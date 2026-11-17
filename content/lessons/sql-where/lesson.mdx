@@ -1,0 +1,41 @@
+Selten will man alle Zeilen einer Tabelle sehen. `WHERE` filtert: Nur Zeilen, für die die Bedingung wahr ist, kommen ins Ergebnis.
+
+<Szene name="filter" />
+
+## Bedingungen formulieren
+
+| Operator | Bedeutung | Beispiel |
+|---|---|---|
+| `=`, `<>` | gleich, ungleich | `stadt = 'Berlin'` |
+| `<`, `>`, `<=`, `>=` | Vergleiche | `preis >= 10` |
+| `AND`, `OR`, `NOT` | verknüpfen | `preis < 10 AND kategorie = 'Papier'` |
+| `BETWEEN a AND b` | im Bereich (einschließlich) | `seit BETWEEN 2019 AND 2021` |
+| `IN (...)` | einer von mehreren Werten | `stadt IN ('Berlin', 'Köln')` |
+| `LIKE` | Textmuster: `%` = beliebig viele Zeichen, `_` = genau eines | `name LIKE 'F%'` |
+| `IS NULL` | Wert fehlt | `email IS NULL` |
+
+Achtung bei den Unterschieden zu den Programmiersprachen: Gleichheit prüft SQL mit einem **einfachen** `=`, und Text steht in **einfachen** Anführungszeichen.
+
+<Code name="kombiniert" />
+
+<Code name="muster" />
+
+## Der Sonderfall NULL
+
+`NULL` bedeutet nicht null und nicht leerer Text, sondern **„unbekannt"**. Das hat eine verblüffende Folge: Jeder Vergleich mit NULL ergibt ebenfalls „unbekannt" – nicht wahr. `email = NULL` ist deshalb nie wahr, nicht einmal, wenn die E-Mail tatsächlich fehlt. Ist die E-Mail einer Person unbekannt, weiß man ja auch nicht, ob sie gleich einer anderen unbekannten E-Mail ist.
+
+Für fehlende Werte gibt es deshalb eigene Prüfungen: `IS NULL` und `IS NOT NULL`.
+
+<Merke>
+
+Lass dir bei neuen Abfragen zuerst die Zeilen anzeigen, die dein WHERE übrig lässt, bevor du mit ihnen weiterarbeitest – vor allem, bevor du sie in einer späteren Lektion änderst oder löschst.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="guenstig" />
+
+<Aufgabe id="stammkunden" />
+
+<Aufgabe id="ohne-email" />

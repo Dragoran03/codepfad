@@ -1,0 +1,57 @@
+In der Lektion über eigene Datentypen hast du Werte gebündelt. Die Funktionen, die mit diesen Werten arbeiten, standen aber lose daneben. Bei einem Bankkonto heißt das: Jeder Code im Programm könnte den Saldo direkt auf −1000 setzen, und die Regel „kein Konto ins Minus" müsste an hundert Stellen geprüft werden.
+
+**Objektorientierung** bündelt deshalb beides: die Daten (Felder) und das Verhalten, das zu ihnen gehört (Methoden). Der Bauplan dafür heißt **Klasse**, ein danach gebautes Exemplar **Objekt**.
+
+<Szene name="konto" />
+
+Drei Begriffe aus der Animation:
+
+- **Konstruktor:** die Methode, die beim Erzeugen läuft und das Objekt in einen gültigen Anfangszustand bringt.
+- **Methode:** eine Funktion, die zu einer Klasse gehört und auf einem bestimmten Objekt aufgerufen wird: `objekt.methode(...)`.
+- **`self` / `this`:** der Verweis auf das Objekt, auf dem die Methode gerade läuft.
+
+<Nur lang="python">
+
+In Python steht `self` ausdrücklich als erster Parameter jeder Methode – beim Aufruf übergibt Python ihn automatisch. Der Konstruktor heißt `__init__`. Felder entstehen einfach dadurch, dass man ihnen über `self` einen Wert zuweist.
+
+</Nur>
+
+<Nur lang="java">
+
+In Java ist **alles** Teil einer Klasse – auch `main`. Felder werden mit Typ deklariert, `private` versteckt sie vor anderem Code. Der Konstruktor heißt wie die Klasse und hat keinen Rückgabetyp. `this` ist in Methoden automatisch vorhanden und darf weggelassen werden, wenn es eindeutig ist (`saldo += betrag` statt `this.saldo += betrag`).
+
+</Nur>
+
+<Nur lang="c">
+
+C kennt keine Klassen – aber das Muster dahinter lässt sich nachbauen und ist in großen C-Projekten wie dem Linux-Kernel allgegenwärtig: ein `struct` für die Daten und Funktionen mit gemeinsamem Präfix (`konto_...`), die als ersten Parameter einen Zeiger auf das Struct bekommen. Der Pfeil `k->saldo` ist die Kurzform für `(*k).saldo`.
+
+Was fehlt, ist der Schutz: Jeder Code kann `k.saldo` direkt ändern.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ hat beides: `struct` und `class`. Der einzige Unterschied ist die Voreinstellung – bei `class` ist alles `private`, bis man `public:` schreibt. Der Konstruktor nutzt hier eine **Initialisierungsliste** (`: inhaber_(inhaber), saldo_(0)`), die die Felder direkt beim Entstehen belegt. Der Unterstrich am Namensende ist eine verbreitete Konvention für private Felder. Methoden, die das Objekt nicht verändern, markiert man mit `const`.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust trennt Daten (`struct`) und Verhalten (`impl`-Block). Methoden bekommen `self` ausdrücklich – und zwar in einer von drei Formen: `&self` (nur lesen), `&mut self` (verändern) oder `self` (das Objekt verbrauchen). Damit steht schon in der Signatur, was eine Methode mit dem Objekt anstellt. Felder sind außerhalb ihres Moduls automatisch privat.
+
+</Nur>
+
+<Merke>
+
+Ein gutes Objekt hütet seine eigenen Regeln. Statt von außen zu prüfen „Ist genug Geld da?" und dann den Saldo zu ändern, sagt man dem Konto „heb ab" – und das Konto entscheidet selbst.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="abheben" />
+
+<Aufgabe id="kapselung" />
+
+<Aufgabe id="klasse-objekt" />

@@ -1,0 +1,33 @@
+Eine Tabelle in einer Datenbank hat keine Reihenfolge – sie ist eine Menge von Zeilen. Wenn die Reihenfolge des Ergebnisses wichtig ist, musst du sie ausdrücklich verlangen.
+
+<Szene name="top3" />
+
+## Nach mehreren Spalten sortieren
+
+Wie im Telefonbuch: erst nach Nachname, bei Gleichstand nach Vorname. Jede Spalte bekommt ihre eigene Richtung.
+
+<Code name="mehrere" />
+
+## Doppelte entfernen
+
+`DISTINCT` macht aus mehreren gleichen Ergebniszeilen eine einzige:
+
+<Code name="distinct" />
+
+## Seitenweise blättern
+
+Suchergebnisse im Netz zeigen meist 10 oder 20 Treffer pro Seite. In SQL geht das mit `LIMIT` und `OFFSET`: `LIMIT 10 OFFSET 20` überspringt die ersten 20 Zeilen und liefert die nächsten 10 – also Seite 3. Ohne `ORDER BY` ist das sinnlos: Ohne festgelegte Reihenfolge könnte dieselbe Zeile auf mehreren Seiten oder auf gar keiner auftauchen.
+
+<Merke>
+
+Kein ORDER BY, keine garantierte Reihenfolge. Dass eine Abfrage heute sortiert aussieht, kann sich mit der nächsten Datenbankversion oder einem neuen Index ändern.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="neueste" />
+
+<Aufgabe id="staedte" />
+
+<Aufgabe id="katalog" />

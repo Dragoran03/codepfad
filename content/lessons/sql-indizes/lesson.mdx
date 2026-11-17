@@ -1,0 +1,31 @@
+SQL ist deklarativ: Du sagst, **was** du willst, die Datenbank entscheidet, **wie** sie es findet. Für dieses Wie hat sie einen **Abfrageplaner**, und dessen wichtigstes Werkzeug ist der **Index**.
+
+<Szene name="index" />
+
+## Den Plan ansehen
+
+Mit `EXPLAIN QUERY PLAN` verrät SQLite, wie es eine Abfrage ausführen würde, ohne sie auszuführen. Andere Datenbanken haben dasselbe unter `EXPLAIN` oder `EXPLAIN ANALYZE`.
+
+<Code name="plan" />
+
+Vor dem Index steht im Plan `SCAN bestellungen` – die ganze Tabelle wird gelesen. Danach `SEARCH bestellungen USING INDEX …` – gezieltes Nachschlagen.
+
+## Wann ein Index hilft
+
+- Bei Spalten in `WHERE`, die viele Zeilen ausschließen.
+- Bei Spalten in `JOIN … ON` – Fremdschlüssel sind deshalb gute Kandidaten.
+- Bei `ORDER BY`: Ein Index ist schon sortiert, die Datenbank kann ihn einfach der Reihe nach lesen.
+
+Wenig bringt er bei Spalten mit nur wenigen verschiedenen Werten (etwa „ja/nein"), bei kleinen Tabellen und bei Bedingungen wie `LIKE '%text'`, die mit einem Platzhalter beginnen – dann hilft die Sortierung nicht.
+
+<Merke>
+
+Fast jedes Leistungsproblem einer Datenbank beginnt mit einem fehlenden Index oder einer Abfrage, die ihn nicht benutzen kann. Bevor du eine langsame Abfrage umschreibst, sieh dir ihren Plan an.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="index" />
+
+<Aufgabe id="kosten" />

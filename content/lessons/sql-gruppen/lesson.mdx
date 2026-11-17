@@ -1,0 +1,39 @@
+Wie viele Kunden hat der Laden? Was kostet ein Produkt im Durchschnitt? Welche Kategorie verkauft sich am besten? Solche Fragen beantworten nicht einzelne Zeilen, sondern Zusammenfassungen. Dafür gibt es **Aggregatfunktionen**:
+
+| Funktion | liefert |
+|---|---|
+| `COUNT(*)` | Anzahl der Zeilen |
+| `COUNT(spalte)` | Anzahl der Zeilen, in denen die Spalte nicht NULL ist |
+| `SUM(spalte)` | Summe |
+| `AVG(spalte)` | Durchschnitt |
+| `MIN(spalte)`, `MAX(spalte)` | kleinster und größter Wert |
+
+Ohne weitere Angaben fassen sie die ganze Tabelle zu einer Zeile zusammen:
+
+<Code name="gesamt" />
+
+## Gruppieren
+
+Spannender wird es mit `GROUP BY`: Dann gibt es eine Zusammenfassung **pro Gruppe**.
+
+<Szene name="gruppen" />
+
+## Gruppen filtern
+
+`WHERE` kann nicht nach Aggregaten filtern – zu dem Zeitpunkt, an dem WHERE arbeitet, gibt es noch gar keine Gruppen. Dafür gibt es `HAVING`, das nach dem Gruppieren angewendet wird:
+
+<Code name="having" />
+
+<Merke>
+
+Die logische Reihenfolge einer SQL-Abfrage ist eine andere als die geschriebene: **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT**. Wer sich diese Reihenfolge merkt, versteht fast jede Fehlermeldung beim Gruppieren.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="je-stadt" />
+
+<Aufgabe id="beliebt" />
+
+<Aufgabe id="where-having" />

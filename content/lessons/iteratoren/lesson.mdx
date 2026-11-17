@@ -1,0 +1,57 @@
+Viele Schleifen folgen demselben Muster: Gehe alle Elemente durch, überspringe manche, verwandle die übrigen und fasse das Ergebnis zusammen. „Summe der Quadrate aller geraden Zahlen" ist so eine Aufgabe. Als Schleife verteilt sich die Idee auf mehrere Zeilen mit Index, Bedingung und Zwischenvariable.
+
+Mit **Iteratoren** und Funktionen höherer Ordnung schreibt man stattdessen eine **Pipeline**, die sich fast wie die Aufgabenstellung liest: *nimm die Werte → behalte die geraden → quadriere sie → bilde die Summe*.
+
+<Szene name="pipeline" />
+
+## Die drei Grundbausteine
+
+| Baustein | macht aus … | Beispiel |
+|---|---|---|
+| **map** | n Elementen n verwandelte Elemente | jeden Preis um 19 % erhöhen |
+| **filter** | n Elementen höchstens n Elemente | nur die Bestellungen über 50 € |
+| **reduce** / **fold** | n Elementen einen einzigen Wert | Summe, Maximum, alles zu einem Text verbinden |
+
+Dazu kommen viele Helfer: `take` (nur die ersten k), `zip` (zwei Folgen paarweise verbinden), `enumerate` (Elemente mit ihrer Position), `any`/`all` (gilt die Bedingung für eines bzw. alle?).
+
+<Nur lang="python">
+
+Python hat `map` und `filter` als Funktionen, doch üblicher sind **Comprehensions**: `[w * w for w in werte if w % 2 == 0]` erzeugt eine Liste, mit runden Klammern einen trägen Generator. Mit `yield` schreibst du eigene Generatoren – Funktionen, die Werte einzeln liefern und dazwischen pausieren.
+
+</Nur>
+
+<Nur lang="java">
+
+Seit Java 8 gibt es **Streams**. Eine Kette beginnt mit einer Quelle (`liste.stream()`, `Arrays.stream(...)`), hat beliebig viele Zwischenschritte (`filter`, `map`, `sorted` …) und endet mit einer **terminalen Operation** (`sum`, `collect`, `forEach`, `count`). Erst die terminale Operation setzt alles in Gang.
+
+</Nur>
+
+<Nur lang="c">
+
+In C schreibt man solche Verarbeitungen als Schleifen. Das ist kein Nachteil, solange die Schleife kurz bleibt – aber du siehst hier, wie viel Ordnung Pipelines in längeren Abläufen schaffen. Die Animation zeigt, wie die anderen Sprachen arbeiten.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Seit C++20 lassen sich mit `<ranges>` Ketten per `|` bauen: `werte | std::views::filter(...) | std::views::transform(...)`. Ältere Programme nutzen die Algorithmen aus `<algorithm>` wie `std::transform`, `std::copy_if` und `std::accumulate`, die mit Iterator-Paaren (`begin()`, `end()`) arbeiten.
+
+</Nur>
+
+<Nur lang="rust">
+
+Iteratoren sind in Rust allgegenwärtig und kosten nichts: Der Compiler übersetzt eine Kette aus `filter`, `map` und `sum` in denselben Maschinencode wie eine von Hand geschriebene Schleife – manchmal sogar in besseren, weil die Grenzprüfungen entfallen. Mit `collect()` sammelst du die Ergebnisse in einen `Vec`, eine `HashMap` oder einen `String`.
+
+</Nur>
+
+<Merke>
+
+Eine Pipeline beschreibt, **was** passieren soll, eine Schleife, **wie**. Beides hat seinen Platz – aber wenn eine Schleife nur filtert, verwandelt und zusammenfasst, ist die Pipeline fast immer klarer.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="lange-woerter" />
+
+<Aufgabe id="reduce" />

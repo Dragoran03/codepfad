@@ -1,0 +1,40 @@
+Ein Prozessor versteht nur eines: Zahlen, die Befehle bedeuten. „Multipliziere Register 0 mit Register 0" ist auf einem modernen Mac-Prozessor die Zahl `0x1B007C00`. Zwischen deinem Quelltext und solchen Zahlen liegt ein langer Weg. Diesen Weg verfolgt dieser Pfad Station für Station.
+
+## Das Fließband
+
+Jeder Compiler – und auch jeder Interpreter – arbeitet wie ein Fließband: Jede Station nimmt das Ergebnis der vorigen, macht daraus etwas Maschinennäheres und reicht es weiter.
+
+<Szene name="weg" />
+
+Wechsle oben die Sprache: Die Stationen ähneln sich überall, aber **wann** übersetzt wird und **wie weit**, unterscheidet sich gewaltig.
+
+| Station | Aufgabe | Lektion |
+|---|---|---|
+| **Lexer** | Zeichen zu Wörtern (Tokens) bündeln | Vom Text zu Tokens |
+| **Parser** | Struktur erkennen, Syntaxbaum bauen | Der Syntaxbaum |
+| **Semantische Analyse** | Namen zuordnen, Typen prüfen | Namen und Typen prüfen |
+| **Optimierer** | Code schneller und kleiner machen | Zwischencode und Optimierung |
+| **Codeerzeugung** | Befehle für den Prozessor auswählen | Maschinencode und Assembler |
+| **Linker** | Teile zu einem Programm verbinden | Linker und ausführbare Datei |
+
+Die ersten drei Stationen bilden das **Front-End**: Es kennt die Sprache. Die letzten bilden das **Back-End**: Es kennt den Prozessor. Dazwischen steht meist eine **Zwischensprache**.
+
+## Was am Ende herauskommt
+
+Hier kannst du es selbst sehen. Der Kasten übersetzt deinen Code mit den echten Werkzeugen auf diesem Rechner – in C, C++ und Rust bis hinunter zum Maschinencode (als lesbarer **Assembler**), in Java und Python bis zum Bytecode ihrer virtuellen Maschine.
+
+<Uebersetzen name="quadrat" opt={2} />
+
+Stark optimiert werden aus der Funktion in C, C++ und Rust gerade einmal zwei Prozessorbefehle: multiplizieren, zurückspringen. Schalte auf „ohne Optimierung“ und vergleiche – oder ändere den Code und übersetze erneut.
+
+<Merke>
+
+„Kompiliert" oder „interpretiert" ist keine Eigenschaft einer Sprache, sondern ihrer Umsetzung. Es gibt Python-Compiler (PyPy mit JIT), C-Interpreter und Java-Programme, die vorab vollständig in Maschinencode übersetzt werden (GraalVM Native Image). Üblich ist trotzdem, was die Animation zeigt.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="frontend" />
+
+<Aufgabe id="wann" />

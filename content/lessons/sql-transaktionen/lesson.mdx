@@ -1,0 +1,35 @@
+Manche Änderungen gehören untrennbar zusammen. Eine Überweisung belastet ein Konto **und** schreibt einem anderen gut. Passiert nur eines von beiden – wegen eines Absturzes, eines Fehlers, eines Stromausfalls –, ist Geld entstanden oder verschwunden. Eine **Transaktion** fasst mehrere Anweisungen zu einer unteilbaren Einheit zusammen.
+
+Diese Lektion arbeitet mit drei Bankkonten:
+
+<Datensatz dataset="konten" />
+
+<Szene name="ueberweisung" />
+
+## Zurückrollen
+
+Mit `ROLLBACK` statt `COMMIT` werden alle Änderungen seit `BEGIN` verworfen, als hätte es sie nie gegeben:
+
+<Code name="rollback" />
+
+In echten Programmen sieht das typischerweise so aus: Transaktion beginnen, Anweisungen ausführen; klappt alles, `COMMIT`, geht irgendetwas schief, `ROLLBACK`. Viele Programmiersprachen und Bibliotheken bieten dafür eine Hilfe, die im Fehlerfall automatisch zurückrollt.
+
+## Regeln schützen auch hier
+
+Die Tabelle `konten` hat die Regel `CHECK (saldo >= 0)`. Eine Abbuchung, die ein Konto ins Minus brächte, scheitert:
+
+<Code name="regel" />
+
+Scheitert innerhalb einer Transaktion eine Anweisung, rollt das Programm üblicherweise die ganze Transaktion zurück – die Überweisung findet dann gar nicht statt, statt nur zur Hälfte.
+
+<Merke>
+
+Isolation hat Stufen. Je strenger die Datenbank gleichzeitige Transaktionen voneinander abschirmt, desto langsamer wird sie. Viele Datenbanken wählen deshalb standardmäßig einen Kompromiss, bei dem seltene Effekte möglich sind, etwa dass eine Transaktion bei zweimaligem Lesen unterschiedliche Werte sieht. Für Geldbeträge stellt man die Isolation deshalb gezielt strenger ein.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="ueberweisen" />
+
+<Aufgabe id="acid" />

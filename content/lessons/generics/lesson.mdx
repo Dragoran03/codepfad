@@ -1,0 +1,59 @@
+Du hast eine Funktion geschrieben, die das erste Element einer Liste von Zahlen liefert. Jetzt brauchst du dieselbe Funktion für eine Liste von Wörtern. Und für eine Liste von Konten. Den Code dreimal zu kopieren und nur den Typ zu ändern, fühlt sich falsch an – und ist es auch.
+
+**Generics** lösen das: Du schreibst Code mit einem **Typparameter** – einem Platzhalter, meist `T` genannt –, und erst beim Benutzen steht fest, welcher Typ eingesetzt wird.
+
+<Code name="erstes" />
+
+Du benutzt Generics längst: `ArrayList<Integer>`, `std::vector<int>`, `Vec<i32>` und `HashMap<String, i32>` sind generische Typen, bei denen du in spitzen Klammern sagst, was hineinkommt.
+
+## Wie der Compiler es umsetzt
+
+Die Idee ist überall dieselbe, die Umsetzung nicht. Sie hat Folgen für Geschwindigkeit, Programmgröße und für das, was erlaubt ist:
+
+<Szene name="wege" />
+
+## Bedingungen an den Typ
+
+Eine Funktion, die das Maximum sucht, funktioniert nicht mit *jedem* Typ – nur mit solchen, die sich vergleichen lassen. Gute Typsysteme erlauben, das auszudrücken:
+
+<Nur lang="java">
+
+`<T extends Comparable<T>>` heißt: „T muss sich mit anderen T vergleichen lassen." Dann darf die Methode `compareTo` benutzen. `Integer` und `String` erfüllen das von Haus aus.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Klassische Templates prüfen nichts vorab: Der Compiler setzt den Typ ein, und erst wenn dabei etwas nicht passt, meldet er sich – oft mit seitenlangen Fehlermeldungen. Seit C++20 lassen sich Bedingungen als **Concepts** formulieren: `template <std::totally_ordered T>`.
+
+</Nur>
+
+<Nur lang="rust">
+
+`T: PartialOrd + Clone` sind **Trait-Grenzen**: Nur Typen, die sich vergleichen und kopieren lassen, sind erlaubt. Rust prüft die Funktion gegen genau diese Grenzen – was dort nicht steht, darfst du in der Funktion nicht benutzen.
+
+</Nur>
+
+<Nur lang="c">
+
+In C trägt die Vergleichsfunktion diese Information: Wer `max_von` aufruft, liefert mit, wie zwei Elemente zu vergleichen sind. Das ist flexibel, aber nichts verhindert, dass jemand die falsche Funktion oder Größe übergibt.
+
+</Nur>
+
+<Nur lang="python">
+
+In Python ist jede Funktion von Natur aus generisch. Ob ein Wert passt, entscheidet sich beim Aufruf von `>`: Für Zahlen und Texte gibt es einen Vergleich, für eine Mischung aus beidem nicht – das ergäbe einen `TypeError`.
+
+</Nur>
+
+<Merke>
+
+Generics sind Funktionen über Typen: So wie eine Funktion einen Wert als Parameter nimmt, nimmt ein generischer Code einen Typ als Parameter.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="maximum" />
+
+<Aufgabe id="warum-generics" />

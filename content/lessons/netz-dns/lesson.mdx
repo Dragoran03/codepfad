@@ -1,0 +1,38 @@
+Menschen merken sich Namen, Router brauchen Zahlen. Das **Domain Name System** übersetzt zwischen beiden: aus `example.org` wird `93.184.215.14`. Es ist eine der ältesten und wichtigsten Infrastrukturen des Internets – fällt es aus, „ist das Internet kaputt", obwohl alle Leitungen funktionieren.
+
+## Eine verteilte Datenbank
+
+Kein Server kennt alle Namen. DNS ist hierarchisch organisiert, wie die Namen selbst – von rechts nach links gelesen: Die Wurzel (`.`) kennt die Zuständigen für die Endungen (`.org`, `.de`, `.com`), diese kennen die Zuständigen für jede Domain, und die kennen ihre eigenen Unternamen.
+
+<Szene name="aufloesung" />
+
+## Eintragsarten
+
+| Typ | bedeutet | Beispiel |
+|---|---|---|
+| **A** | IPv4-Adresse | `example.org → 93.184.215.14` |
+| **AAAA** | IPv6-Adresse | `example.org → 2606:2800:21f:cb07::1` |
+| **CNAME** | Alias für einen anderen Namen | `www.example.org → example.org` |
+| **MX** | zuständiger Mailserver | `example.org → mail.example.org` |
+| **NS** | zuständiger Namensserver | `example.org → ns1.example.org` |
+| **TXT** | beliebiger Text, oft zur Prüfung von Absendern | `v=spf1 …` |
+
+## Namen auflösen in deiner Sprache
+
+Programme fragen das Betriebssystem, das wiederum seinen Resolver fragt. Der Name `localhost` wird dabei nicht im Internet nachgeschlagen, sondern steht in einer lokalen Datei (`/etc/hosts`) – er führt immer zum eigenen Rechner:
+
+<Code name="aufloesen" />
+
+Im Terminal kannst du DNS mit `dig example.org` oder `nslookup example.org` direkt befragen.
+
+<Merke>
+
+Wenn „das Internet nicht geht", aber `ping 1.1.1.1` funktioniert, ist es fast immer DNS. Und nach einer Änderung an einem DNS-Eintrag dauert es bis zum Ablauf der TTL, bis sie überall sichtbar ist – die Caches behalten die alte Antwort.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="hierarchie" />
+
+<Aufgabe id="udp-dns" />

@@ -1,0 +1,42 @@
+IP bringt Pakete von Rechner zu Rechner – aber ohne Garantie. Pakete können verloren gehen, doppelt ankommen, einander überholen. Und IP weiß nicht, für **welches Programm** auf dem Zielrechner ein Paket bestimmt ist. Beides regelt die **Transportschicht**. Sie bietet zwei grundverschiedene Dienste an.
+
+## TCP: der verlässliche Datenstrom
+
+Das **Transmission Control Protocol** verhält sich wie ein Telefongespräch: Erst wird eine Verbindung aufgebaut, dann fließen Daten in beide Richtungen, am Ende wird aufgelegt. Dazwischen garantiert TCP, dass alles **vollständig**, **in der richtigen Reihenfolge** und **ohne Duplikate** ankommt.
+
+<Szene name="tcp" />
+
+Außerdem passt TCP sein Tempo an: Es startet vorsichtig und sendet schneller, solange alles ankommt. Gehen Pakete verloren, deutet es das als Stau im Netz und bremst (*Staukontrolle*). Ohne diesen Mechanismus wäre das Internet längst zusammengebrochen.
+
+## UDP: einfach abschicken
+
+Das **User Datagram Protocol** ist das Gegenteil: kein Verbindungsaufbau, keine Bestätigung, keine Reihenfolge. Jedes Datagramm ist eine einzelne Postkarte.
+
+<Szene name="udp" />
+
+Ein UDP-Datagramm in deiner Sprache, auf dem eigenen Rechner verschickt und empfangen:
+
+<Code name="udp" />
+
+## Im Vergleich
+
+| | TCP | UDP |
+|---|---|---|
+| Verbindung | ja, mit Handschlag | nein |
+| Zuverlässigkeit | Bestätigungen, Wiederholung | keine |
+| Reihenfolge | garantiert | nicht garantiert |
+| Datenform | Strom von Bytes | einzelne Datagramme |
+| Kopf | mind. 20 Byte | 8 Byte |
+| Typisch für | Web, E-Mail, Dateien, SSH | DNS, Videotelefonie, Spiele, Streaming |
+
+<Merke>
+
+TCP ist ein **Strom**, keine Folge von Nachrichten. Wer dreimal je 100 Byte sendet, kann sie als einen Block von 300 Byte empfangen – oder als 7 Häppchen. Wo eine Nachricht endet, muss das Anwendungsprotokoll festlegen (zum Beispiel durch Zeilenumbrüche oder eine vorangestellte Länge). Das ist einer der häufigsten Fehler in selbst geschriebener Netzwerksoftware.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="zusammensetzen" />
+
+<Aufgabe id="welches" />

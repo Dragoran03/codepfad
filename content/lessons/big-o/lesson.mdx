@@ -1,0 +1,44 @@
+Ein Programm braucht für 100 Datensätze eine Sekunde. Wie lange braucht es für 100.000? Tausend Sekunden? Eine Million? Oder immer noch etwa eine? Die Antwort hängt nicht von der Geschwindigkeit des Rechners ab, sondern davon, **wie der Aufwand mit der Datenmenge wächst**.
+
+Diese Wachstumsrate beschreibt man mit der **O-Notation** (gesprochen „Groß-O"). Sie ignoriert bewusst Details wie „doppelt so viele Schritte" und fragt nur: Welche Form hat die Kurve?
+
+<BigO />
+
+| Klasse | Name | Was passiert bei doppelt so vielen Daten? | Beispiel |
+|---|---|---|---|
+| **O(1)** | konstant | gar nichts | Array-Zugriff per Index, Nachschlagen in einer Hash-Map |
+| **O(log n)** | logarithmisch | ein Schritt mehr | binäre Suche |
+| **O(n)** | linear | doppelt so lange | Liste einmal durchgehen, Maximum suchen |
+| **O(n log n)** | „linearithmisch" | etwas mehr als doppelt | gute Sortierverfahren |
+| **O(n²)** | quadratisch | viermal so lange | jedes Element mit jedem vergleichen, Bubble Sort |
+| **O(2ⁿ)** | exponentiell | bei *einem* Element mehr doppelt so lange | naive Fibonacci-Rekursion, alle Teilmengen ausprobieren |
+
+## Laufzeit am Code ablesen
+
+Mit etwas Übung sieht man die Klasse dem Code an:
+
+- Eine Schleife über alle Elemente: **O(n)**.
+- Zwei geschachtelte Schleifen über alle Elemente: **O(n²)**.
+- Eine Schleife, die den Bereich jedes Mal halbiert: **O(log n)**.
+- Aufrufe von Bibliotheksfunktionen zählen mit! `x in liste` in Python oder `liste.contains(x)` in Java sind selbst eine Schleife – O(n).
+
+<Code name="zaehlen" />
+
+Zwei Regeln vereinfachen das Rechnen:
+
+1. **Konstante Faktoren fallen weg.** 3n und n/2 sind beide O(n). Es geht um die Form der Kurve, nicht um ihre genaue Höhe.
+2. **Nur der größte Term zählt.** n² + 100n + 5000 ist O(n²), denn für großes n wird der Rest bedeutungslos.
+
+<Merke>
+
+Für kleine Datenmengen ist fast jedes Verfahren schnell genug. O-Notation wird wichtig, wenn die Daten wachsen können – und das tun sie fast immer. Der häufigste Leistungsfehler in echten Programmen ist eine versteckte O(n²)-Schleife: eine Suche in einer Liste innerhalb einer Schleife, wo eine Map oder ein Set genügt hätte.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="zaehlen" />
+
+<Aufgabe id="duplikat" />
+
+<Aufgabe id="klasse" />

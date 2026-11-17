@@ -1,0 +1,62 @@
+Sortieren ist eine der häufigsten Aufgaben überhaupt: Suchergebnisse nach Relevanz, E-Mails nach Datum, Produkte nach Preis. Und wie du in der letzten Lektion gesehen hast, macht Sortieren auch das Suchen schneller.
+
+Es gibt Dutzende Sortierverfahren. Zwei einfache zeigen gut, worauf es ankommt.
+
+## Bubble Sort
+
+Das vielleicht bekannteste Verfahren – und eines der langsamsten. Die Idee: Gehe immer wieder durch die Liste und tausche benachbarte Werte, die falsch herum stehen.
+
+<Szene name="bubble" />
+
+## Insertion Sort
+
+So sortieren die meisten Menschen Spielkarten auf der Hand: Nimm eine Karte nach der anderen und schiebe sie an die richtige Stelle zwischen den bereits sortierten.
+
+<Szene name="insertion" />
+
+## Schneller geht es mit Teilen und Herrschen
+
+Beide Verfahren brauchen bei n Werten im schlimmsten Fall rund n² Schritte. Für ein paar Dutzend Werte ist das egal, für Millionen nicht. Die schnellen Verfahren teilen das Problem:
+
+- **Merge Sort** halbiert die Liste immer weiter, bis nur noch einzelne Werte übrig sind (die trivialerweise sortiert sind), und **verschmilzt** dann sortierte Teillisten zu immer größeren. Das Verschmelzen ist deine Aufgabe unten.
+- **Quicksort** wählt einen Wert als Pivot, sortiert alles Kleinere nach links und alles Größere nach rechts und macht mit beiden Seiten rekursiv weiter.
+
+Beide brauchen nur etwa n · log₂(n) Schritte. Bei einer Million Werten ist das der Unterschied zwischen 20 Millionen und einer Billion Schritten.
+
+<Nur lang="python">
+
+Python sortiert mit **Timsort**, einer Mischung aus Merge Sort und Insertion Sort, die vorsortierte Abschnitte erkennt. `sorted(liste)` liefert eine neue Liste, `liste.sort()` sortiert an Ort und Stelle. Mit `key=` bestimmst du, wonach sortiert wird: `sorted(namen, key=len)`.
+
+</Nur>
+
+<Nur lang="java">
+
+`Arrays.sort` verwendet für einfache Zahlen eine Quicksort-Variante und für Objekte Timsort (stabil). Für eigene Sortierreihenfolgen gibt man einen `Comparator` mit: `liste.sort(Comparator.comparing(Person::alter))`.
+
+</Nur>
+
+<Nur lang="c">
+
+`qsort(werte, anzahl, sizeof(int), vergleiche)` sortiert beliebige Arrays. Die Vergleichsfunktion liefert eine negative Zahl, null oder eine positive Zahl – je nachdem, ob das erste Element kleiner, gleich oder größer ist.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::sort(v.begin(), v.end())` nutzt Introsort, eine Mischung aus Quicksort, Heapsort und Insertion Sort. Weil der Compiler den Vergleich direkt einbauen kann, ist es meist schneller als Cs `qsort`. Braucht man Stabilität, nimmt man `std::stable_sort`.
+
+</Nur>
+
+<Nur lang="rust">
+
+`v.sort()` ist stabil (eine Merge-Sort-Variante), `v.sort_unstable()` meist schneller (eine Quicksort-Variante). Mit `sort_by_key(|p| p.alter)` sortierst du nach einem selbst gewählten Schlüssel.
+
+</Nur>
+
+## Jetzt du
+
+<Aufgabe id="mischen" />
+
+<Aufgabe id="welches" />
+
+<Aufgabe id="stabil" />

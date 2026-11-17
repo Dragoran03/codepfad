@@ -1,0 +1,69 @@
+Stack-Speicher räumt sich selbst auf: Endet ein Funktionsaufruf, ist sein Bereich weg. Beim Heap ist das anders. Ein Objekt dort kann beliebig lange leben – aber irgendwann wird es nicht mehr gebraucht, und dann muss sein Speicher zurück. Wer das wann tut, ist eine der grundlegendsten Entscheidungen beim Entwurf einer Programmiersprache.
+
+Drei Antworten haben sich durchgesetzt:
+
+| Strategie | Wer räumt auf? | Sprachen | Stärke | Schwäche |
+|---|---|---|---|---|
+| **Von Hand** | du, mit `free` / `delete` | C, (C++) | volle Kontrolle, kein Zusatzaufwand | Lecks, doppelte Freigabe, hängende Zeiger |
+| **Garbage Collector** | ein Hintergrundprozess zur Laufzeit | Java, Python, C#, Go, JavaScript | bequem und sicher | Rechenaufwand, unvorhersehbare Pausen |
+| **Besitzregeln** | der Compiler legt es fest | Rust, (C++ mit RAII) | sicher **und** ohne Laufzeitkosten | mehr Regeln beim Schreiben |
+
+## In deiner Sprache
+
+Die Animation zeigt, wie die gewählte Sprache vorgeht. Wechsle die Sprache, um die drei Strategien zu vergleichen – C, Java und Rust sind die deutlichsten Vertreter.
+
+<Szene name="lebenszyklus" />
+
+<Nur lang="python">
+
+Python verbindet zwei Verfahren. Jedes Objekt trägt einen **Referenzzähler**; fällt er auf null, wird das Objekt sofort freigegeben. Probier es aus:
+
+<Code name="gc" />
+
+Ein Haken der Referenzzählung: Zwei Objekte, die aufeinander verweisen, halten sich gegenseitig am Leben, obwohl sonst niemand sie erreicht. Für solche Kreise läuft zusätzlich ein Garbage Collector.
+
+</Nur>
+
+<Nur lang="java">
+
+Der Garbage Collector der JVM ist hochoptimiert. Er teilt den Heap in Generationen ein, weil die meisten Objekte jung sterben: Kurzlebige Objekte werden schnell und billig eingesammelt, langlebige seltener geprüft. Du kannst mit `System.gc()` um eine Sammlung bitten – garantiert ist sie nicht, und in normalem Code ruft man das nie auf.
+
+</Nur>
+
+<Nur lang="c">
+
+In C gilt eine einzige Regel, und sie ist gnadenlos: **Zu jedem `malloc` gehört genau ein `free`.** Der Compiler hilft dir nicht. Werkzeuge wie Valgrind oder die Sanitizer, die auf dieser Plattform mitlaufen, finden viele Fehler beim Testen – aber nur auf den Wegen, die das Programm dabei tatsächlich nimmt.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ erlaubt `new` und `delete` von Hand, doch in modernem Code sieht man sie kaum noch. Stattdessen besitzen Objekte ihre Ressourcen und geben sie im **Destruktor** frei, der automatisch am Ende des Gültigkeitsbereichs läuft: `std::vector`, `std::string`, `std::unique_ptr` (ein Besitzer) und `std::shared_ptr` (mehrere Besitzer mit Referenzzähler). Das Prinzip heißt RAII – *Resource Acquisition Is Initialization*.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rusts drei Besitzregeln:
+
+1. Jeder Wert hat genau einen **Besitzer**.
+2. Es kann zu jedem Zeitpunkt nur einen Besitzer geben – Zuweisen oder Übergeben **verschiebt** den Besitz.
+3. Verlässt der Besitzer seinen Gültigkeitsbereich, wird der Wert freigegeben.
+
+Wer einen Wert nur benutzen, aber nicht besitzen will, **leiht** ihn mit `&` aus. Das hast du in der Lektion über Referenzen gesehen. Einfache Werte wie Zahlen werden übrigens kopiert statt verschoben – bei ihnen gibt es nichts freizugeben.
+
+</Nur>
+
+<Merke>
+
+Speicherfehler sind keine Kleinigkeit. Microsoft und Google berichten unabhängig voneinander, dass rund 70 Prozent ihrer schweren Sicherheitslücken auf Fehler in der Speicherverwaltung zurückgehen. Das ist der Hauptgrund, warum Sprachen wie Rust in Betriebssystemen und Browsern Einzug halten.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="wachsen" />
+
+<Aufgabe id="strategien" />
+
+<Aufgabe id="preis" />

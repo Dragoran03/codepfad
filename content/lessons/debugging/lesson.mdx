@@ -1,0 +1,65 @@
+Der erste dokumentierte „Bug" war 1947 eine echte Motte in einem Relais des Rechners Mark II. Heute sind Bugs Denkfehler, und sie zu finden ist ein eigenes Handwerk. Erfahrene Entwickler sind darin nicht deshalb besser, weil sie weniger Fehler machen, sondern weil sie **systematisch** suchen statt zu raten.
+
+## 1. Die Fehlermeldung wirklich lesen
+
+Es klingt banal, aber die meiste Information steckt in der Meldung selbst. Führe dieses Programm aus:
+
+<Code name="absturz" />
+
+<Nur lang="python">
+
+Python zeigt einen **Traceback**: die Kette der Aufrufe, die zum Fehler führte – der tiefste Aufruf steht **unten**, direkt über der Fehlermeldung. Lies von unten nach oben: Was ist passiert (`IndexError`)? In welcher Zeile (`return wort[len(wort)]`)? Wer hat diese Funktion aufgerufen?
+
+</Nur>
+
+<Nur lang="java">
+
+Java zeigt einen **Stacktrace**: erst die Ausnahme mit Meldung, darunter die Aufrufkette – der tiefste Aufruf steht **oben**. Jede Zeile nennt Klasse, Methode, Datei und Zeilennummer. Bei langen Traces aus Frameworks suchst du die erste Zeile mit deinem eigenen Klassennamen.
+
+</Nur>
+
+<Nur lang="c">
+
+Ohne Hilfsmittel würde dieses Programm einfach irgendetwas ausgeben – C prüft den Zugriff nicht. Hier meldet der UndefinedBehaviorSanitizer Datei, Zeile und Spalte. Er erkennt aber nur einen Teil solcher Fehler; bei Zeigern auf Heap-Speicher bleibt ein Überlauf oft stumm. In großen Programmen startet man es deshalb im **Debugger** (`gdb` oder `lldb`); nach einem Absturz zeigt dort der Befehl `bt` (*backtrace*) die Aufrufkette.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::string::at` prüft den Index und wirft eine `std::out_of_range`-Ausnahme. Weil niemand sie fängt, beendet sich das Programm mit dieser Meldung – leider ohne Zeilennummer. Mit eckigen Klammern (`wort[i]`) gäbe es gar keine Prüfung. Die Stelle findest du im **Debugger** (`gdb` oder `lldb`): Nach dem Absturz zeigt der Befehl `bt` (*backtrace*) die Aufrufkette.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust bricht mit einer **Panic** ab und nennt Datei, Zeile und Grund. Die vollständige Aufrufkette bekommst du, wenn du das Programm mit der Umgebungsvariable `RUST_BACKTRACE=1` startest.
+
+</Nur>
+
+## 2. Den Fehler einkreisen
+
+Wenn die Meldung nicht reicht, wird der Bereich, in dem der Fehler stecken kann, Schritt für Schritt verkleinert:
+
+- **Ausgaben einfügen.** Gib Zwischenwerte aus und vergleiche sie mit dem, was du erwartest. Die erste Stelle, an der beides auseinandergeht, ist heiß.
+- **Den Debugger benutzen.** Er hält das Programm an einem **Haltepunkt** (*breakpoint*) an. Dann gehst du Zeile für Zeile weiter (*step over*), springst in Funktionen hinein (*step into*) und siehst alle Variablen – wie in den Animationen dieser Plattform, nur mit deinem eigenen Programm. Jeder gute Editor (VS Code, IntelliJ, CLion) hat einen eingebaut.
+- **Halbieren.** Funktionierte es gestern noch? Dann such die Änderung, die den Fehler gebracht hat – nicht linear, sondern durch Halbieren:
+
+<Szene name="bisect" />
+
+## 3. Erst verstehen, dann reparieren
+
+Wer einen Fehler „repariert", ohne ihn zu verstehen, hat ihn meist nur versteckt. Bevor du etwas änderst, solltest du einen Satz sagen können wie: „Die Schleife hört eine Position zu früh auf, weil die obere Grenze ausschließlich ist." Und danach: Schreib einen Test, der genau diesen Fehler gefunden hätte. Dann kann er nie unbemerkt zurückkehren.
+
+<Merke>
+
+Wenn du sicher bist, dass etwas „unmöglich" ist, aber trotzdem passiert, ist eine deiner Annahmen falsch. Prüfe sie einzeln – vor allem die, bei denen du dir am sichersten bist.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="letzte-k" />
+
+<Aufgabe id="stacktrace" />
+
+<Aufgabe id="quietscheente" />

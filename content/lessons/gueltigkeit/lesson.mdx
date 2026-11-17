@@ -1,0 +1,54 @@
+In einem Programm mit tausend Funktionen heißen garantiert mehrere Variablen `i`, `summe` oder `ergebnis`. Dass sie sich nicht gegenseitig überschreiben, verdanken wir einer einfachen Regel: Jede Variable gilt nur in einem bestimmten Bereich des Codes – ihrem **Gültigkeitsbereich** (englisch *scope*).
+
+## Jede Funktion hat ihre eigenen Variablen
+
+<Szene name="kopie" />
+
+Zwei Dinge sind hier passiert:
+
+1. Der Parameter `zahl` ist eine **eigene Variable** der Funktion, obwohl er denselben Namen trägt wie die Variable in `main`.
+2. Beim Aufruf wurde der **Wert kopiert**. Was die Funktion mit ihrer Kopie anstellt, bleibt ihre Sache.
+
+Das ist eine Schutzmaßnahme. Du kannst eine fremde Funktion aufrufen, ohne Angst haben zu müssen, dass sie deine Variablen durcheinanderbringt.
+
+<Nur lang="rust">
+
+Im Beispiel steht `mut zahl` beim Parameter. Auch Parameter sind in Rust zunächst unveränderlich; das `mut` erlaubt der Funktion, ihre **eigene Kopie** zu verändern. Am Aufrufer ändert das nichts.
+
+</Nur>
+
+## Blöcke
+
+Wie ist es mit Variablen, die innerhalb eines `if` oder einer Schleife entstehen? Führe das Beispiel aus:
+
+<Code name="block" />
+
+<Nur lang="python">
+
+In Python funktioniert das. Python kennt Gültigkeitsbereiche nur für **Funktionen** (und Module), nicht für einzelne Blöcke. Eine Variable, die in einem `if` oder einer Schleife entsteht, lebt bis zum Ende der umgebenden Funktion.
+
+Das ist bequem, hat aber eine Falle: Wird der Block nie betreten, existiert die Variable nicht, und der Zugriff danach endet mit einem `NameError`. Wechsle oben zu einer anderen Sprache, um zu sehen, wie streng es dort zugeht.
+
+</Nur>
+
+<Nur lang="java,c,cpp,rust">
+
+Der Compiler lehnt das ab. Hier bildet jedes Paar geschweifter Klammern einen eigenen Bereich. Eine Variable lebt von der Zeile, in der sie angelegt wird, bis zur schließenden Klammer ihres Blocks. Danach ist ihr Name unbekannt.
+
+Daraus folgt eine praktische Regel: Lege eine Variable in dem Block an, in dem sie gebraucht wird – und zwar im **äußersten**, in dem sie gebraucht wird. Ein Ergebnis, das nach einer Schleife noch da sein soll, muss vor der Schleife angelegt werden.
+
+</Nur>
+
+<Merke>
+
+Je kleiner der Bereich, in dem eine Variable gilt, desto weniger Stellen können sie verändern – und desto leichter findest du einen Fehler. Variablen, die überall im Programm sichtbar sind („globale Variablen"), meidet man deshalb, wo es geht.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="summe-fix" />
+
+<Aufgabe id="schatten" />
+
+<Aufgabe id="lebensdauer" />

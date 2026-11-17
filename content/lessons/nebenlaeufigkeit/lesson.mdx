@@ -1,0 +1,63 @@
+Moderne Prozessoren haben viele Kerne, und Programme warten oft auf langsame Dinge: auf das Netzwerk, die Festplatte, eine Eingabe. Beides spricht dafür, mehrere Dinge gleichzeitig zu tun. Ein Programm kann dafür mehrere **Threads** starten – Ausführungsstränge, die nebeneinander laufen und sich denselben Speicher teilen.
+
+Dieser geteilte Speicher ist Segen und Fluch zugleich.
+
+## Was schiefgehen kann
+
+Probiere es selbst. Zwei Threads wollen denselben Zähler um 1 erhöhen. Im Code ist das eine Zeile, der Prozessor braucht dafür aber drei Schritte. Du bestimmst, in welcher Reihenfolge sie ablaufen:
+
+<RaceLab />
+
+Wenn das Ergebnis davon abhängt, in welcher Reihenfolge Threads zufällig an die Reihe kommen, spricht man von einer **Race Condition**. Sie ist tückisch: Das Programm funktioniert tausendmal und versagt beim tausendundersten Mal – auf dem Rechner eines Kunden.
+
+## Die Sperre
+
+Die Lösung im Experiment war eine **Sperre** (*Mutex*, von „mutual exclusion"): Nur wer die Sperre hält, darf den Zähler anfassen. Der andere Thread wartet, bis sie wieder frei ist. Der Abschnitt dazwischen heißt **kritischer Abschnitt**.
+
+<Code name="zaehler" />
+
+Führe das Programm aus: Mit Sperre kommt immer 200000 heraus. Wer die Sperre in der Spielwiese entfernt, bekommt (außer in Python) ein zufälliges, meist kleineres Ergebnis.
+
+<Nur lang="python">
+
+Python hat eine Besonderheit: den **Global Interpreter Lock** (GIL). Er sorgt in der klassischen Python-Version dafür, dass immer nur ein Thread Python-Code ausführt. Threads helfen deshalb bei Wartezeiten (Netzwerk, Dateien), aber nicht beim Rechnen auf mehreren Kernen – dafür nimmt man `multiprocessing`. Race Conditions gibt es trotzdem: `zaehler += 1` ist auch in Python mehrere Schritte.
+
+</Nur>
+
+<Nur lang="java">
+
+`synchronized` macht aus einem Block einen kritischen Abschnitt. Für einfache Zähler gibt es `AtomicInteger`, das die drei Schritte als einen unteilbaren Prozessorbefehl ausführt. Für größere Programme startet man Threads selten von Hand, sondern übergibt Aufgaben an einen `ExecutorService`, der eine feste Zahl von Threads verwaltet. Seit Java 21 gibt es zusätzlich leichtgewichtige **virtuelle Threads**.
+
+</Nur>
+
+<Nur lang="c">
+
+Threads kommen in C aus der POSIX-Bibliothek `pthread`. `pthread_mutex_lock` und `unlock` müssen immer paarweise aufgerufen werden – vergisst man das `unlock` auf einem Fehlerpfad, hängt das Programm. Seit C11 gibt es außerdem `<stdatomic.h>` für unteilbare Operationen.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::lock_guard` ist RAII für Sperren: Er sperrt beim Anlegen und gibt automatisch frei, wenn er den Gültigkeitsbereich verlässt – auch bei einer Ausnahme. `std::atomic<int>` macht einfache Zähler ohne Sperre sicher. Und `std::jthread` (C++20) wartet in seinem Destruktor automatisch auf das Ende des Threads.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust verhindert Race Conditions auf Daten beim Kompilieren. Der `Mutex` **besitzt** die Daten: An den Zähler kommt man nur über `lock()`, und die Sperre wird automatisch freigegeben, wenn das Ergebnis von `lock()` verschwindet. `Arc` („atomic reference counted") ermöglicht, dass mehrere Threads den Mutex gemeinsam besitzen. Vergisst man eines davon, kompiliert das Programm nicht.
+
+</Nur>
+
+<Merke>
+
+Die sichersten Threads teilen nichts. Wenn jeder Thread an seinen eigenen Daten arbeitet und die Ergebnisse erst am Ende zusammengeführt werden – wie in der Aufgabe unten –, gibt es nichts zu sperren und nichts zu verwechseln.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="aufteilen" />
+
+<Aufgabe id="deadlock" />
+
+<Aufgabe id="rust-sicher" />

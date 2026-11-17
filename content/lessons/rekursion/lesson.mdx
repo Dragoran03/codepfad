@@ -1,0 +1,53 @@
+Um die Treppe hinaufzukommen, nimm eine Stufe – und dann den Rest der Treppe. Das klingt nach einem Trick, ist aber eine vollständige Anleitung, solange man weiß, wann Schluss ist: oben angekommen.
+
+Eine Funktion, die sich selbst aufruft, heißt **rekursiv**. Sie löst eine Aufgabe, indem sie sie auf eine kleinere Version derselben Aufgabe zurückführt. Dafür braucht sie immer zwei Teile:
+
+- den **Basisfall**: eine Situation, die so einfach ist, dass die Antwort ohne weiteren Aufruf feststeht;
+- den **rekursiven Fall**: Die Funktion ruft sich mit einem kleineren Problem auf und baut aus dem Ergebnis ihre Antwort.
+
+## Ein Beispiel, das sich verzweigt
+
+Die Fibonacci-Zahlen beginnen mit 0 und 1, jede weitere ist die Summe der beiden vorigen: 0, 1, 1, 2, 3, 5, 8, 13 … Die Definition ist selbst schon rekursiv – und lässt sich fast wörtlich in Code übertragen.
+
+<Szene name="fib" />
+
+Achte auf zwei Dinge:
+
+1. **Der Stack wächst und schrumpft** mit der Tiefe des Baums. Jeder wartende Aufruf hält seinen eigenen Bereich mit seinem eigenen `n`.
+2. **Dieselben Teilprobleme werden mehrfach gelöst.** Die Zahl der Aufrufe wächst etwa um den Faktor 1,6 mit jedem Schritt von n. `fib(40)` braucht so über 300 Millionen Aufrufe.
+
+Die Abhilfe heißt **Memoisierung**: Man merkt sich bereits berechnete Ergebnisse in einer Map und schlägt sie nach, statt sie neu zu berechnen. Dann braucht `fib(n)` nur noch n Aufrufe. Das Verfahren dahinter – große Probleme aus gespeicherten Lösungen kleinerer Probleme zusammensetzen – heißt **dynamische Programmierung**.
+
+## Wann Rekursion?
+
+Jede Rekursion lässt sich auch mit einer Schleife schreiben und umgekehrt. Rekursion glänzt bei Problemen, die von Natur aus verschachtelt sind:
+
+- Bäume und Verzeichnisstrukturen durchlaufen (ein Ordner enthält Ordner, die Ordner enthalten …),
+- Teile-und-herrsche-Verfahren wie Merge Sort oder Quicksort,
+- Ausdrücke auswerten: `(2 + 3) * (4 - 1)` besteht aus kleineren Ausdrücken.
+
+<Nur lang="python">
+
+Python begrenzt die Rekursionstiefe auf etwa 1000 Ebenen und bricht dann mit `RecursionError` ab. Für tiefe Rekursion ist eine Schleife in Python meist die bessere Wahl. Memoisierung ist dagegen ein Einzeiler: `@functools.cache` über die Funktion schreiben.
+
+</Nur>
+
+<Nur lang="java,c,cpp,rust">
+
+Die maximale Tiefe hängt von der Stack-Größe ab und liegt meist bei einigen zehntausend Ebenen. Manche Compiler können Rekursion, bei der der Selbstaufruf ganz am Ende steht (**Endrekursion**), in eine Schleife umwandeln – garantiert ist das in diesen Sprachen aber nicht.
+
+</Nur>
+
+<Merke>
+
+Vertraue der Rekursion. Wenn der Basisfall stimmt und jeder Aufruf das Problem verkleinert, musst du nicht jeden einzelnen Aufruf im Kopf nachvollziehen. Frag dich nur: „Angenommen, der Aufruf für das kleinere Problem liefert die richtige Antwort – baue ich daraus die richtige Antwort für mein Problem?"
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="potenz" />
+
+<Aufgabe id="hanoi" />
+
+<Aufgabe id="basisfall" />

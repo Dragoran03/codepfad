@@ -1,0 +1,59 @@
+Bisher hat diese Plattform deine Programme geprüft. Im Berufsalltag macht das niemand für dich – oder besser gesagt: Du schreibst das Programm, das prüft. **Automatische Tests** sind kleine Programme, die deinen Code mit festgelegten Eingaben aufrufen und vergleichen, ob das Erwartete herauskommt.
+
+Das klingt nach doppelter Arbeit. In der Praxis spart es enorm viel Zeit:
+
+- **Sofortige Rückmeldung.** Ein Knopfdruck zeigt, ob noch alles funktioniert – statt minutenlang von Hand durchzuklicken.
+- **Mut zum Umbauen.** Wer Code verbessern will, ohne Tests zu haben, riskiert bei jeder Änderung, etwas kaputtzumachen, ohne es zu merken.
+- **Lebende Dokumentation.** Ein Test zeigt präzise, wie eine Funktion gemeint ist – und er veraltet nicht, weil er sonst fehlschlägt.
+
+## Aufbau eines Tests
+
+Fast jeder Test folgt dem Muster **Arrange – Act – Assert**: Ausgangslage herstellen, die zu prüfende Funktion aufrufen, das Ergebnis mit der Erwartung vergleichen. Jede Sprache hat dafür Werkzeuge:
+
+<Code name="framework" />
+
+<Nur lang="python">
+
+**pytest** ist der De-facto-Standard: Jede Funktion, deren Name mit `test_` beginnt, ist ein Test, und ein schlichtes `assert` genügt. pytest zeigt bei Fehlschlägen genau, welche Werte verglichen wurden. Das mitgelieferte Modul `unittest` funktioniert ohne Installation, ist aber umständlicher.
+
+</Nur>
+
+<Nur lang="java">
+
+**JUnit** ist das Standard-Framework. Testmethoden werden mit `@Test` markiert, Erwartungen mit `assertEquals`, `assertTrue` oder `assertThrows` formuliert. Build-Werkzeuge wie Maven und Gradle finden und starten die Tests automatisch.
+
+</Nur>
+
+<Nur lang="c">
+
+C bringt nur `assert` aus `<assert.h>` mit: Ist die Bedingung falsch, bricht das Programm mit Datei und Zeile ab. Für ernsthafte Projekte gibt es Frameworks wie **Unity**, **CMocka** oder **Check**, die mehrere Tests sammeln und übersichtlich berichten.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Verbreitet sind **GoogleTest** und **Catch2**. Neben `EXPECT_EQ` (Test läuft weiter) gibt es `ASSERT_EQ` (Test bricht ab). Mit CMake und `ctest` werden die Tests ins Projekt eingebunden.
+
+</Nur>
+
+<Nur lang="rust">
+
+Testen ist in Rust eingebaut: Funktionen mit `#[test]` stehen meist im selben Modul wie der Code und werden mit `cargo test` gefunden und ausgeführt. Code-Beispiele in der Dokumentation werden dabei ebenfalls als Tests ausgeführt – veraltete Beispiele fallen so sofort auf.
+
+</Nur>
+
+Diese Werkzeuge brauchen ein ganzes Projekt mit mehreren Dateien. In der Aufgabe unten baust du das Prinzip deshalb in einer einzigen Datei nach.
+
+<Merke>
+
+Ein Test, der nie fehlschlagen kann, ist wertlos. Prüfe deshalb neue Tests, indem du den Code absichtlich kaputtmachst: Wird der Test jetzt rot? Genau so prüft übrigens diese Plattform ihre eigenen Aufgaben – jede Musterlösung muss alle Tests bestehen, und jeder Startcode muss mindestens einen verfehlen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="fizzbuzz" />
+
+<Aufgabe id="randfaelle" />
+
+<Aufgabe id="pyramide" />

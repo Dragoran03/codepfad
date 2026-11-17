@@ -1,0 +1,51 @@
+Ein Zeichenprogramm kennt Kreise, Rechtecke, Dreiecke und Sterne. Soll es die Gesamtfläche berechnen, könnte man für jede Form eine eigene Schleife schreiben – oder einen großen Block aus `if`-Abfragen: „Ist es ein Kreis? Dann rechne so. Ist es ein Rechteck? Dann so." Bei jeder neuen Form müsste dieser Block wachsen.
+
+Eleganter ist eine Vereinbarung: **Jede Form kann ihre Fläche selbst berechnen.** Der Rest des Programms fragt einfach jede Form nach ihrer Fläche, ohne zu wissen, um welche Form es sich handelt. Diese Vereinbarung heißt je nach Sprache **Interface**, **Trait** oder **abstrakte Klasse**.
+
+<Szene name="formen" />
+
+Achte in der Animation auf die hervorgehobene Zeile: Der Aufruf `flaeche()` steht nur einmal im Code, springt aber je nach Objekt in eine andere Methode. Das nennt man **dynamische Bindung** oder **Polymorphie** (griechisch: Vielgestaltigkeit).
+
+<Nur lang="python">
+
+Python braucht keine ausdrückliche Vereinbarung. Jedes Objekt mit einer Methode `flaeche` funktioniert in der Schleife – das ist **Duck Typing**. Wer den Vertrag trotzdem festhalten will, kann eine Basisklasse mit `abc.ABC` und `@abstractmethod` schreiben; dann meldet Python einen Fehler, wenn eine Unterklasse die Methode vergisst.
+
+</Nur>
+
+<Nur lang="java">
+
+`interface Form` beschreibt nur die Methodensignatur. Mit `implements Form` verspricht eine Klasse, sie zu liefern – vergisst sie es, lehnt der Compiler ab. Das Beispiel nutzt `record`s, eine kompakte Schreibweise für Klassen, die nur Daten tragen. Neben Interfaces gibt es in Java auch Vererbung mit `extends`: Eine Klasse übernimmt dann Felder und Methoden einer anderen und kann einzelne davon überschreiben.
+
+</Nur>
+
+<Nur lang="c">
+
+C hat kein Sprachmittel dafür, aber man kann es nachbauen – und sieht dabei, was andere Sprachen im Hintergrund tun. Jede Form trägt einen **Funktionszeiger**: eine Variable, die die Adresse einer Funktion enthält. Der Aufruf `formen[i].flaeche(&formen[i])` springt zu der Funktion, deren Adresse gerade darin steht. Genau so arbeiten virtuelle Methoden in C++ intern.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Eine Klasse mit einer **rein virtuellen** Methode (`= 0`) ist abstrakt: Von ihr selbst lassen sich keine Objekte erzeugen, nur von Unterklassen, die die Methode mit `override` liefern. Das Schlüsselwort `virtual` sorgt dafür, dass beim Aufruf über einen Zeiger auf `Form` die Methode der tatsächlichen Klasse läuft. Weil die Formen unterschiedlich groß sind, liegen sie auf dem Heap und werden über `unique_ptr` verwaltet. Der virtuelle Destruktor stellt sicher, dass beim Aufräumen der richtige Destruktor läuft.
+
+</Nur>
+
+<Nur lang="rust">
+
+Ein **Trait** beschreibt Fähigkeiten, `impl Form for Kreis` liefert sie für einen Typ. Rust kennt keine Vererbung zwischen Structs – Traits sind das einzige Mittel für gemeinsames Verhalten. `Box<dyn Form>` bedeutet: ein Heap-Objekt irgendeines Typs, der `Form` erfüllt. Das `dyn` macht ausdrücklich, dass hier zur Laufzeit nachgeschlagen wird. Wo der Typ schon beim Kompilieren feststeht, verwendet man Traits mit Generics (nächste Lektion), und der Nachschlage-Schritt entfällt.
+
+</Nur>
+
+<Merke>
+
+Programmiere gegen den Vertrag, nicht gegen die Umsetzung. Code, der nur „irgendeine Form" erwartet, muss nie angepasst werden, wenn neue Formen hinzukommen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="dreieck" />
+
+<Aufgabe id="vererbung" />
+
+<Aufgabe id="vertrag" />

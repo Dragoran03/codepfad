@@ -1,0 +1,61 @@
+Computer sind schnell, aber vor allem sind sie geduldig. Eine Anweisung eine Million Mal auszuführen kostet dich eine einzige zusätzliche Zeile. Das Werkzeug dafür heißt **Schleife**.
+
+## Solange: die while-Schleife
+
+`while` funktioniert wie ein `if`, das immer wieder zum Anfang zurückspringt: Solange die Bedingung wahr ist, wird der Block ausgeführt.
+
+<Code name="countdown" />
+
+Die letzte Zeile im Block ist die wichtigste. Ohne `zahl = zahl - 1` bliebe die Bedingung für immer wahr, und das Programm käme nie zum Ende: eine **Endlosschleife**. Probier es in der Spielwiese ruhig aus – nach fünf Sekunden wird das Programm hier automatisch abgebrochen.
+
+## Für jedes: die for-Schleife
+
+Oft weißt du vorher, wie oft etwas passieren soll, oder du willst der Reihe nach eine Folge von Werten durchgehen. Dafür gibt es `for`. Die Schleife bringt ihre Zählvariable gleich mit.
+
+<Szene name="summe" />
+
+<Nur lang="python">
+
+`range(1, n + 1)` erzeugt die Zahlen von 1 bis n. Die obere Grenze ist **nicht** enthalten – deshalb das `+ 1`. `range(5)` zählt von 0 bis 4.
+
+</Nur>
+
+<Nur lang="java,c,cpp">
+
+Der Kopf der klassischen `for`-Schleife besteht aus drei Teilen, getrennt durch Semikolons: **Start** (einmal am Anfang), **Bedingung** (vor jedem Durchlauf geprüft) und **Schritt** (nach jedem Durchlauf ausgeführt). `i++` ist die Kurzform von `i = i + 1`.
+
+</Nur>
+
+<Nur lang="rust">
+
+`1..=n` ist ein **Bereich** von 1 bis einschließlich n. Ohne das Gleichheitszeichen (`1..n`) wäre n nicht mehr dabei. Die Schleifenvariable `i` braucht kein `mut`: In jedem Durchlauf entsteht sie neu.
+
+</Nur>
+
+<Merke>
+
+Programmierer zählen gern ab 0. Eine Schleife, die `n`-mal laufen soll, geht deshalb meist von 0 bis *kleiner als* n. Die häufigste Fehlerart bei Schleifen ist genau ein Durchlauf zu viel oder zu wenig – sie hat sogar einen Namen: Off-by-one-Fehler.
+
+</Merke>
+
+## Welche Schleife wann?
+
+- **`for`**, wenn die Anzahl der Durchläufe feststeht oder du eine Folge von Werten abarbeitest.
+- **`while`**, wenn du erst unterwegs erfährst, wann Schluss ist: „Lies, bis die Eingabe leer ist", „Teile, bis nichts mehr übrig ist".
+
+## Vorzeitig aussteigen
+
+Zwei Anweisungen greifen in den Ablauf ein:
+
+- `break` beendet die Schleife sofort.
+- `continue` überspringt den Rest des aktuellen Durchlaufs und macht mit dem nächsten weiter.
+
+Beide stehen fast immer in einem `if`. In der dritten Aufgabe unten kannst du testen, ob du sie auseinanderhalten kannst.
+
+## Jetzt du
+
+<Aufgabe id="einmaleins" />
+
+<Aufgabe id="quersumme" />
+
+<Aufgabe id="sprung" />

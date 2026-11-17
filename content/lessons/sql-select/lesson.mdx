@@ -1,0 +1,39 @@
+Fast jede Anwendung speichert ihre Daten in einer **Datenbank**: Online-Shops ihre Bestellungen, Banken ihre Konten, Apps ihre Nutzer. Die verbreitetste Art sind **relationale Datenbanken**, und ihre Sprache heißt **SQL** (*Structured Query Language*).
+
+SQL ist anders als alles bisher. In Python oder Rust beschreibst du Schritt für Schritt, **wie** etwas berechnet wird. In SQL beschreibst du nur, **was** du haben willst – wie die Datenbank es findet, entscheidet sie selbst. Man nennt das **deklarativ**.
+
+## Alles ist eine Tabelle
+
+Eine relationale Datenbank besteht aus Tabellen. Jede **Spalte** hat einen Namen und einen Typ, jede **Zeile** ist ein Datensatz. In diesem Pfad arbeitest du mit dem Datenbestand eines kleinen Schreibwarenladens:
+
+<Datensatz dataset="laden" />
+
+## Spalten auswählen
+
+Die wichtigste Anweisung ist `SELECT`: „Wähle diese Spalten aus jener Tabelle."
+
+<Szene name="auswahl" />
+
+Probier selbst. Jedes Beispiel lässt sich ausführen und in der Spielwiese verändern:
+
+<Code name="alles" />
+
+Nach `SELECT` dürfen auch Berechnungen stehen. Mit `AS` gibst du der neuen Spalte einen Namen:
+
+<Code name="rechnen" />
+
+SQL-Schlüsselwörter schreibt man üblicherweise groß, Tabellen- und Spaltennamen klein. Nötig ist das nicht – SQL unterscheidet bei Schlüsselwörtern nicht zwischen Groß- und Kleinschreibung –, aber es macht Abfragen lesbarer. Eine Anweisung endet mit einem Semikolon.
+
+<Merke>
+
+Das Ergebnis jeder Abfrage ist wieder eine Tabelle. Diese einfache Idee trägt die ganze Sprache: Filtern, Sortieren, Zusammenfassen und Verknüpfen machen alle aus Tabellen neue Tabellen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="produkte" />
+
+<Aufgabe id="brutto" />
+
+<Aufgabe id="stern" />

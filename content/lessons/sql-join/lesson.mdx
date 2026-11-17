@@ -1,0 +1,34 @@
+Warum steht in der Tabelle `bestellungen` nicht einfach der Name des Kunden? Weil Aylin dreimal bestellt hat. Stünde ihr Name, ihre Stadt und ihre E-Mail in jeder Bestellung, müsste man bei einem Umzug drei Zeilen ändern – und vergisst garantiert eine. Deshalb steht jede Information **genau einmal** in der Datenbank, und Tabellen verweisen über **Schlüssel** aufeinander.
+
+- Der **Primärschlüssel** (`kunden.id`) identifiziert jede Zeile eindeutig.
+- Ein **Fremdschlüssel** (`bestellungen.kunde_id`) verweist auf den Primärschlüssel einer anderen Tabelle.
+
+Ein `JOIN` setzt die Teile bei der Abfrage wieder zusammen.
+
+<Szene name="join" />
+
+## LEFT JOIN: auch ohne Partner
+
+Ein **INNER JOIN** (oder einfach `JOIN`) liefert nur Zeilen, die auf beiden Seiten einen Partner haben. Ein **LEFT JOIN** behält alle Zeilen der linken Tabelle; fehlt ein Partner, stehen in dessen Spalten `NULL`-Werte:
+
+<Code name="left" />
+
+## Mehr als zwei Tabellen
+
+JOINs lassen sich aneinanderhängen. Welche Produkte in welcher Menge stecken in Bestellung 6?
+
+<Code name="drei" />
+
+<Merke>
+
+Jeder JOIN braucht eine Verbindungsbedingung mit `ON`. Vergisst man sie, verbindet die Datenbank **jede** Zeile mit **jeder** – aus 7 Bestellungen und 6 Kunden werden 42 Zeilen voller Unsinn. Wenn ein Ergebnis plötzlich viel zu viele Zeilen hat, ist das fast immer die Ursache.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="offene" />
+
+<Aufgabe id="nie-bestellt" />
+
+<Aufgabe id="umsatz" />

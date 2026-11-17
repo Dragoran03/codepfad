@@ -1,0 +1,47 @@
+Am Ende des Fließbands steht **Maschinencode**: eine Folge von Zahlen, von denen jede einen einfachen Befehl für den Prozessor bedeutet. Damit Menschen ihn lesen können, gibt es eine Textform: **Assembler**. Jede Zeile Assembler entspricht genau einem Maschinenbefehl.
+
+## Ein Prozessor bei der Arbeit
+
+Die Funktion `summe(n)` aus der Lektion über Optimierung, so übersetzt, wie ein Compiler ohne Optimierung es ungefähr täte (für den ARM64-Prozessor eines aktuellen Macs):
+
+<Szene name="cpu" />
+
+Alles, was du aus Hochsprachen kennst, löst sich in wenige Grundbausteine auf:
+
+| Hochsprache | Maschinenebene |
+|---|---|
+| Variablen | Register (oder Speicheradressen) |
+| Rechnungen | Rechenbefehle mit zwei, drei Registern (`add`, `mul`, `sub`) |
+| `if`, `while`, `for` | Vergleich (`cmp`) und bedingter Sprung (`b.gt`, `b.eq` …) |
+| Funktionsaufruf | Argumente in Register legen, springen (`bl`), zurückspringen (`ret`) |
+| Arrays, Structs, Objekte | Adressen, aus denen geladen (`ldr`) und in die gespeichert (`str`) wird |
+
+Wie Argumente und Rückgabewerte übergeben werden, regelt die **Aufrufkonvention** (*calling convention*) des Betriebssystems: Auf ARM64 kommen die ersten acht Argumente in die Register x0 bis x7, das Ergebnis in x0. Nur weil sich alle Compiler daran halten, können C-, C++- und Rust-Code sich gegenseitig aufrufen.
+
+## Dein Code als Maschinenbefehle
+
+<Uebersetzen name="maximum" opt={2} />
+
+<Nur lang="c,cpp,rust">
+
+Optimiert kommt die Funktion oft ganz ohne Sprung aus: Der Prozessor vergleicht und wählt dann mit einem einzigen Befehl (`csel`, *conditional select*) einen der beiden Werte. Sprünge sind für moderne Prozessoren teuer, wenn sie falsch vorhergesagt werden – deshalb vermeidet der Compiler sie, wo er kann. Schalte auf „ohne Optimierung" und vergleiche.
+
+</Nur>
+
+<Nur lang="python,java">
+
+Bytecode sieht Assembler verblüffend ähnlich: Vergleich, bedingter Sprung, Rückgabe. Der Unterschied: Die „Maschine", für die er gedacht ist, existiert nur als Programm. Mehr dazu in der Lektion über Interpreter und virtuelle Maschinen.
+
+</Nur>
+
+<Merke>
+
+Assembler muss man heute selten schreiben, aber lesen zu können lohnt sich: um zu verstehen, was der Compiler aus dem eigenen Code macht, um Leistungsprobleme zu finden und um Fehler in C und C++ aufzuspüren, die sich nur auf Maschinenebene erklären lassen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="architektur" />
+
+<Aufgabe id="register" />

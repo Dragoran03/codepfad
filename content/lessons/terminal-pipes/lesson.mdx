@@ -1,0 +1,54 @@
+Die Unix-Philosophie lässt sich in einem Satz sagen: **Schreibe Programme, die eine Sache gut machen, und die zusammenarbeiten.** `grep` sucht, `sort` sortiert, `wc` zählt. Keines davon ist für sich beeindruckend. Verbunden lösen sie Aufgaben, für die man sonst ein eigenes Programm schreiben müsste.
+
+Der Übungsordner enthält diesmal eine Datei `server.log` – das Protokoll eines kleinen Webservers. Jede Zeile ist eine Anfrage: IP-Adresse, Methode, Pfad, Statuscode.
+
+<Code name="einzeln" />
+
+## Ein-, Aus- und Umleitung
+
+Jedes Programm hat drei Kanäle: **stdin** (Eingabe), **stdout** (Ausgabe) und **stderr** (Fehlermeldungen). Normalerweise landen stdout und stderr auf dem Bildschirm. Umleitungen ändern das:
+
+| Zeichen | bewirkt |
+|---|---|
+| `> datei` | Ausgabe in Datei schreiben (überschreibt) |
+| `>> datei` | Ausgabe an Datei anhängen |
+| `< datei` | Eingabe aus Datei lesen |
+| `2> datei` | Fehlermeldungen in Datei schreiben |
+| `a \| b` | Ausgabe von `a` wird Eingabe von `b` (Pipe) |
+
+<Code name="umleiten" />
+
+## Pipelines
+
+Mit dem senkrechten Strich `|` wird die Ausgabe eines Befehls zur Eingabe des nächsten. Die Frage „Welche IP-Adresse verursacht die meisten 404-Fehler?" beantwortet eine einzige Zeile:
+
+<Szene name="kette" />
+
+<Code name="kette" />
+
+Die wichtigsten Werkzeuge für Pipelines:
+
+| Befehl | macht |
+|---|---|
+| `grep muster` | Zeilen filtern (`-v` umkehren, `-i` Groß/klein egal, `-c` zählen) |
+| `cut -d" " -f2` | Spalten ausschneiden |
+| `sort` | sortieren (`-n` numerisch, `-r` umgekehrt) |
+| `uniq -c` | gleiche aufeinanderfolgende Zeilen zählen |
+| `head -n`, `tail -n` | erste bzw. letzte n Zeilen |
+| `wc -l` | Zeilen zählen |
+| `tr a b` | Zeichen ersetzen |
+| `awk '{print $2}'` | eine kleine Programmiersprache für Spalten |
+
+<Merke>
+
+Bau Pipelines Schritt für Schritt. Führe erst den ersten Befehl aus, schau dir die Ausgabe an, hänge dann den nächsten an. So siehst du an jeder Stelle, was gerade durch die Leitung fließt – genau wie in der Animation.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="zaehlen" />
+
+<Aufgabe id="top" />
+
+<Aufgabe id="umleitung" />

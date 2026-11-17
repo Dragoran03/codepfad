@@ -1,0 +1,62 @@
+Programme leben in einer unordentlichen Welt. Dateien fehlen, Netzwerke brechen ab, Nutzer tippen „zwölf" in ein Zahlenfeld. Ein robustes Programm rechnet damit. Die Frage ist: Wie erfährt der Code, der eine Aufgabe in Auftrag gibt, dass sie gescheitert ist – und wie, ohne dass der eigentliche Programmablauf unter Fehlerprüfungen begraben wird?
+
+Sprachen haben darauf zwei grundverschiedene Antworten gefunden.
+
+<Szene name="kette" />
+
+## Ausnahmen
+
+In Python, Java und C++ **wirft** eine Funktion im Fehlerfall eine **Ausnahme** (*exception*). Sie verlässt die Funktion sofort und wandert den Aufrufstapel hinauf, bis ein passender `catch`- bzw. `except`-Block sie **fängt**. Fängt sie niemand, bricht das Programm ab und gibt den Stapel aus, durch den sie gewandert ist.
+
+- **Vorteil:** Der normale Ablauf bleibt übersichtlich, Zwischenebenen müssen sich um nichts kümmern.
+- **Nachteil:** Man sieht einer Funktion nicht an, welche Ausnahmen aus ihr herausfliegen können. Jeder Aufruf ist ein möglicher Ausstiegspunkt.
+
+<Nur lang="java">
+
+Java unterscheidet **geprüfte** Ausnahmen (etwa `IOException`), die eine Methode in ihrer Signatur mit `throws` ankündigen muss, und **ungeprüfte** (`RuntimeException` und Unterklassen), die überall auftreten dürfen. Mit `finally` oder `try (...)` (try-with-resources) stellt man sicher, dass Aufräumarbeiten wie das Schließen einer Datei auch im Fehlerfall passieren.
+
+</Nur>
+
+<Nur lang="python">
+
+Python benutzt Ausnahmen sehr freizügig – auch für ganz normale Situationen. Ein typisches Python-Muster ist „Lieber um Verzeihung bitten als um Erlaubnis": erst versuchen, dann den Fehler fangen, statt vorher alles zu prüfen. Mit `finally` und `with` wird aufgeräumt, egal wie der Block verlassen wird.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ verbindet Ausnahmen mit RAII: Beim Hochwandern der Ausnahme laufen die Destruktoren aller verlassenen Objekte. Dateien werden geschlossen, Speicher freigegeben – ohne `finally`. Manche Projekte (etwa in Spielen oder eingebetteten Systemen) schalten Ausnahmen aus Geschwindigkeitsgründen ab und arbeiten mit Rückgabewerten; C++23 bietet dafür `std::expected`, das Rusts `Result` ähnelt.
+
+</Nur>
+
+## Fehler als Rückgabewerte
+
+C und Rust geben Fehler als ganz normalen **Rückgabewert** zurück. Der Fehler kann nirgendwo „hinfliegen" – er muss auf jeder Ebene ausdrücklich behandelt oder weitergereicht werden.
+
+<Nur lang="c">
+
+In C ist das ein Fehlercode, meist `-1` oder `NULL`. Viele Bibliotheksfunktionen legen zusätzlich in der globalen Variable `errno` ab, was genau schiefging. Der große Nachteil: Nichts zwingt dich, den Rückgabewert zu prüfen. Ein vergessenes `if` ist einer der häufigsten Fehler in C-Programmen.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust verpackt das Ergebnis in den Typ `Result<T, E>`: entweder `Ok(wert)` oder `Err(fehler)`. Du kommst nicht an den Wert, ohne den Fehlerfall zu bedenken. Das `?` reicht einen Fehler in einem Zeichen weiter – so knapp wie eine Ausnahme, aber sichtbar. Für Werte, die fehlen können, ohne dass es ein Fehler ist, gibt es `Option<T>` mit `Some(wert)` und `None`.
+
+`unwrap()` ist die Abkürzung „Ich bin sicher, dass es klappt – sonst brich ab". In Lernprogrammen praktisch, in echtem Code mit Vorsicht zu genießen.
+
+</Nur>
+
+<Merke>
+
+Fehler verschwinden nicht, wenn man sie ignoriert – sie tauchen nur später und an der falschen Stelle wieder auf. Das schlimmste Muster in jeder Sprache ist ein leerer `catch`-Block: Er macht aus einem lauten Fehler einen leisen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="robust" />
+
+<Aufgabe id="wo-fangen" />
+
+<Aufgabe id="panik" />

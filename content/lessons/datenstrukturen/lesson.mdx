@@ -1,0 +1,73 @@
+Arrays und Maps hast du schon kennengelernt. Drei weitere Datenstrukturen tauchen so oft auf, dass jede Programmiererin und jeder Programmierer sie kennen sollte. Sie unterscheiden sich vor allem darin, **wo** man Elemente hinzufügt und **wo** man sie wieder herausnimmt.
+
+## Stapel und Warteschlange
+
+<Szene name="stapel" />
+
+Beide sind eigentlich nur Arrays oder Listen mit Spielregeln – aber genau diese Regeln machen sie nützlich:
+
+- Ein **Stapel** merkt sich, wo man herkommt. Der Aufrufstapel deines Programms ist einer, die „Zurück"-Taste im Browser auch, ebenso jede „Rückgängig"-Funktion.
+- Eine **Warteschlange** sorgt für Fairness. Druckaufträge, Anfragen an einen Webserver und Nachrichten zwischen Programmteilen werden so abgearbeitet.
+
+<Nur lang="python">
+
+Als Stapel dient einfach eine `list` mit `append` und `pop`. Für Warteschlangen nimmt man `collections.deque`: Bei einer normalen Liste wäre das Entfernen vorn (`pop(0)`) O(n), weil alle anderen Elemente nachrücken müssen.
+
+</Nur>
+
+<Nur lang="java">
+
+`ArrayDeque` kann beides: `push`/`pop` am einen Ende für den Stapel, `addLast`/`pollFirst` für die Warteschlange. Die alte Klasse `Stack` gilt als veraltet.
+
+</Nur>
+
+<Nur lang="c">
+
+Ein Array und ein oder zwei Indizes genügen. Achte auf die Grenzen: Ein Stapel ohne Prüfung läuft über, und eine Warteschlange, deren Indizes nur wachsen, braucht irgendwann einen Ringpuffer, bei dem die Indizes per `% kapazitaet` wieder vorn anfangen.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::stack` und `std::queue` sind Adapter: Sie verpacken einen anderen Container (standardmäßig `std::deque`) und lassen nur die passenden Operationen zu. Beachte, dass `pop()` nichts zurückgibt – den Wert liest man vorher mit `top()` bzw. `front()`.
+
+</Nur>
+
+<Nur lang="rust">
+
+Ein `Vec` mit `push` und `pop` ist der Stapel. Für Warteschlangen gibt es `VecDeque` mit `push_back` und `pop_front`. `pop` liefert ein `Option`, weil der Stapel leer sein könnte.
+
+</Nur>
+
+## Die verkettete Liste
+
+Ein Array liegt als ein zusammenhängender Block im Speicher. Eine **verkettete Liste** dagegen besteht aus einzelnen Knoten, die irgendwo auf dem Heap liegen und über Verweise verbunden sind – wie eine Schnitzeljagd, bei der jeder Zettel verrät, wo der nächste liegt.
+
+<Szene name="liste" />
+
+| | Array | Verkettete Liste |
+|---|---|---|
+| Zugriff auf Element Nr. i | O(1) | O(n) |
+| Einfügen vorn | O(n) | O(1) |
+| Einfügen an bekannter Stelle | O(n) | O(1) |
+| Speicher | kompakt | zusätzlich ein Verweis pro Element |
+
+<Nur lang="rust">
+
+Verkettete Listen sind in Rust berüchtigt schwierig – nicht, weil Rust schlecht wäre, sondern weil sie geteilten Besitz und viele Verweise brauchen, genau das, was Rusts Regeln einschränken. Die einfach verkettete Version mit `Option<Box<Knoten>>` geht gut; für alles Kompliziertere nutzt man in der Praxis `Vec` oder `VecDeque`.
+
+</Nur>
+
+<Merke>
+
+Es gibt keine beste Datenstruktur, nur eine passende. Frag dich: Wo kommen Elemente hinzu? Wo werden sie entnommen? Wonach wird gesucht? Die Antworten führen fast immer direkt zur richtigen Wahl.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="klammern" />
+
+<Aufgabe id="wofuer" />
+
+<Aufgabe id="liste-array" />

@@ -1,0 +1,42 @@
+Bevor Daten durchs Internet reisen, müssen sie erst einmal über eine Leitung. Die einfachste Art, viele Geräte zu verbinden, ist eine einzige gemeinsame Leitung, an der alle hängen: ein **Bus**. Busse findest du überall, wo Geräte nah beieinander sind – im Auto, im Smartphone, auf jeder Platine.
+
+## Das Grundproblem: Wer darf reden?
+
+Auf einem Bus hört jeder alles, aber es kann immer nur einer gleichzeitig senden. Jeder Bus braucht deshalb eine Regel für den **Zugriff**. Drei Ansätze sind verbreitet:
+
+- **Ein Chef fragt reihum** (Master/Slave): Nur der Master darf ein Gespräch beginnen. So arbeiten I²C und SPI.
+- **Alle dürfen, Konflikte werden gelöst**: CAN löst Konflikte elegant ohne Zeitverlust (siehe unten), das klassische Ethernet ließ beide abbrechen und nach einer zufälligen Pause neu beginnen.
+- **Feste Zeitfenster**: Jeder bekommt seinen Takt. Das ist planbar, aber wenig flexibel (FlexRay im Auto).
+
+## CAN im Auto
+
+Der **Controller Area Network**-Bus verbindet in jedem Auto Motor, Bremsen, Airbags, Fensterheber und Radio. Seine Zugriffsregel ist ein kleines Kunststück:
+
+<Szene name="can" />
+
+Diese **bitweise Arbitrierung** funktioniert nur, weil eine 0 die Leitung elektrisch „herunterzieht" und damit jede 1 überschreibt (wie ein offener Kontakt, den jeder schließen kann). Niemand muss warten, und die wichtigste Nachricht kommt garantiert zuerst durch.
+
+## Busse auf der Platine
+
+| Bus | Leitungen | Typischer Einsatz | Adressierung |
+|---|---|---|---|
+| **I²C** | 2 (Takt, Daten) | Sensoren, Displays, Speicherchips | 7-Bit-Adresse im ersten Byte |
+| **SPI** | 4 + eine Auswahlleitung pro Gerät | schnelle Sensoren, SD-Karten, Displays | eigene Leitung *Chip Select* pro Gerät |
+| **UART** (seriell) | 2 (Senden, Empfangen) | Punkt-zu-Punkt, Debug-Konsole | keine – nur zwei Geräte |
+| **CAN** | 2 (verdrillt) | Autos, Maschinen, Medizintechnik | Nachrichtenkennung statt Geräteadresse |
+| **USB** | 4 bzw. mehr | Peripherie am Rechner | Stern über Hubs, Gerätenummern |
+| **PCI Express** | 2 Paare pro Lane | Grafikkarte, SSD | Punkt-zu-Punkt, paketbasiert |
+
+Interessant bei CAN: Nachrichten haben **keine Zieladresse**. Jede Nachricht trägt eine Kennung, die sagt, *was* sie enthält („Raddrehzahl vorn links"), und jedes Steuergerät entscheidet selbst, ob es sich dafür interessiert. Dieses Muster (*Publish/Subscribe*) findest du später in großen Software-Systemen wieder.
+
+<Merke>
+
+Ein Bus ist ein geteiltes Medium. Seine Kapazität teilen sich alle Teilnehmer, und es braucht eine Regel, wer wann sprechen darf. Genau dieselben Fragen stellen sich beim WLAN – auch Funk ist ein geteiltes Medium.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="arbitrierung" />
+
+<Aufgabe id="bus-oder-stern" />

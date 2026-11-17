@@ -1,0 +1,68 @@
+Jetzt kommt alles zusammen. Wenn du eine Adresse in die Adresszeile tippst, laufen in Sekundenbruchteilen fast alle Protokolle dieses Pfads ab: DNS, TCP, TLS und schließlich **HTTP**, das *Hypertext Transfer Protocol*, die Sprache des Webs.
+
+<Szene name="seitenaufruf" />
+
+## HTTP ist Text
+
+Das Erstaunliche an HTTP/1.1: Es ist für Menschen lesbar. Eine Anfrage sieht so aus –
+
+```
+GET /index.html HTTP/1.1
+Host: example.org
+User-Agent: Mozilla/5.0
+Accept: text/html
+
+```
+
+– und die Antwort so:
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 1256
+Cache-Control: max-age=3600
+
+<!doctype html>
+<html> …
+```
+
+Beide bestehen aus einer **Startzeile**, beliebig vielen **Kopfzeilen** (*Header*) im Format `Name: Wert`, einer **Leerzeile** und optional einem **Inhalt** (*Body*). Die Leerzeile ist entscheidend: Nur an ihr erkennt der Empfänger, wo die Kopfzeilen enden.
+
+## Methoden
+
+| Methode | Zweck | Beispiel |
+|---|---|---|
+| `GET` | etwas abrufen | eine Seite, ein Bild, Daten einer API |
+| `POST` | etwas schicken oder anlegen | ein Formular absenden, eine Bestellung |
+| `PUT` | etwas ersetzen | ein Profil aktualisieren |
+| `DELETE` | etwas löschen | einen Beitrag entfernen |
+
+Auf dieser Grundlage bauen **REST-APIs** auf: Programme sprechen per HTTP miteinander, mit Pfaden wie `/kunden/42` und Daten im JSON-Format. Auch diese Plattform funktioniert so – jedes Mal, wenn du auf „Prüfen" klickst, schickt dein Browser eine `POST`-Anfrage an `/api/check`.
+
+## HTTPS und TLS
+
+HTTP allein ist unverschlüsselt. **HTTPS** ist HTTP innerhalb einer **TLS**-Verbindung (*Transport Layer Security*). TLS leistet drei Dinge:
+
+- **Vertraulichkeit:** Niemand auf dem Weg kann mitlesen.
+- **Integrität:** Niemand kann unbemerkt etwas verändern.
+- **Echtheit:** Das Zertifikat beweist, dass du wirklich mit `example.org` sprichst und nicht mit einem Betrüger im selben WLAN.
+
+## Die Versionen
+
+- **HTTP/1.1** (1997): Text, eine Anfrage nach der anderen pro Verbindung.
+- **HTTP/2** (2015): binär, viele Anfragen gleichzeitig über eine Verbindung.
+- **HTTP/3** (2022): läuft über **QUIC** auf UDP statt über TCP. Verbindungsaufbau und TLS-Handschlag sind zusammengelegt, und ein verlorenes Paket hält nicht mehr alle anderen Anfragen auf.
+
+<Merke>
+
+Das Web ist ein Stapel aus allem, was dieser Pfad behandelt hat: Ethernet oder WLAN trägt IP, IP trägt TCP, TCP trägt TLS, TLS trägt HTTP, HTTP trägt HTML. Jede Schicht kann man einzeln verstehen, prüfen und austauschen. Genau das macht das Internet so robust.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="antwort" />
+
+<Aufgabe id="statuscodes" />
+
+<Aufgabe id="tls" />

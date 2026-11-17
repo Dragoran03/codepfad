@@ -1,0 +1,64 @@
+Wie findest du im Telefonbuch die Nummer von „Müller"? Sicher nicht, indem du auf Seite 1 bei „Aachen" anfängst. Du schlägst irgendwo in der Mitte auf, siehst „Kowalski", weißt, dass Müller weiter hinten kommt, und hast mit einem einzigen Blick die Hälfte des Buchs ausgeschlossen.
+
+## Lineare Suche
+
+Die einfachste Suche kennst du schon: von vorn nach hinten jedes Element prüfen, bis der Wert gefunden ist. Sie funktioniert immer, auch mit unsortierten Daten. Im schlimmsten Fall – der Wert fehlt oder steht ganz hinten – braucht sie so viele Vergleiche, wie es Elemente gibt.
+
+## Binäre Suche
+
+Ist die Liste sortiert, geht es wie im Telefonbuch. Verschiebe den Regler und probiere auch Werte, die nicht vorkommen:
+
+<Szene name="binaer" />
+
+Mit jedem Vergleich halbiert sich der Suchbereich. Deshalb wächst der Aufwand nur sehr langsam mit der Datenmenge:
+
+| Anzahl Elemente | lineare Suche (höchstens) | binäre Suche (höchstens) |
+|---|---|---|
+| 15 | 15 | 4 |
+| 1.000 | 1.000 | 10 |
+| 1.000.000 | 1.000.000 | 20 |
+| 1.000.000.000 | 1.000.000.000 | 30 |
+
+<Nur lang="python">
+
+Im Alltag schreibt man die binäre Suche selten selbst. Python bringt das Modul `bisect` mit: `bisect.bisect_left(werte, ziel)` liefert die Position, an der der Wert steht oder eingefügt werden müsste.
+
+</Nur>
+
+<Nur lang="java">
+
+Java bietet `Arrays.binarySearch(werte, ziel)` und `Collections.binarySearch(liste, ziel)`. Ist der Wert nicht vorhanden, kommt eine negative Zahl zurück, aus der sich die Einfügeposition ablesen lässt.
+
+</Nur>
+
+<Nur lang="c">
+
+Die C-Standardbibliothek enthält `bsearch`, das wie `qsort` mit `void *` und einer Vergleichsfunktion arbeitet – das Muster aus der Lektion über Generics.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::binary_search` meldet nur, ob ein Wert vorkommt. Meist nützlicher ist `std::lower_bound`: Es liefert einen Iterator auf das erste Element, das nicht kleiner als der gesuchte Wert ist.
+
+</Nur>
+
+<Nur lang="rust">
+
+Slices haben die Methode `binary_search`: Sie liefert `Ok(position)`, wenn der Wert gefunden wurde, und `Err(position)` mit der Stelle, an der er eingefügt werden müsste.
+
+</Nur>
+
+<Merke>
+
+Die binäre Suche ist berüchtigt dafür, schwer fehlerfrei zu schreiben: Ob `<` oder `<=`, ob `mitte` oder `mitte + 1` – ein Zeichen daneben, und es entsteht eine Endlosschleife oder ein übersehener Treffer. Teste deshalb immer auch die Ränder: das erste Element, das letzte, einen fehlenden Wert und eine Liste mit nur einem Element.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="binaer" />
+
+<Aufgabe id="voraussetzung" />
+
+<Aufgabe id="schritte" />

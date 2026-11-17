@@ -1,0 +1,65 @@
+Bisher haben wir so getan, als lägen im Speicher Zahlen, Texte und Wahrheitswerte. Tatsächlich liegt dort nur eines: sehr viele winzige Schalter, die an oder aus sind. Ein solcher Schalter heißt **Bit**. Acht davon bilden ein **Byte**.
+
+Alles, was ein Computer verarbeitet – Zahlen, Buchstaben, Bilder, Programme – ist eine Vereinbarung darüber, wie Bitmuster zu lesen sind.
+
+## Zählen mit zwei Ziffern
+
+Im Dezimalsystem ist jede Stelle zehnmal so viel wert wie die rechts daneben: Einer, Zehner, Hunderter. Im **Binärsystem** gibt es nur die Ziffern 0 und 1, und jede Stelle ist doppelt so viel wert: 1, 2, 4, 8, 16 …
+
+<BitLab />
+
+Stell 65 ein und lies die vierte Zeile: Dasselbe Bitmuster ist als Zahl gelesen 65 und als Zeichen gelesen ein `A`. Schalte das Bit ganz links ein und beobachte die Zeile „mit Vorzeichen": Für negative Zahlen wird das höchste Bit als Minuszeichen-Ersatz verwendet (das Verfahren heißt Zweierkomplement).
+
+## Hexadezimal: Binär für Menschen
+
+Lange Ketten aus Nullen und Einsen sind schwer zu lesen. Deshalb fasst man je vier Bit zu einer Ziffer zusammen. Vier Bit können 16 Werte annehmen, also braucht man 16 Ziffern: 0 bis 9 und dann A bis F. Das ist das **Hexadezimalsystem**. Ein Byte sind immer genau zwei Hex-Ziffern.
+
+Du begegnest Hex-Werten bei Farben (`#1E90FF`), bei Speicheradressen in Fehlermeldungen und überall dort, wo es auf einzelne Bytes ankommt. Im Code kennzeichnet das Präfix `0x` eine Hex-Zahl und `0b` eine Binärzahl.
+
+<Code name="darstellung" />
+
+## Wenn der Platz nicht reicht
+
+Ein Zahlentyp hat eine feste Zahl an Bits und damit einen größten Wert. Klick im Experiment oben bei 255 auf „+ 1": Der Zähler springt auf 0. Das ist ein **Überlauf**, und er ist kein theoretisches Problem – Raketen sind deswegen abgestürzt.
+
+Wie Sprachen damit umgehen, unterscheidet sich stark. Führe das Beispiel aus und wechsle die Sprache:
+
+<Code name="ueberlauf" />
+
+<Nur lang="python">
+
+Python ist die Ausnahme: Ganze Zahlen wachsen automatisch mit und können beliebig groß werden. Ein Überlauf kann nicht passieren – dafür rechnet Python langsamer als Sprachen mit festen Größen.
+
+</Nur>
+
+<Nur lang="java">
+
+Java lässt die Zahl **stillschweigend umspringen**: Aus der größten positiven wird die kleinste negative Zahl. Kein Fehler, keine Warnung. Wer große Werte erwartet, nimmt `long` (64 Bit) oder prüft mit `Math.addExact`, das im Fehlerfall eine Ausnahme auslöst.
+
+</Nur>
+
+<Nur lang="c,cpp">
+
+Der Überlauf einer Zahl mit Vorzeichen ist hier **undefiniertes Verhalten**: Der Sprachstandard legt nicht fest, was passiert, und der Compiler darf annehmen, dass es nie vorkommt. In der Praxis springt der Wert meist um – verlassen darfst du dich darauf nicht. Auf dieser Plattform läuft ein Prüfwerkzeug mit (UndefinedBehaviorSanitizer), das den Fehler meldet. Bei `unsigned`-Typen ist das Umspringen dagegen ausdrücklich erlaubt.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust behandelt einen Überlauf als Fehler. Kann der Compiler ihn schon vorhersehen, lehnt er das Programm ab; sonst bricht das Programm im Entwicklungsmodus mit einer Meldung ab. Wer das Umspringen wirklich will, sagt es ausdrücklich mit `wrapping_add`, und `checked_add` liefert `None`, wenn es nicht passt.
+
+</Nur>
+
+<Merke>
+
+Ein Datentyp ist eine Leseanleitung für Bits. `int` sagt: „Lies diese 32 Bit als ganze Zahl mit Vorzeichen." Kommazahlen, Zeichen und Wahrheitswerte sind andere Leseanleitungen für dieselbe Art von Rohmaterial.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="binaer" />
+
+<Aufgabe id="byte" />
+
+<Aufgabe id="hex" />

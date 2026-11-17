@@ -1,0 +1,37 @@
+Nach dem Lexer liegt eine flache Liste von Tokens vor. Aber `2 + 3 * 4` ist keine flache Liste – es ist eine **Struktur**: eine Summe, deren zweiter Summand ein Produkt ist. Diese Struktur erkennt der **Parser** und hält sie in einem Baum fest, dem **abstrakten Syntaxbaum** (AST, *abstract syntax tree*).
+
+<CompilerLab ansicht="parser" />
+
+Spiel mit dem Ausdruck: Setz Klammern um `2 + 3`, lass die Klammern ganz weg, schreib `a - b - c`. Der Baum zeigt immer die Reihenfolge, in der gerechnet wird – von den Blättern nach oben.
+
+## Grammatik
+
+Woher weiß der Parser, was erlaubt ist? Aus der **Grammatik** der Sprache: einem Satz von Regeln, die festlegen, wie Konstrukte aus kleineren aufgebaut sind. Für Rechenausdrücke sieht sie etwa so aus:
+
+```
+Ausdruck  = Term  { ("+" | "-") Term }
+Term      = Faktor { ("*" | "/") Faktor }
+Faktor    = Zahl | Name | "(" Ausdruck ")"
+```
+
+Gelesen: Ein Ausdruck ist ein Term, gefolgt von beliebig vielen weiteren Termen mit `+` oder `-` dazwischen. Ein Term besteht aus Faktoren mit `*` oder `/`. Weil Terme **innerhalb** von Ausdrücken stehen, bindet `*` stärker als `+` – Punkt vor Strich ist hier keine Sonderregel, sondern folgt aus dem Aufbau der Grammatik. Und weil ein Faktor wieder ein geklammerter Ausdruck sein kann, ist die Grammatik **rekursiv**.
+
+Viele Parser übersetzen solche Regeln fast wörtlich in Funktionen, die sich gegenseitig aufrufen: `ausdruck()` ruft `term()`, `term()` ruft `faktor()`, und `faktor()` ruft bei einer Klammer wieder `ausdruck()`. Das Verfahren heißt **rekursiver Abstieg** und wird in den Compilern von Rust, Go und clang benutzt.
+
+## Syntaxfehler
+
+Passt die Tokenfolge zu keiner Regel, meldet der Parser einen **Syntaxfehler** – und zwar dort, wo er nicht mehr weiterweiß. Das ist oft eine Zeile **nach** dem eigentlichen Fehler. Probier es:
+
+<Code name="syntaxfehler" />
+
+<Merke>
+
+Wenn eine Fehlermeldung auf eine Zeile zeigt, in der alles richtig aussieht, schau eine Zeile weiter oben. Der Parser bemerkt eine fehlende Klammer oder ein fehlendes Semikolon erst am nächsten Token, das nicht mehr passt.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="punkt-vor-strich" />
+
+<Aufgabe id="baum" />

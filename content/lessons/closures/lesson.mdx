@@ -1,0 +1,67 @@
+Bisher waren Funktionen etwas, das man definiert und aufruft. Viele Sprachen erlauben mehr: Eine Funktion ist ein **Wert** wie eine Zahl oder ein Text. Man kann sie in einer Variable speichern, einer anderen Funktion übergeben oder als Ergebnis zurückgeben.
+
+<Code name="lambda" />
+
+Funktionen ohne eigenen Namen, die man direkt dort schreibt, wo man sie braucht, heißen **Lambdas** (nach dem Lambda-Kalkül, einer mathematischen Grundlage der Informatik) oder **anonyme Funktionen**.
+
+<Nur lang="python">
+
+`lambda x: x * x` ist eine Kurzform für eine Funktion mit einem einzigen Ausdruck. Für alles Längere schreibt man eine normale Funktion mit `def` – auch die kann man als Wert weitergeben.
+
+</Nur>
+
+<Nur lang="java">
+
+Ein Lambda (`x -> x * x`) braucht in Java immer einen passenden **Funktionstyp**: ein Interface mit genau einer Methode, etwa `IntUnaryOperator`, `Predicate<T>` oder `Function<T, R>`. Aufgerufen wird über diese Methode (`applyAsInt`, `test`, `apply`). `Main::verdopple` ist eine **Methodenreferenz** – eine vorhandene Methode als Wert.
+
+</Nur>
+
+<Nur lang="c">
+
+C kennt **Funktionszeiger**: Variablen, die die Adresse einer Funktion enthalten. Die Schreibweise `int (*f)(int)` liest sich „f ist ein Zeiger auf eine Funktion, die ein int nimmt und ein int liefert". Namenlose Funktionen gibt es nicht – jede Funktion muss irgendwo mit Namen definiert sein.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Ein Lambda steht in eckigen, runden und geschweiften Klammern: `[Einfang](Parameter) { Rumpf }`. Jedes Lambda hat seinen eigenen, unaussprechlichen Typ; mit `auto` speichert man es, mit `std::function` kann man verschiedene Funktionen mit gleicher Signatur in einer Variable unterbringen.
+
+</Nur>
+
+<Nur lang="rust">
+
+Closures stehen zwischen senkrechten Strichen: `|x| x * x`. Je nachdem, was sie mit ihrer Umgebung tun, erfüllen sie einen von drei Traits: `Fn` (nur lesen), `FnMut` (verändern) oder `FnOnce` (verbrauchen, nur einmal aufrufbar). Funktionen, die Closures annehmen, nennen den passenden Trait – so steht in der Signatur, was erlaubt ist.
+
+</Nur>
+
+## Closures: Funktionen mit Gedächtnis
+
+Richtig interessant wird es, wenn eine Funktion Variablen aus ihrer Umgebung benutzt. Sie nimmt diese Variablen dann mit – auch wenn die Umgebung längst nicht mehr existiert.
+
+<Szene name="zaehler" />
+
+Eine **Closure** ist eine Funktion samt den Variablen, die sie aus ihrer Umgebung eingefangen hat. Das ist ein bisschen wie ein Objekt mit nur einer Methode – und tatsächlich lassen sich beide Konzepte ineinander übersetzen.
+
+<Nur lang="cpp">
+
+In C++ legst du in den eckigen Klammern fest, **wie** eingefangen wird: `[x]` kopiert, `[&x]` nimmt eine Referenz, `[=]` und `[&]` fangen alles Benutzte per Kopie bzw. Referenz ein. Vorsicht bei Referenzen: Lebt das Lambda länger als die Variable, zeigt die Referenz ins Leere.
+
+</Nur>
+
+<Nur lang="rust">
+
+Der Compiler leitet selbst ab, ob eine Closure eine Variable ausleiht oder besitzen muss. Mit `move` erzwingst du, dass sie den Besitz übernimmt – nötig, wenn die Closure länger lebt als die Funktion, in der sie entstand. Rust prüft beim Kompilieren, dass keine Closure eine Variable überlebt, die sie nur ausgeliehen hat.
+
+</Nur>
+
+<Merke>
+
+Eine Closure trägt ihre Umgebung im Rucksack. Das macht sie zum idealen Werkzeug, um Verhalten mitsamt den nötigen Daten weiterzugeben – etwa „ist größer als **diese** Grenze".
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="zaehle-wenn" />
+
+<Aufgabe id="warum" />

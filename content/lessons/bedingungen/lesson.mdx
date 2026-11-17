@@ -1,0 +1,74 @@
+Bisher liefen unsere Programme stur von oben nach unten. Interessant werden sie erst, wenn sie auf Situationen reagieren: *Wenn* das Passwort stimmt, zeige die Seite – *sonst* eine Fehlermeldung. Dafür gibt es `if` (wenn) und `else` (sonst).
+
+Im Kern steht immer eine **Bedingung**: ein Ausdruck, der entweder wahr oder falsch ist.
+
+<Szene name="eintritt" />
+
+Achte auf die Reihenfolge: Die Bedingungen werden von oben nach unten geprüft, und der erste Treffer gewinnt. Deshalb reicht im zweiten Zweig `alter < 18` – dass das Alter mindestens 6 ist, steht dort schon fest.
+
+<Nur lang="python">
+
+Python erkennt Blöcke an der **Einrückung**. Nach dem Doppelpunkt gehört alles, was gleich weit eingerückt ist, zum Zweig. Üblich sind vier Leerzeichen. Eine falsche Einrückung ist in Python kein Schönheitsfehler, sondern ändert die Bedeutung des Programms.
+
+</Nur>
+
+<Nur lang="java,c,cpp">
+
+Die Bedingung steht in runden Klammern, der Block in geschweiften. Die Einrückung ist nur für Menschen – der Compiler schaut ausschließlich auf die Klammern. Rücke trotzdem sauber ein, sonst findest du dich selbst nicht mehr zurecht.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust braucht keine runden Klammern um die Bedingung, aber immer geschweifte um den Block. Eine Besonderheit: `if` ist in Rust ein **Ausdruck** und liefert einen Wert. Das Beispiel ließe sich auch so schreiben: `let preis = if alter < 6 { 0 } else if alter < 18 { 5 } else { 9 };`
+
+</Nur>
+
+## Vergleichen
+
+Bedingungen entstehen meist durch Vergleiche. Die Zeichen sind überall dieselben:
+
+| Zeichen | Bedeutung | Beispiel |
+|---|---|---|
+| `==` | gleich | `alter == 18` |
+| `!=` | ungleich | `name != "Mia"` |
+| `<`, `>` | kleiner, größer | `preis < 10` |
+| `<=`, `>=` | kleiner oder gleich, größer oder gleich | `punkte >= 50` |
+
+<Merke titel="Häufigster Anfängerfehler">
+
+Ein einfaches `=` **speichert** einen Wert. Ein doppeltes `==` **vergleicht** zwei Werte. Wer in einer Bedingung versehentlich `=` schreibt, bekommt je nach Sprache eine Fehlermeldung oder – in C und C++ – ein Programm, das stillschweigend etwas anderes tut.
+
+</Merke>
+
+## Bedingungen verknüpfen
+
+Mehrere Bedingungen lassen sich mit **und**, **oder** und **nicht** kombinieren:
+
+<Code name="logik" />
+
+- **und**: wahr, wenn *beide* Seiten wahr sind.
+- **oder**: wahr, wenn *mindestens eine* Seite wahr ist.
+- **nicht**: dreht wahr und falsch um.
+
+<Nur lang="python">
+
+Python schreibt die Verknüpfungen als Wörter: `and`, `or`, `not`.
+
+</Nur>
+
+<Nur lang="java,c,cpp,rust">
+
+Geschrieben werden sie als Zeichen: `&&` für und, `||` für oder, `!` für nicht.
+
+</Nur>
+
+Wie bei Punkt- vor Strichrechnung bindet „und" stärker als „oder". Wenn du unsicher bist, setze Klammern – sie kosten nichts und machen die Absicht klar.
+
+## Jetzt du
+
+<Aufgabe id="vorzeichen" />
+
+<Aufgabe id="schaltjahr" />
+
+<Aufgabe id="kette" />

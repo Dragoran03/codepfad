@@ -1,0 +1,63 @@
+Bisher enthielt jede Variable einen Wert. Manchmal ist es aber nützlicher, festzuhalten, **wo** ein Wert liegt. Eine Hausadresse ist kleiner als das Haus, man kann sie weitergeben, ohne das Haus zu kopieren – und wer die Adresse kennt, kann das Haus streichen.
+
+Eine Variable, die die Speicheradresse eines Werts enthält, heißt **Zeiger** (*pointer*). Die etwas zahmere Variante, bei der die Sprache die eigentliche Adresse vor dir verbirgt, heißt **Referenz**. Das Prinzip ist dasselbe: ein Verweis auf Daten, die woanders liegen.
+
+## Wozu?
+
+Erinnere dich an die Lektion über Gültigkeitsbereiche: Funktionen bekommen Kopien ihrer Argumente und können die Variablen des Aufrufers nicht ändern. Meistens ist das gut. Manchmal aber soll eine Funktion genau das: zwei Werte vertauschen, ein großes Objekt verändern, ohne es zu kopieren. Dann gibt man ihr einen Verweis.
+
+<Szene name="tausch" />
+
+<Nur lang="c">
+
+Zwei Zeichen musst du kennen:
+
+- `&x` – der **Adress-Operator**: „Wo liegt `x`?"
+- `*p` – die **Dereferenzierung**: „Was liegt an der Adresse in `p`?" Links vom `=` heißt es: „Schreibe dorthin."
+
+Der Typ `int *` liest sich „Zeiger auf int". Zeiger sind in C allgegenwärtig: Arrays werden als Zeiger auf ihr erstes Element übergeben, Strings sind Zeiger auf Zeichen, und `scanf("%d", &x)` braucht die Adresse, um etwas in `x` schreiben zu können. Mit Zeigern lässt sich sogar rechnen: `p + 1` zeigt auf das nächste Element.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ kennt beides. **Zeiger** funktionieren wie in C (`int *p = &x; *p = 5;`). **Referenzen** (`int &r = x;`) sind sicherer: Sie müssen beim Anlegen an eine Variable gebunden werden, können nie null sein und nie auf etwas anderes umgelenkt werden. Für Funktionsparameter sind Referenzen der Normalfall; `const T&` heißt: „Gib mir Zugriff zum Lesen, ohne zu kopieren."
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust nennt Referenzen **Ausleihen** (*borrowing*) und prüft sie beim Kompilieren nach zwei Regeln:
+
+1. Zur selben Zeit gibt es **entweder** beliebig viele lesende Referenzen (`&x`) **oder** genau eine schreibende (`&mut x`).
+2. Eine Referenz darf nie länger leben als der Wert, auf den sie zeigt.
+
+Damit sind die klassischen Zeigerfehler aus C – hängende Zeiger, Null-Zeiger, gleichzeitiges Ändern von zwei Seiten – schon vor dem ersten Start ausgeschlossen.
+
+</Nur>
+
+<Nur lang="java,python">
+
+Hier gibt es keine Zeiger, mit denen du rechnen oder Adressen ansehen kannst. Trotzdem sind Verweise überall: **Jede Variable, die ein Objekt enthält, enthält in Wahrheit einen Verweis darauf.** Bei Zahlen merkt man davon nichts: In Java werden sie tatsächlich kopiert, und in Python sind sie unveränderlich – jede Rechnung erzeugt ein neues Zahlenobjekt. Deshalb kann eine Funktion eine übergebene Liste verändern, aber nicht eine übergebene Zahl.
+
+</Nur>
+
+## Zwei Namen für dasselbe
+
+Verweise haben eine Nebenwirkung, die selbst Profis regelmäßig überrascht: Wenn zwei Variablen auf dasselbe Objekt zeigen, sieht jede die Änderungen der anderen. Man nennt das **Aliasing**.
+
+<Code name="alias" />
+
+<Merke>
+
+Bei jeder Zuweisung lohnt die Frage: Wird hier der Wert kopiert oder nur der Verweis? Zahlen werden fast immer kopiert. Bei Listen, Objekten und Strings hängt es von der Sprache ab – und wer eine echte Kopie will, muss sie oft ausdrücklich verlangen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="kopie" />
+
+<Aufgabe id="alias" />
+
+<Aufgabe id="null" />

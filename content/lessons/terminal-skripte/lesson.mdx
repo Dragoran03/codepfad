@@ -1,0 +1,41 @@
+Wer dieselbe Folge von Befehlen zum dritten Mal tippt, sollte ein **Skript** schreiben: eine Textdatei mit Befehlen, die die Shell der Reihe nach ausführt. Die Shell ist dabei eine vollwertige Programmiersprache – mit Variablen, Bedingungen und Schleifen. Allerdings einer recht eigenwilligen.
+
+## Variablen, Schleifen, Bedingungen
+
+<Code name="grundlagen" />
+
+Ein paar Eigenheiten, über die jeder einmal stolpert:
+
+- **Keine Leerzeichen** um das `=`: `name = "Mia"` würde einen Befehl namens `name` aufrufen.
+- Variablen liest man mit `$`. In **doppelten** Anführungszeichen werden sie ersetzt, in einfachen nicht: `'$name'` bleibt wörtlich.
+- `$(befehl)` setzt die Ausgabe eines Befehls ein.
+- Platzhalter wie `*.txt` ersetzt die Shell **vor** dem Aufruf durch alle passenden Dateinamen (*Globbing*).
+- Setze Variablen fast immer in Anführungszeichen (`"$datei"`). Sonst zerfällt ein Dateiname mit Leerzeichen in mehrere Wörter.
+
+## Erfolg oder Fehler: der Exit-Code
+
+Jeder Befehl meldet beim Beenden eine Zahl: **0 heißt Erfolg**, alles andere Fehler. Die Variable `$?` enthält den Code des letzten Befehls, und `if` entscheidet nicht über wahr/falsch, sondern über genau diesen Code:
+
+<Code name="exitcode" />
+
+## Ein echtes Skript
+
+Ein Skript beginnt mit der **Shebang-Zeile** `#!/bin/bash`: Sie sagt dem Betriebssystem, welches Programm die Datei ausführen soll. Damit man es direkt starten kann, braucht es das Ausführungsrecht (`chmod +x`). Gestartet wird es mit `./name.sh` – das `./` ist nötig, weil die Shell Programme sonst nur in den Ordnern sucht, die in der Variable `PATH` stehen. Argumente beim Aufruf landen in `$1`, `$2` …, ihre Anzahl in `$#`.
+
+Das Beispiel legt das Skript mit einem **Here-Document** an: Alles zwischen `<<'EOF'` und `EOF` wird in die Datei geschrieben.
+
+<Code name="skript" />
+
+<Merke>
+
+Shell-Skripte sind ideal, um Befehle zu verketten – für alles mit komplizierter Logik, Datenstrukturen oder Rechnungen ist eine richtige Programmiersprache wie Python die bessere Wahl. Eine verbreitete Faustregel: Wird ein Shell-Skript länger als eine Bildschirmseite, schreib es in Python neu.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="backup" />
+
+<Aufgabe id="argument" />
+
+<Aufgabe id="exit" />

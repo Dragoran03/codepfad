@@ -1,0 +1,56 @@
+C, C++ und Rust werden vorab in Maschinencode für einen bestimmten Prozessor übersetzt. Python und Java gehen einen Umweg: Sie übersetzen in **Bytecode** – Maschinencode für einen Prozessor, den es nicht gibt. Diesen gedachten Prozessor spielt ein Programm: die **virtuelle Maschine** (VM).
+
+## Eine Maschine aus Software
+
+Die meisten VMs sind **Stack-Maschinen**: Statt mit Registern rechnen sie mit einem Stapel. Das macht den Bytecode kompakt und leicht zu erzeugen – der Compiler muss sich nicht um die Verteilung auf Register kümmern.
+
+<Szene name="stack" />
+
+Erkennst du das Muster aus dem Mini-Compiler wieder? Bytecode ist genau das, was dort in Schritt 3 entsteht.
+
+## Echter Bytecode
+
+So sieht es aus, wenn deine Sprache diese Funktion übersetzt:
+
+<Uebersetzen name="rechnung" />
+
+<Nur lang="python">
+
+Jede Zeile ist ein Befehl für die Python-VM. Die Zahl ganz links ist die Zeile im Quelltext, die zweite die Position im Bytecode. Seit Python 3.11 ist der Interpreter **spezialisierend**: Er beobachtet, welche Typen tatsächlich vorkommen, und ersetzt allgemeine Befehle wie `BINARY_OP` zur Laufzeit durch schnellere Varianten, etwa für zwei ganze Zahlen. Python 3.13 enthält außerdem einen ersten, noch experimentellen JIT-Compiler.
+
+</Nur>
+
+<Nur lang="java">
+
+Die Befehle der JVM tragen ihren Typ im Namen: `iload` lädt einen `int`, `imul` multipliziert zwei `int`s, `ireturn` gibt einen `int` zurück. Weil `javac` die Typen schon geprüft hat, muss die JVM das nicht mehr bei jedem Befehl tun. Der Code läuft zunächst im Interpreter; oft benutzte Methoden übersetzt der **JIT-Compiler** (HotSpot) in Maschinencode – mit Optimierungen wie in der vorigen Lektion.
+
+</Nur>
+
+<Nur lang="c,cpp,rust">
+
+Zum Vergleich: In deiner Sprache gibt es keinen Bytecode, sondern gleich Maschinencode. Wechsle oben zu Python oder Java, um den Bytecode derselben Funktion zu sehen.
+
+</Nur>
+
+## Interpreter, Bytecode, JIT
+
+| Verfahren | Wie | Beispiele |
+|---|---|---|
+| **Baum-Interpreter** | läuft den Syntaxbaum direkt ab | frühe Skriptsprachen, Lehr-Interpreter |
+| **Bytecode-Interpreter** | eine Schleife liest Befehl für Befehl und führt ihn aus | CPython, Ruby, Lua |
+| **JIT-Compiler** | übersetzt heiße Stellen zur Laufzeit in Maschinencode | JVM (HotSpot), JavaScript-Engines (V8), .NET, PyPy |
+| **AOT-Compiler** | übersetzt alles vorab | C, C++, Rust, Go, Swift |
+
+Ein Bytecode-Interpreter ist im Kern eine riesige `switch`-Anweisung in einer Schleife: Befehl holen, verzweigen, ausführen, nächster Befehl. Jeder Python-Befehl kostet dadurch Dutzende Maschinenbefehle – der Hauptgrund, warum reines Python bei Rechenarbeit etwa 10- bis 100-mal langsamer ist als C. Bibliotheken wie NumPy umgehen das, indem sie die eigentliche Arbeit in C erledigen.
+
+<Merke>
+
+Eine virtuelle Maschine ist ein Programm, das so tut, als wäre es ein Prozessor. Dieselbe Idee steckt in WebAssembly (der Bytecode für Browser) und in der Ethereum-VM.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="warum-vm" />
+
+<Aufgabe id="aufwaermen" />

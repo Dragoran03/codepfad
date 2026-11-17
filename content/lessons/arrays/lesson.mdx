@@ -1,0 +1,61 @@
+Eine Variable merkt sich einen Wert. Was aber, wenn du die Punktzahlen von 30 Schülern brauchst oder die Messwerte eines ganzen Tages? Dreißig Variablen namens `punkte1` bis `punkte30` sind keine Lösung. Du brauchst **eine** Variable, die viele Werte aufnimmt: ein **Array** oder eine **Liste**.
+
+## Ein Name, viele Fächer
+
+Stell dir eine Reihe nummerierter Schließfächer vor. Das Array hat einen Namen, jedes Fach eine Nummer – den **Index**, wieder ab 0 gezählt. Mit Name und Index greifst du in eckigen Klammern direkt auf ein Fach zu.
+
+<Szene name="maximum" />
+
+Das Muster dieser Animation heißt **lineare Suche**: einmal von vorn nach hinten durchgehen und sich unterwegs etwas merken. Summe, Durchschnitt, kleinster Wert, „kommt die 7 vor?" – alles Varianten davon.
+
+## Feste und wachsende Arrays
+
+Ursprünglich ist ein Array ein zusammenhängender Speicherblock **fester Größe**. Das macht den Zugriff extrem schnell: Die Adresse von Fach `i` lässt sich einfach ausrechnen. Dafür kann es nicht wachsen – direkt dahinter liegt schon etwas anderes.
+
+Weil man selten vorher weiß, wie viele Werte kommen, bringen fast alle Sprachen zusätzlich eine **wachsende Liste** mit. Sie reserviert insgeheim etwas mehr Platz als nötig und zieht in einen größeren Block um, wenn er voll ist.
+
+<Code name="liste" />
+
+<Nur lang="python">
+
+Pythons `list` ist immer eine wachsende Liste und darf sogar Werte verschiedener Typen mischen. Negative Indizes zählen von hinten: `punkte[-1]` ist das letzte Element.
+
+</Nur>
+
+<Nur lang="java">
+
+Java hat beides. Das klassische Array (`int[] werte = new int[5];`) hat eine feste Länge, abrufbar über `werte.length`. Die `ArrayList` wächst mit; auf ihre Elemente greifst du mit `get` und `set` zu statt mit eckigen Klammern. In den spitzen Klammern steht der Elementtyp – für Zahlen `Integer` statt `int`.
+
+</Nur>
+
+<Nur lang="c">
+
+C kennt nur das feste Array – und es kennt nicht einmal seine eigene Länge. Du musst sie selbst in einer Variable mitführen (`anzahl` im Beispiel) und an jede Funktion mit übergeben. „Anhängen" heißt: selbst an die nächste freie Stelle schreiben und selbst darauf achten, dass noch Platz ist. Wachsende Arrays baut man in C von Hand mit `malloc` und `realloc`; dazu mehr im Kapitel über Speicher.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::vector` ist die wachsende Liste und in C++ fast immer die richtige Wahl. Die festen Arrays aus C (`int werte[5];`) funktionieren ebenfalls, kennen aber ihre Länge nicht. Achtung: `werte[i]` prüft den Index nicht, `werte.at(i)` schon.
+
+</Nur>
+
+<Nur lang="rust">
+
+`[4, 9, 2]` ist ein Array fester Länge, `vec![4, 9, 2]` ein wachsender `Vec`. Zum Anhängen muss der Vektor `mut` sein. In der `for`-Schleife steht `&punkte`: Die Schleife **leiht** sich den Vektor nur aus. Ohne das `&` würde sie ihn verbrauchen, und er wäre danach nicht mehr benutzbar – ein Vorgeschmack auf Rusts Besitzregeln.
+
+</Nur>
+
+<Merke>
+
+Ein Array mit `n` Elementen hat die Indizes `0` bis `n - 1`. Der Zugriff auf Index `n` ist der klassische Fehler – und je nach Sprache endet er mit einer klaren Fehlermeldung oder mit rätselhaftem Verhalten.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="minimum" />
+
+<Aufgabe id="rueckwaerts" />
+
+<Aufgabe id="grenzen" />

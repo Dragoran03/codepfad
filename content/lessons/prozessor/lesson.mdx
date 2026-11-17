@@ -1,0 +1,55 @@
+Am Ende jeder Übersetzungskette steht der Prozessor (CPU). Er ist erstaunlich einfach gestrickt: Er wiederholt immer denselben Zyklus, Milliarden Mal pro Sekunde.
+
+<Szene name="zyklus" />
+
+Diese Idee – Befehle und Daten im selben Speicher, ein Befehlszähler, der Zyklus aus Holen, Entschlüsseln und Ausführen – geht auf John von Neumann (1945) zurück und steckt bis heute in fast jedem Computer.
+
+## Was moderne Prozessoren zusätzlich tun
+
+Der einfache Zyklus wäre heute viel zu langsam. Moderne Prozessoren arbeiten mit Tricks, die für dein Programm unsichtbar sind, aber seine Geschwindigkeit bestimmen:
+
+- **Pipelining:** Während ein Befehl ausgeführt wird, wird der nächste schon entschlüsselt und der übernächste geholt.
+- **Superskalare Ausführung:** Mehrere Rechenwerke arbeiten parallel an unabhängigen Befehlen, teils in anderer Reihenfolge als im Programm (*out-of-order*).
+- **Sprungvorhersage:** Bei jedem `if` rät der Prozessor, wie es ausgeht, und rechnet schon einmal weiter. Lag er falsch, verwirft er die Arbeit – das kostet etwa 15 bis 20 Takte.
+- **Mehrere Kerne:** mehrere vollständige Prozessoren auf einem Chip. Davon profitiert ein Programm aber nur mit mehreren Threads (siehe Lektion über Nebenläufigkeit).
+
+## Die Speicherhierarchie
+
+Rechnen ist billig, Daten heranschaffen ist teuer. Deshalb gibt es zwischen Registern und Arbeitsspeicher mehrere Stufen von **Caches**: kleine, sehr schnelle Zwischenspeicher.
+
+| Ebene | Größe (typisch) | Zugriffszeit | im Vergleich |
+|---|---|---|---|
+| Register | wenige hundert Byte | < 1 ns | ein Gedanke |
+| L1-Cache | 64–128 KB pro Kern | ~1 ns | ein Blick auf den Schreibtisch |
+| L2-Cache | 1–16 MB | ~4 ns | ein Griff ins Regal |
+| L3-Cache | 8–64 MB | ~15 ns | ein Gang in den Nebenraum |
+| Arbeitsspeicher | 8–128 GB | ~100 ns | ein Weg in den Keller |
+| SSD | Terabyte | ~100 000 ns | eine Fahrt in die Stadt |
+
+Wie stark das zählt, kannst du messen. Das Programm summiert dieselben Werte zweimal – einmal Zeile für Zeile, einmal Spalte für Spalte. Die Feldgröße 4096 ist bewusst eine Zweierpotenz: Dann landen spaltenweise Zugriffe zusätzlich immer wieder in denselben Cache-Fächern und verdrängen sich gegenseitig. Führe es mehrmals aus:
+
+<Code name="cache" />
+
+<Nur lang="python">
+
+In Python ist der Unterschied klein: Jede einzelne Operation des Interpreters kostet so viel Zeit, dass die Speicherzugriffe kaum ins Gewicht fallen. Wechsle zu C, C++, Java oder Rust, um den Effekt deutlich zu sehen.
+
+</Nur>
+
+<Nur lang="c,cpp">
+
+Beachte: Diese Plattform übersetzt C und C++ ohne Optimierung und mit Prüfwerkzeugen (Sanitizern). Ein optimiertes Programm wäre bei beiden Varianten viel schneller – der Abstand zwischen ihnen bliebe aber bestehen.
+
+</Nur>
+
+<Merke>
+
+Daten, die zusammen gebraucht werden, sollten auch zusammen im Speicher liegen. Arrays der Reihe nach durchlaufen, Structs kompakt halten, unnötige Zeiger vermeiden: So bleibt der Prozessor beschäftigt, statt auf den Speicher zu warten.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="cache" />
+
+<Aufgabe id="takt" />

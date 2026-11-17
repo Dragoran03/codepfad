@@ -1,0 +1,51 @@
+Ein Punkt auf einer Karte hat zwei Koordinaten. Ein Buch hat Titel, Autorin und Seitenzahl. Ein Nutzerkonto hat Name, E-Mail und Anmeldedatum. In der wirklichen Welt treten Werte selten einzeln auf – sie gehören zusammen.
+
+Mit einzelnen Variablen (`x1`, `y1`, `x2`, `y2` …) wird das schnell unübersichtlich. Besser ist ein **eigener Datentyp**, der die zusammengehörigen Werte bündelt.
+
+<Szene name="punkt" />
+
+Du hast gerade die Sprache um ein Wort erweitert. Neben `int` und Text gibt es in diesem Programm jetzt auch `Punkt` – mit allem, was dazugehört: Variablen dieses Typs, Parameter dieses Typs, Arrays voller Punkte.
+
+<Nur lang="python">
+
+Python kennt mehrere Wege. Der bequemste für reine Datenbündel ist `@dataclass`: Du zählst die Felder mit ihren Typen auf, und Python erzeugt den Rest (Konstruktor, lesbare Ausgabe, Vergleich) automatisch. Für schnelle Wegwerf-Bündel gibt es außerdem **Tupel**: `punkt = (1, 2)` – kompakt, aber ohne Feldnamen.
+
+</Nur>
+
+<Nur lang="java">
+
+In Java ist jeder eigene Typ eine Klasse. Das Beispiel nutzt eine schlichte Klasse mit zwei Feldern und einem **Konstruktor**, der beim Erzeugen mit `new` die Werte einträgt. Für unveränderliche Datenbündel gibt es seit Java 16 eine Kurzform: `record Punkt(int x, int y) {}` erzeugt Felder, Konstruktor und Zugriffsmethoden in einer Zeile.
+
+</Nur>
+
+<Nur lang="c">
+
+`struct` ist Cs einziges Werkzeug, um Werte zu bündeln. Beachte das Semikolon hinter der schließenden Klammer der Definition und dass der Typ `struct Punkt` heißt, nicht nur `Punkt`. Bei der Übergabe an eine Funktion wird das ganze Struct **kopiert**. Bei großen Structs übergibt man deshalb lieber einen Zeiger – das ist Thema des nächsten Kapitels.
+
+</Nur>
+
+<Nur lang="cpp">
+
+Ein `struct` in C++ sieht aus wie in C, der Typname ist aber einfach `Punkt`. Technisch ist ein `struct` hier dasselbe wie eine `class` – nur dass seine Felder standardmäßig von außen zugänglich sind. Bei der Übergabe an eine Funktion wird der Wert kopiert, sofern du keine Referenz (`const Punkt&`) verlangst.
+
+</Nur>
+
+<Nur lang="rust">
+
+Beim Erzeugen nennst du jedes Feld beim Namen: `Punkt { x: 1, y: 2 }`. Verwechslungen in der Reihenfolge sind damit ausgeschlossen. Wie bei allen Variablen gilt: Felder lassen sich nur ändern, wenn die Variable `mut` ist. Die Funktion bekommt die Punkte als `&Punkt` – sie leiht sie sich nur zum Lesen aus.
+
+</Nur>
+
+<Merke>
+
+Wenn mehrere Werte immer gemeinsam durch dein Programm wandern, gib ihnen einen gemeinsamen Typ. Gute Programme sind oft vor allem das: gut gewählte Datentypen, um die sich der restliche Code fast von selbst ordnet.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="rechteck-vergleich" />
+
+<Aufgabe id="warum" />
+
+<Aufgabe id="bauplan" />

@@ -1,0 +1,33 @@
+Fast jedes kabelgebundene Netz der Welt spricht **Ethernet**. Es regelt, wie Daten über **ein** Netzsegment kommen: vom Laptop zum Switch, vom Switch zum Router. Ethernet arbeitet auf Schicht 2 des OSI-Modells, die Daten heißen hier **Rahmen** (*Frames*).
+
+## Ein Ethernet-Rahmen
+
+| Feld | Größe | Inhalt |
+|---|---|---|
+| Ziel-MAC | 6 Byte | an wen (oder ff:ff:ff:ff:ff:ff für alle) |
+| Absender-MAC | 6 Byte | von wem |
+| Typ | 2 Byte | was drinsteckt, z. B. 0x0800 = IPv4, 0x86DD = IPv6 |
+| Nutzdaten | 46–1500 Byte | z. B. ein IP-Paket |
+| Prüfsumme | 4 Byte | erkennt Übertragungsfehler |
+
+Eine **MAC-Adresse** ist 48 Bit lang und wird hexadezimal geschrieben, etwa `a4:83:e7:1c:0b:f2`. Die erste Hälfte verrät den Hersteller. WLAN benutzt dasselbe Adressschema – deshalb lassen sich WLAN und Kabel problemlos mischen.
+
+## Der Switch
+
+Früher hingen alle Rechner an einem gemeinsamen Kabel – einem Bus, wie in der vorigen Lektion. Heute hängt jeder an einem eigenen Port eines **Switches**. Der Switch ist schlau: Er merkt sich, welche Adresse an welchem Port hängt.
+
+<Szene name="lernen" />
+
+Damit hat jedes Gerät seine eigene, ungestörte Leitung zum Switch, und zwei Paare können gleichzeitig miteinander reden. Kommt ein Rechner lange nicht vor, vergisst der Switch ihn nach einigen Minuten wieder – so funktioniert es auch, wenn jemand mit seinem Laptop an einen anderen Port umzieht.
+
+<Merke>
+
+Ein Switch arbeitet nur mit MAC-Adressen und nur innerhalb **eines** lokalen Netzes. Er versteht keine IP-Adressen und verbindet keine verschiedenen Netze – das ist Aufgabe des Routers. Alle Geräte, die ein Broadcast erreicht, bilden zusammen eine **Broadcast-Domäne**.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="switch" />
+
+<Aufgabe id="mac-ip" />

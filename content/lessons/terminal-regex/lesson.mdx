@@ -1,0 +1,46 @@
+„Finde alle E-Mail-Adressen", „Ist das eine gültige Postleitzahl?", „Ersetze jedes Datum durch die deutsche Schreibweise" – für solche Aufgaben gibt es eine eigene kleine Sprache: **reguläre Ausdrücke** (*regular expressions*, kurz Regex). Ein regulärer Ausdruck beschreibt ein Textmuster. Sie stecken in `grep`, in jedem Editor und in jeder Programmiersprache.
+
+## Das Alphabet der Muster
+
+| Muster | passt auf |
+|---|---|
+| `abc` | genau diesen Text |
+| `.` | ein beliebiges Zeichen |
+| `[aeiou]` | eines der Zeichen in der Klammer |
+| `[0-9]`, `[a-z]` | ein Zeichen aus dem Bereich |
+| `[^0-9]` | ein Zeichen, das **keine** Ziffer ist |
+| `a*` | `a` beliebig oft, auch keinmal |
+| `a+` | `a` mindestens einmal |
+| `a?` | `a` optional |
+| `a{3}`, `a{2,4}` | genau 3-mal, 2- bis 4-mal |
+| `^`, `$` | Anfang, Ende der Zeile |
+| `\b` | Wortgrenze |
+| `a\|b` | `a` oder `b` |
+| `( … )` | Gruppe – lässt sich wiederholen und später wieder einsetzen |
+| `\.` | ein echter Punkt (Sonderzeichen werden mit `\` entschärft) |
+
+Am besten lernt man Regex durch Ausprobieren. Tippe ein Muster oder wähle ein Beispiel:
+
+<RegexLab />
+
+## Regex im Terminal
+
+`grep -E` sucht mit erweiterten regulären Ausdrücken, `grep -o` gibt nur den passenden Teil aus. `sed` ersetzt; mit `\1`, `\2` … setzt es den Inhalt der Gruppen wieder ein. Der Übungsordner enthält eine Datei `kontakte.txt`:
+
+<Code name="grep" />
+
+Die Schreibweise unterscheidet sich je nach Werkzeug leicht. `grep` ohne `-E` verlangt etwa `\+` statt `+`, und Kürzel wie `\d` für Ziffern kennen Python, Java, JavaScript und Rust, aber nicht jedes Unix-Werkzeug. `[0-9]` funktioniert überall.
+
+<Merke>
+
+Reguläre Ausdrücke sind mächtig und schnell unlesbar. Ein Muster, das alle gültigen E-Mail-Adressen exakt erkennt, ist mehrere tausend Zeichen lang. Für Suchen und Aufräumen sind sie unschlagbar; zum Prüfen komplizierter Formate (E-Mail, HTML, JSON) nimmt man besser eine spezialisierte Bibliothek.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="mails" />
+
+<Aufgabe id="plz" />
+
+<Aufgabe id="bedeutung" />

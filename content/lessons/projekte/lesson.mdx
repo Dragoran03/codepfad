@@ -1,0 +1,110 @@
+Alle Programme auf dieser Plattform bestehen aus einer einzigen Datei. Echte Software umfasst Hunderte bis Zehntausende Dateien und baut auf fremdem Code auf, den andere geschrieben haben. Damit das beherrschbar bleibt, braucht es drei Dinge: **Module**, um Code aufzuteilen, **Paketmanager**, um fremden Code einzubinden, und **Build-Werkzeuge**, die alles zusammensetzen.
+
+## Code aufteilen: Module
+
+Ein Modul fasst zusammengehörigen Code zusammen und entscheidet, was davon nach außen sichtbar ist. Was nicht ausdrücklich freigegeben ist, bleibt ein internes Detail – das ist Kapselung im Großen.
+
+<Nur lang="python">
+
+In Python ist jede Datei ein Modul, jeder Ordner mit Python-Dateien ein **Paket**. Mit `import` holst du dir, was du brauchst:
+
+```
+mein_projekt/
+├── pyproject.toml        # Name, Version, Abhängigkeiten
+├── src/rechner/
+│   ├── __init__.py
+│   ├── grundrechnen.py   # def addiere(a, b): ...
+│   └── statistik.py      # from rechner.grundrechnen import addiere
+└── tests/
+    └── test_statistik.py
+```
+
+Abhängigkeiten installiert man mit **pip** (oder modernen Werkzeugen wie **uv** und **Poetry**) aus dem Paketverzeichnis PyPI – am besten in eine **virtuelle Umgebung** (`python -m venv .venv`), damit sich Projekte nicht gegenseitig in die Quere kommen.
+
+</Nur>
+
+<Nur lang="java">
+
+Java ordnet Klassen in **Pakete**, die der Ordnerstruktur folgen. `public` macht eine Klasse über das Paket hinaus sichtbar:
+
+```
+mein-projekt/
+├── pom.xml                              # Maven: Abhängigkeiten, Build-Schritte
+└── src/
+    ├── main/java/de/beispiel/rechner/
+    │   ├── Rechner.java                 # package de.beispiel.rechner;
+    │   └── Statistik.java
+    └── test/java/de/beispiel/rechner/
+        └── StatistikTest.java
+```
+
+**Maven** und **Gradle** laden Abhängigkeiten aus dem zentralen Verzeichnis Maven Central, kompilieren, testen und packen alles in eine `.jar`-Datei. `mvn test` oder `./gradlew test` startet die Tests.
+
+</Nur>
+
+<Nur lang="c">
+
+C teilt Code in **Header** (`.h`, die Schnittstelle: welche Funktionen es gibt) und **Quelldateien** (`.c`, die Umsetzung). Wer eine Funktion benutzen will, bindet den Header mit `#include` ein; Funktionen, die mit `static` markiert sind, bleiben in ihrer Datei verborgen.
+
+```
+mein-projekt/
+├── Makefile           # oder CMakeLists.txt
+├── include/rechner.h  # int addiere(int a, int b);
+├── src/rechner.c      # int addiere(int a, int b) { return a + b; }
+├── src/main.c         # #include "rechner.h"
+└── tests/test_rechner.c
+```
+
+Jede `.c`-Datei wird einzeln zu einer Objektdatei kompiliert, der **Linker** fügt sie zusammen. **Make** oder **CMake** sorgen dafür, dass nach einer Änderung nur die betroffenen Dateien neu übersetzt werden. Einen offiziellen Paketmanager hat C nicht; Bibliotheken kommen oft vom Betriebssystem (`apt`, `brew`).
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ übernimmt das Header-Modell von C und ergänzt **Namespaces** gegen Namenskollisionen (`namespace rechner { ... }`, Aufruf mit `rechner::addiere`). Seit C++20 gibt es echte **Module** (`export module rechner;`), die sich aber erst langsam durchsetzen.
+
+```
+mein-projekt/
+├── CMakeLists.txt
+├── include/rechner/statistik.hpp
+├── src/statistik.cpp
+├── src/main.cpp
+└── tests/statistik_test.cpp
+```
+
+**CMake** ist der Standard für Builds, für Abhängigkeiten werden **vcpkg** oder **Conan** immer verbreiteter.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust hat mit **Cargo** ein Werkzeug für alles: Projekt anlegen (`cargo new`), Abhängigkeiten von crates.io laden, bauen (`cargo build`), testen (`cargo test`), formatieren (`cargo fmt`), prüfen (`cargo clippy`). Module entstehen mit `mod`, und nur was `pub` ist, ist von außen sichtbar.
+
+```
+mein_projekt/
+├── Cargo.toml        # Name, Version, [dependencies]
+├── Cargo.lock        # exakte Versionen (automatisch)
+└── src/
+    ├── main.rs       # mod statistik;
+    └── statistik.rs  # pub fn mittelwert(...) -> f64 { ... }
+```
+
+</Nur>
+
+## Fremden Code nutzen: Paketmanager
+
+Niemand schreibt seinen eigenen JSON-Parser oder seine eigene Verschlüsselung. Paketmanager laden Bibliotheken samt **deren** Abhängigkeiten herunter – oft Hunderte Pakete für ein mittelgroßes Projekt. Das ist ein enormer Produktivitätsgewinn und zugleich ein Risiko: Jede Abhängigkeit ist Code, dem du vertraust. Wähle sie deshalb mit Bedacht: Wird das Paket gepflegt? Wie viele nutzen es? Brauche ich es wirklich?
+
+<Merke>
+
+Ein gutes Projekt lässt sich auf einem frischen Rechner mit einem einzigen Befehl bauen und testen. Alles, was dafür nötig ist, steht in Dateien im Projekt – nicht im Kopf einer Person.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="semver" />
+
+<Aufgabe id="lockfile" />
+
+<Aufgabe id="build" />

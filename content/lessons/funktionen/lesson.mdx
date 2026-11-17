@@ -1,0 +1,55 @@
+Stell dir vor, du müsstest jedes Mal, wenn du Kaffee willst, einer Maschine erklären, wie man Wasser erhitzt. Praktischer ist ein Knopf mit der Aufschrift „Kaffee". Eine **Funktion** ist so ein Knopf: ein Stück Code mit einem Namen, das du beliebig oft auslösen kannst.
+
+Du benutzt Funktionen schon die ganze Zeit – die Ausgabe ist eine. Jetzt baust du eigene.
+
+## Hinein und wieder heraus
+
+Eine Funktion hat drei Teile: einen **Namen**, **Parameter** (was sie braucht) und einen **Rückgabewert** (was sie liefert).
+
+<Szene name="quadrat" />
+
+Rechts im Bild siehst du den **Aufrufstapel**. Bei jedem Aufruf kommt ein neuer Bereich obenauf, mit eigenen Variablen. Mit `return` verschwindet er wieder. Die Funktion weiß nichts von `a` und `b`, und `main` weiß nichts von `x` und `ergebnis` – nur über Parameter und Rückgabewert reden die beiden miteinander.
+
+<Nur lang="python">
+
+`def` leitet die Definition ein, danach kommen Name, Parameter in Klammern und ein Doppelpunkt. Der eingerückte Block ist der Rumpf. Typen musst du nicht angeben. Eine Funktion ohne `return` gibt den besonderen Wert `None` („nichts") zurück.
+
+</Nur>
+
+<Nur lang="java">
+
+Vor dem Namen steht der **Rückgabetyp** (`int`), in den Klammern stehen die Parameter mit ihren Typen. `void` als Rückgabetyp heißt: Die Funktion liefert nichts zurück. Funktionen heißen in Java **Methoden** und stehen immer in einer Klasse; das `static` erlaubt, sie ohne Objekt aufzurufen – dazu mehr bei den Klassen.
+
+</Nur>
+
+<Nur lang="c,cpp">
+
+Vor dem Namen steht der **Rückgabetyp** (`int`), in den Klammern stehen die Parameter mit ihren Typen. `void` heißt: Die Funktion liefert nichts zurück. Wichtig: Der Compiler liest von oben nach unten. Eine Funktion muss **vor** ihrem ersten Aufruf bekannt sein – deshalb steht `quadrat` über `main`.
+
+</Nur>
+
+<Nur lang="rust">
+
+`fn` leitet die Definition ein. Parameter brauchen immer einen Typ (`x: i32`), der Rückgabetyp steht hinter dem Pfeil `->`. Rust kennt eine Abkürzung: Steht in der letzten Zeile ein Ausdruck **ohne Semikolon**, ist das der Rückgabewert. `x * x` allein würde also genügen.
+
+</Nur>
+
+## Warum der Aufwand?
+
+- **Wiederverwenden:** einmal schreiben, überall aufrufen. Ein Fehler muss nur an einer Stelle behoben werden.
+- **Benennen:** `ist_schaltjahr(jahr)` liest sich wie ein Satz. Die Bedingung dahinter muss niemand mehr im Kopf entziffern.
+- **Zerlegen:** Ein großes Problem zerfällt in kleine, die du einzeln lösen und prüfen kannst.
+
+<Merke>
+
+Eine gute Funktion tut **eine** Sache, und ihr Name sagt, welche. Wenn du beim Benennen ein „und" brauchst, sind es wahrscheinlich zwei Funktionen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="maximum" />
+
+<Aufgabe id="verkettet" />
+
+<Aufgabe id="rueckgabe" />

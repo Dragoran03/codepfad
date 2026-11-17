@@ -1,0 +1,29 @@
+Ein Satz kann grammatisch korrekt und trotzdem sinnlos sein: „Der Bleistift trinkt den Montag." Programme genauso: `return breite * hohe;` ist syntaktisch einwandfrei – aber es gibt gar keine Variable `hohe`. Solche Fehler findet die **semantische Analyse**: die Station, die prüft, ob das Programm eine **Bedeutung** hat.
+
+Ihre wichtigsten Aufgaben:
+
+- **Namensauflösung:** Zu jedem benutzten Namen die passende Vereinbarung finden – unter Beachtung der Gültigkeitsbereiche.
+- **Typprüfung:** Passt jeder Wert dahin, wo er steht? Darf man diese beiden Typen addieren? Hat der Funktionsaufruf die richtige Zahl und Art von Argumenten?
+- **Weitere Regeln:** Wird jede Variable vor dem Lesen belegt? Erreicht jede Funktion ein `return`? In Rust außerdem: Werden die Besitz- und Ausleihregeln eingehalten?
+
+<Szene name="symbole" />
+
+## Wann wird geprüft?
+
+Hier zeigt sich der Unterschied zwischen statisch und dynamisch typisierten Sprachen ganz praktisch. Führe das Programm in verschiedenen Sprachen aus:
+
+<Code name="unbekannt" />
+
+Lies auch die Fehlermeldungen genau: Moderne Compiler schlagen oft vor, was du gemeint haben könntest. Rust und clang zeigen die betroffene Stelle sogar mit Pfeilen an.
+
+<Merke>
+
+Jede Prüfung, die der Compiler übernimmt, ist ein Test, den du nicht schreiben musst – und der für jede Zeile gilt, auch für die selten ausgeführten. Darin liegt die Stärke statischer Typisierung in großen Programmen.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="wann-entdeckt" />
+
+<Aufgabe id="inferenz" />

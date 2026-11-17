@@ -1,0 +1,32 @@
+Wenn du eine Webseite aufrufst, reist deine Anfrage durch WLAN, Kupferkabel, Glasfaser und Dutzende Geräte verschiedener Hersteller – und kommt trotzdem an. Das funktioniert, weil die Arbeit auf **Schichten** verteilt ist. Jede Schicht löst genau ein Problem und verlässt sich darauf, dass die Schicht darunter ihres gelöst hat.
+
+## Kapselung
+
+Jede Schicht schreibt ihre eigenen Steuerinformationen (den **Header**) vor die Daten der darüberliegenden Schicht – wie ein Brief, der in einen Umschlag gesteckt wird, der in ein Paket kommt, das in einen Container kommt.
+
+<Szene name="kapselung" />
+
+## Die Schichtenmodelle
+
+In der Praxis benutzt man das **TCP/IP-Modell** mit vier Schichten. Zum Lernen und in Prüfungen begegnet einem oft das ältere **OSI-Modell** mit sieben, das einige Schichten feiner aufteilt.
+
+| TCP/IP | OSI | Aufgabe | Beispiele | Adressen |
+|---|---|---|---|---|
+| **Anwendung** | 7 Anwendung, 6 Darstellung, 5 Sitzung | was übertragen wird | HTTP, DNS, SMTP, SSH | URLs, Namen |
+| **Transport** | 4 Transport | zwischen welchen **Programmen**, wie zuverlässig | TCP, UDP, QUIC | Ports |
+| **Internet** | 3 Vermittlung | zwischen welchen **Rechnern**, über welchen Weg | IP (v4, v6), ICMP | IP-Adressen |
+| **Netzzugang** | 2 Sicherung, 1 Bitübertragung | über **ein** Kabel oder Funknetz | Ethernet, WLAN, Glasfaser | MAC-Adressen |
+
+Merke dir vor allem die drei Arten von Adressen: Die **MAC-Adresse** gilt nur im lokalen Netz, die **IP-Adresse** im ganzen Internet, und der **Port** unterscheidet die Programme auf einem Rechner. Diesen drei Ebenen folgt der Rest dieses Pfads – von unten nach oben.
+
+<Merke>
+
+Jedes Gerät arbeitet nur bis zu „seiner" Schicht: Ein **Switch** schaut auf MAC-Adressen (Schicht 2), ein **Router** auf IP-Adressen (Schicht 3), erst der **Zielrechner** packt alles aus. Wenn du weißt, auf welcher Schicht ein Gerät arbeitet, weißt du, was es kann – und was nicht.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="welche-schicht" />
+
+<Aufgabe id="warum-schichten" />

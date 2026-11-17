@@ -1,0 +1,45 @@
+Wie benutzt ein Programm das Netzwerk? Über **Sockets**: Endpunkte einer Verbindung, die das Betriebssystem bereitstellt. Die Schnittstelle dafür entstand 1983 an der Universität Berkeley und ist seitdem fast unverändert – jede Sprache, jedes Betriebssystem, jeder Webserver benutzt sie.
+
+<Szene name="ablauf" />
+
+## Ein Server und ein Client in einem Programm
+
+Das Beispiel startet einen kleinen TCP-Server in einem eigenen Thread und verbindet sich dann selbst als Client mit ihm – über die **Loopback-Adresse** `127.0.0.1`, die immer zum eigenen Rechner führt. Der Server antwortet mit dem Text in Großbuchstaben. Das ist ein echtes Netzwerkgespräch: Die Daten durchlaufen den kompletten TCP/IP-Stapel deines Betriebssystems.
+
+<Code name="echo" />
+
+<Nur lang="python">
+
+Pythons `socket`-Modul bildet die Berkeley-Schnittstelle fast eins zu eins ab. Für echte Anwendungen gibt es höhere Bausteine: `socketserver`, `asyncio` für viele gleichzeitige Verbindungen ohne Threads und Bibliotheken wie `requests` für HTTP.
+
+</Nur>
+
+<Nur lang="java">
+
+`ServerSocket` wartet auf Verbindungen, `Socket` ist eine einzelne Verbindung mit Ein- und Ausgabestrom. Für Server mit Tausenden gleichzeitigen Verbindungen gibt es `java.nio` mit nicht blockierenden Kanälen – oder seit Java 21 virtuelle Threads, mit denen der einfache blockierende Stil wieder skaliert.
+
+</Nur>
+
+<Nur lang="c,cpp">
+
+Das ist die Original-Schnittstelle des Betriebssystems: `socket`, `bind`, `listen`, `accept`, `connect`, `send`, `recv`, `close`. Adressen stehen in Structs (`sockaddr_in`), und Zahlen müssen in die **Netzwerk-Byte-Reihenfolge** gebracht werden (`htonl`, `htons`) – im Netz wird immer das höchstwertige Byte zuerst übertragen. C++ hat bis heute keine Netzwerkbibliothek im Standard; man benutzt diese C-Funktionen oder Bibliotheken wie Boost.Asio.
+
+</Nur>
+
+<Nur lang="rust">
+
+`TcpListener` und `TcpStream` aus der Standardbibliothek kapseln die Systemaufrufe sicher: Ein Socket wird automatisch geschlossen, wenn er seinen Gültigkeitsbereich verlässt, und Fehler kommen als `Result`. Für Server mit vielen gleichzeitigen Verbindungen ist die asynchrone Laufzeitumgebung **Tokio** der Standard.
+
+</Nur>
+
+<Merke>
+
+Ein `recv` liefert **so viele Bytes, wie gerade da sind** – nicht unbedingt eine ganze Nachricht. Echte Programme lesen in einer Schleife, bis ein vereinbartes Ende erreicht ist. Im Beispiel reicht ein einzelner Aufruf nur, weil die Nachricht winzig ist und auf demselben Rechner bleibt.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="bytes-zaehlen" />
+
+<Aufgabe id="ports" />

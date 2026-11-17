@@ -1,0 +1,44 @@
+Bisher waren die Tabellen schon da. Jetzt entwirfst du selbst welche. Ein guter Entwurf ist die halbe Miete: Er macht Abfragen einfach und schließt viele Fehler von vornherein aus.
+
+## Aufteilen statt wiederholen
+
+<Szene name="normalisieren" />
+
+## Tabellen anlegen
+
+`CREATE TABLE` legt eine Tabelle an. Jede Spalte bekommt einen Namen, einen Typ und optional Regeln (*Constraints*), über die die Datenbank wacht:
+
+| Regel | bedeutet |
+|---|---|
+| `PRIMARY KEY` | eindeutige, nie leere Kennung jeder Zeile |
+| `NOT NULL` | Pflichtfeld |
+| `UNIQUE` | kein Wert darf doppelt vorkommen |
+| `CHECK (…)` | jeder Wert muss die Bedingung erfüllen |
+| `REFERENCES tabelle(spalte)` | Fremdschlüssel: Der Wert muss in der anderen Tabelle existieren |
+| `DEFAULT wert` | Standardwert, wenn beim Einfügen nichts angegeben wird |
+
+Das Beispiel legt Autoren und Bücher an und verbindet sie über einen Fremdschlüssel. Diese Lektion startet mit einer leeren Datenbank:
+
+<Code name="anlegen" />
+
+Ändere in der Spielwiese einmal das Erscheinungsjahr auf 1200 oder die `autor_id` auf 3 und schau, was passiert.
+
+## Beziehungen
+
+Zwischen Tabellen gibt es drei typische Beziehungen:
+
+- **1 : n** – ein Kunde hat viele Bestellungen. Die „viele"-Seite bekommt den Fremdschlüssel (`bestellungen.kunde_id`).
+- **n : m** – eine Bestellung enthält viele Produkte, ein Produkt steckt in vielen Bestellungen. Das braucht eine **Zwischentabelle** mit zwei Fremdschlüsseln – im Laden ist das `positionen`, die zusätzlich die Menge speichert.
+- **1 : 1** – selten; oft gehören die Daten dann einfach in dieselbe Tabelle.
+
+<Merke>
+
+Regeln gehören in die Datenbank, nicht nur in den Programmcode. Programme haben Fehler, werden neu geschrieben und von mehreren Seiten aus benutzt. Eine `CHECK`-Regel in der Tabelle gilt für alle – immer.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="kurse" />
+
+<Aufgabe id="schluessel" />

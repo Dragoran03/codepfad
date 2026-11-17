@@ -1,0 +1,73 @@
+Namen, Nachrichten, Webseiten, Programmcode: Ein großer Teil aller Daten ist Text. In Programmen heißt Text **Zeichenkette** oder *String* – und der Name verrät den Aufbau. Ein String ist eine Kette einzelner Zeichen, aufgereiht wie Perlen.
+
+## Zeichen haben Positionen
+
+<Szene name="zaehle" />
+
+Weil ein String eine Folge ist, kannst du ihn mit einer Schleife durchgehen oder gezielt ein einzelnes Zeichen herausgreifen. Die Position heißt **Index**. Das erste Zeichen hat den Index 0, das letzte den Index *Länge minus 1*.
+
+Warum ab 0? Der Index gibt an, wie viele Zeichen man vom Anfang aus **überspringen** muss. Beim ersten Zeichen: keines.
+
+## Was man mit Strings macht
+
+Vier Handgriffe brauchst du ständig: verketten, die Länge bestimmen, ein Zeichen lesen und umwandeln.
+
+<Code name="grundlagen" />
+
+<Nur lang="python">
+
+Strings sind in Python **unveränderlich**. `name.upper()` verändert `name` nicht, sondern liefert einen neuen String. Auch `name[0] = "X"` ist nicht erlaubt.
+
+Sehr praktisch sind **f-Strings**: `f"Hallo {name}, du bist {alter}"` setzt die Werte direkt in den Text ein. Und mit Slices schneidest du Teile heraus: `wort[1:4]` liefert die Zeichen an den Positionen 1 bis 3.
+
+</Nur>
+
+<Nur lang="java">
+
+Strings sind in Java **unveränderlich**. `name.toUpperCase()` liefert einen neuen String, das Original bleibt.
+
+Eine wichtige Falle: Vergleiche Strings mit `a.equals(b)`, **nicht** mit `==`. Das `==` prüft bei Objekten, ob es sich um dasselbe Objekt im Speicher handelt, nicht ob der Inhalt gleich ist. Für einzelne Zeichen (`char`, in einfachen Anführungszeichen) ist `==` dagegen richtig.
+
+</Nur>
+
+<Nur lang="c">
+
+C hat keinen eigenen String-Typ. Ein Text ist ein `char`-Array, das mit dem Nullzeichen `'\0'` endet. Daraus folgt vieles:
+
+- Die Länge ist nirgends gespeichert. `strlen` zählt jedes Mal bis zum Nullzeichen.
+- Du bist für den Platz verantwortlich. `strcat` hängt blind an – ist das Zielarray zu klein, wird fremder Speicher überschrieben. Das ist eine der bekanntesten Sicherheitslücken überhaupt.
+- Vergleichen geht nicht mit `==`, sondern mit `strcmp(a, b) == 0`.
+
+Einfache Anführungszeichen (`'A'`) stehen für ein einzelnes Zeichen, doppelte (`"A"`) für einen String aus Zeichen plus Nullzeichen.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::string` nimmt dir die Speicherverwaltung ab: Der String wächst bei Bedarf, kennt seine Länge und lässt sich mit `==` vergleichen und mit `+` verketten. Anders als in Python und Java ist er **veränderlich** – `name[0] = 'X'` funktioniert.
+
+Einfache Anführungszeichen (`'A'`) stehen für ein einzelnes Zeichen vom Typ `char`, doppelte für einen String.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust kennt zwei String-Typen. `&str` ist ein **Blick auf** einen vorhandenen Text, zum Beispiel ein Literal im Code. `String` **besitzt** seinen Text und kann wachsen. Mit `.to_string()` wird aus dem einen das andere.
+
+Rust-Strings sind immer gültiges UTF-8. Weil ein Zeichen dort 1 bis 4 Bytes belegt, gibt es bewusst kein `name[0]`: `len()` zählt Bytes, und mit `.chars()` gehst du die tatsächlichen Zeichen durch.
+
+</Nur>
+
+<Merke>
+
+Ein einzelnes Zeichen ist im Speicher eine Zahl. Das `A` hat die Nummer 65, das `a` die 97. Welche Zahl für welches Zeichen steht, regelt eine Kodierung – heute fast überall UTF-8. Umlaute und Emojis belegen darin mehr als ein Byte, was beim Zählen von „Zeichen" für Überraschungen sorgen kann.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="vokale" />
+
+<Aufgabe id="umdrehen" />
+
+<Aufgabe id="text-plus-text" />

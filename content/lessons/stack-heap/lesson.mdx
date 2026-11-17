@@ -1,0 +1,66 @@
+Bis hierher haben wir Variablen als beschriftete Kästchen betrachtet. Jetzt schauen wir genauer hin, **wo** diese Kästchen liegen. Jedes laufende Programm teilt seinen Arbeitsspeicher in zwei Bereiche mit sehr unterschiedlichen Regeln.
+
+| | Stack | Heap |
+|---|---|---|
+| **Was liegt dort?** | lokale Variablen und Parameter | Daten, deren Größe oder Lebensdauer erst zur Laufzeit feststeht |
+| **Wie wird er verwaltet?** | automatisch: Bereich kommt beim Aufruf, verschwindet beim `return` | je nach Sprache von Hand, per Garbage Collector oder per Besitzregeln |
+| **Wie schnell?** | sehr schnell: nur ein Zeiger wird verschoben | langsamer: ein freier Platz muss gesucht werden |
+| **Wie groß?** | klein, meist wenige Megabyte | so viel, wie der Rechner hergibt |
+
+## Ein Wert reist durch den Speicher
+
+Die Animation zeigt eine Funktion, die eine Liste erzeugt und zurückgibt. Achte darauf, was beim `return` verschwindet und was bleibt.
+
+<Szene name="erzeuge" />
+
+Der entscheidende Moment ist der Schritt nach dem `return`: Der Stack-Bereich der Funktion ist weg, die Daten auf dem Heap sind noch da. Das ist der Grund, warum es den Heap überhaupt gibt.
+
+<Nur lang="python">
+
+In Python liegt **jeder** Wert auf dem Heap, auch Zahlen und Texte. Variablen sind nur Namen, die auf Objekte zeigen. Du musst nie entscheiden, wo etwas liegt – Python entscheidet für dich und räumt auch auf.
+
+</Nur>
+
+<Nur lang="java">
+
+Java trennt klar: Einfache Werte wie `int`, `double` und `boolean` liegen direkt in der Variable auf dem Stack. Alles, was mit `new` entsteht – Arrays, Strings, Objekte –, liegt auf dem Heap, und die Variable enthält einen Verweis. Aufgeräumt wird automatisch.
+
+</Nur>
+
+<Nur lang="c">
+
+In C entscheidest du selbst. Normale Variablen liegen auf dem Stack. Heap-Speicher bekommst du von `malloc` (Inhalt zufällig) oder `calloc` (mit Nullen gefüllt) und gibst ihn mit `free` zurück. Jedes `malloc` braucht genau ein `free` – nicht keins, nicht zwei.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ erlaubt Heap-Speicher von Hand (`new` und `delete`), aber modernes C++ vermeidet das. Ein `std::vector` oder `std::string` ist selbst ein kleines Objekt auf dem Stack, das seinen Heap-Speicher verwaltet: Er holt ihn bei Bedarf und gibt ihn automatisch zurück, wenn die Variable ihren Gültigkeitsbereich verlässt. Dieses Prinzip heißt **RAII**.
+
+</Nur>
+
+<Nur lang="rust">
+
+Ein `Vec`, `String` oder `Box` ist ein kleiner Verwaltungsteil auf dem Stack, der Daten auf dem Heap **besitzt**. Endet die Lebenszeit des Besitzers, gibt Rust den Heap-Speicher automatisch frei. Weil es immer genau einen Besitzer gibt, passiert das genau einmal – das ist das Thema der übernächsten Lektion.
+
+</Nur>
+
+## Wenn der Stack voll ist
+
+Weil jeder laufende Funktionsaufruf Platz auf dem Stack belegt, kann eine Funktion, die sich endlos selbst aufruft, ihn zum Überlaufen bringen. Führe das Programm aus:
+
+<Code name="tief" />
+
+<Merke>
+
+Stack: schnell, klein, räumt sich selbst auf, lebt so lange wie der Funktionsaufruf. Heap: groß, flexibel, lebt so lange, bis jemand aufräumt. Die großen Unterschiede zwischen Programmiersprachen liegen vor allem darin, **wer** dieser Jemand ist.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="quadrate" />
+
+<Aufgabe id="lokal" />
+
+<Aufgabe id="overflow" />

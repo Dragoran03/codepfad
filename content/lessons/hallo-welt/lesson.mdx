@@ -1,0 +1,80 @@
+Ein Programm ist eine Liste von Anweisungen, die ein Computer der Reihe nach ausführt. Mehr nicht. Die Kunst besteht darin, ein großes Problem in so kleine Anweisungen zu zerlegen, dass selbst eine Maschine sie versteht.
+
+Traditionell lässt das erste Programm den Computer zwei Wörter sagen:
+
+<Code name="hallo" />
+
+Drück auf **Ausführen**. Dein Rechner hat den Text gerade wirklich übersetzt und gestartet.
+
+<Nur lang="python">
+
+In Python ist das schon alles. `print` ist eine **Funktion**: ein Befehl mit einem Namen. In die runden Klammern kommt, womit sie arbeiten soll – hier ein Text. Text steht immer in Anführungszeichen, damit Python ihn nicht für einen Befehl hält.
+
+</Nur>
+
+<Nur lang="java">
+
+Java verlangt etwas Rahmen. Jeder Code gehört in eine **Klasse** (hier `Main`), und das Programm startet immer in der Methode `main`. Die Wörter `public static void` und `String[] args` darfst du vorerst als feste Formel hinnehmen – jedes davon bekommt später seine Lektion.
+
+Die eigentliche Arbeit macht eine Zeile: `System.out.println(...)` gibt den Text in den Klammern aus und beginnt danach eine neue Zeile. Jede Anweisung endet mit einem Semikolon.
+
+</Nur>
+
+<Nur lang="c">
+
+`#include <stdio.h>` holt die Ein- und Ausgabefunktionen dazu – C selbst kennt von Haus aus fast nichts. Jedes Programm startet in der Funktion `main`. Das `int` davor heißt: Sie liefert am Ende eine ganze Zahl zurück, und `return 0` bedeutet „alles gut gegangen".
+
+`printf` gibt Text aus. Das `\n` am Ende steht für einen Zeilenumbruch – ohne ihn würde die nächste Ausgabe direkt dahinter kleben. Jede Anweisung endet mit einem Semikolon.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`#include <iostream>` holt die Ein- und Ausgabe dazu. Jedes Programm startet in der Funktion `main`; `return 0` meldet am Ende „alles gut gegangen".
+
+`std::cout` ist der Ausgabestrom („character output"). Mit `<<` schiebst du Werte hinein, als würdest du sie auf ein Fließband legen. Das `\n` steht für einen Zeilenumbruch. Jede Anweisung endet mit einem Semikolon.
+
+</Nur>
+
+<Nur lang="rust">
+
+`fn main()` definiert die Funktion `main` – dort startet jedes Rust-Programm. Der Code zwischen den geschweiften Klammern ist ihr Inhalt.
+
+`println!` gibt eine Zeile aus. Das Ausrufezeichen verrät, dass es ein **Makro** ist und keine gewöhnliche Funktion; für den Moment macht das keinen Unterschied. Jede Anweisung endet mit einem Semikolon.
+
+</Nur>
+
+## Eins nach dem anderen
+
+Ein Programm mit mehreren Anweisungen läuft von oben nach unten ab. Klick dich durch oder lass es abspielen – links siehst du, welche Zeile gerade dran ist, rechts die Ausgabe.
+
+<Szene name="ablauf" />
+
+Solche Animationen begleiten dich durch den ganzen Pfad. Wechsle oben die Sprache, während eine läuft: Der Schritt bleibt, nur der Code tauscht sich aus.
+
+## Wie wird aus Text ein laufendes Programm?
+
+Ein Prozessor versteht keinen Text, sondern nur winzige Zahlenbefehle: Maschinencode. Irgendjemand muss übersetzen. Wie und wann das passiert, ist einer der größten Unterschiede zwischen Programmiersprachen.
+
+<Szene name="weg" />
+
+| | Übersetzung | Fehler fallen auf | Typisch für |
+|---|---|---|---|
+| **Python** | während der Ausführung (Interpreter) | erst, wenn die Zeile erreicht wird | Skripte, Datenanalyse, schnelle Ergebnisse |
+| **Java** | vorab in Bytecode, dann JVM | vieles schon beim Kompilieren | große Unternehmensanwendungen, Android |
+| **C / C++** | vorab in Maschinencode | vieles beim Kompilieren – Speicherfehler aber nicht | Betriebssysteme, Spiele, Hardware |
+| **Rust** | vorab in Maschinencode | fast alles beim Kompilieren | Systemprogrammierung ohne Speicherfehler |
+
+<Merke>
+
+Kompilierte Sprachen übersetzen erst alles und laufen dann schnell. Interpretierte Sprachen laufen sofort los und übersetzen unterwegs. Beides hat seinen Platz.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="gruss" />
+
+<Aufgabe id="reihenfolge" />
+
+<Aufgabe id="compiler" />

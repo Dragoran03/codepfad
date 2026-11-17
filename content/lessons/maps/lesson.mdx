@@ -1,0 +1,59 @@
+Ein Array beantwortet die Frage „Was steht an Position 3?". Oft lautet die Frage aber anders: „Was kostet eine Birne?", „Welche E-Mail-Adresse hat Nutzerin mia?", „Wie oft kam dieses Wort vor?". Du suchst nicht über eine Nummer, sondern über einen **Schlüssel**.
+
+Die Datenstruktur dafür hat viele Namen: **Map**, Dictionary, Hash-Tabelle, assoziatives Array. Gemeint ist immer dasselbe: eine Sammlung von Schlüssel-Wert-Paaren, in der jeder Schlüssel nur einmal vorkommt.
+
+## Der Trick dahinter
+
+Man könnte die Paare einfach in eine Liste legen und bei jeder Frage von vorn bis hinten durchsuchen. Bei zehn Einträgen ist das egal, bei zehn Millionen nicht. Eine Hash-Tabelle sucht nicht – sie **rechnet aus**, wo der Eintrag liegt.
+
+<Szene name="hash" />
+
+Drei Eigenschaften folgen direkt aus diesem Aufbau:
+
+- **Nachschlagen, Einfügen und Löschen sind sehr schnell** und werden mit wachsender Größe praktisch nicht langsamer.
+- **Die Reihenfolge ist nicht garantiert.** Die Einträge liegen dort, wohin die Hash-Funktion sie schickt, nicht in der Reihenfolge des Einfügens.
+- **Schlüssel sollten sich nicht ändern**, solange sie in der Map liegen – sonst stimmt die berechnete Fachnummer nicht mehr.
+
+<Nur lang="python">
+
+In Python heißt die Map `dict` und wird mit geschweiften Klammern geschrieben: `{"apfel": 3, "birne": 5}`. Der Zugriff `preise["mango"]` auf einen fehlenden Schlüssel löst einen `KeyError` aus; `preise.get("mango", 0)` liefert stattdessen einen Standardwert. Eine Besonderheit: Python-Dictionaries merken sich seit Version 3.7 zusätzlich die Einfüge-Reihenfolge.
+
+</Nur>
+
+<Nur lang="java">
+
+`HashMap<String, Integer>` nennt in spitzen Klammern den Typ der Schlüssel und der Werte. `get` liefert bei einem fehlenden Schlüssel `null` – wer damit weiterrechnet, erntet eine `NullPointerException`. Sicherer sind `containsKey` oder `getOrDefault(schluessel, 0)`. Brauchst du die Schlüssel sortiert, nimm eine `TreeMap`.
+
+</Nur>
+
+<Nur lang="c">
+
+C bringt keine Map mit. Für kleine Datenmengen reicht die Lösung aus dem Beispiel: ein Array aus Paaren, linear durchsucht. Wer mehr braucht, baut die Hash-Tabelle aus der Animation selbst – ein Array aus Fächern plus eine Hash-Funktion – oder greift zu einer Bibliothek. Dass man in C solche Grundbausteine selbst schreibt, ist lehrreich und der Hauptgrund, warum man es heute selten freiwillig tut.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::unordered_map` ist die Hash-Tabelle. Achtung beim Lesen mit eckigen Klammern: `preise["mango"]` **legt den Eintrag an**, wenn er fehlt (mit dem Wert 0). Zum reinen Prüfen nimm `contains` oder `find`. Die ältere `std::map` hält ihre Schlüssel sortiert und ist dafür etwas langsamer.
+
+</Nur>
+
+<Nur lang="rust">
+
+`HashMap` muss mit `use std::collections::HashMap;` eingebunden werden. `preise["mango"]` bricht bei einem fehlenden Schlüssel das Programm ab. Der sichere Weg ist `preise.get("mango")`: Er liefert ein `Option` – entweder `Some(wert)` oder `None` –, und der Compiler zwingt dich, beide Fälle zu behandeln.
+
+</Nur>
+
+<Merke>
+
+Array: Zugriff über die **Position**. Map: Zugriff über einen **Schlüssel**. Wenn du dich dabei ertappst, eine Liste nach einem bestimmten Eintrag zu durchsuchen, wolltest du wahrscheinlich eine Map.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="stimmen" />
+
+<Aufgabe id="schnell" />
+
+<Aufgabe id="wahl" />

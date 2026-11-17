@@ -1,0 +1,62 @@
+Zwischen Front-End und Back-End liegt bei den meisten Compilern eine **Zwischensprache** (*intermediate representation*, IR). Sie ist maschinennäher als der Quelltext, aber noch unabhängig vom Prozessor. Bei clang und rustc ist das **LLVM-IR**. Die Funktion `quadrat` sieht darin etwa so aus:
+
+```
+define i32 @quadrat(i32 %x) {
+  %ergebnis = mul nsw i32 %x, %x
+  ret i32 %ergebnis
+}
+```
+
+Jede Zeile ist ein einfacher Befehl, jeder Wert bekommt genau einmal einen Namen (das erleichtert Umformungen enorm). Auf dieser Sprache arbeitet der **Optimierer**: Er schickt den Code durch Dutzende Durchläufe (*passes*), die ihn jeweils ein wenig verbessern.
+
+## Konstanten falten
+
+Was schon beim Übersetzen feststeht, muss nicht zur Laufzeit gerechnet werden. Übersetze das Beispiel einmal **ohne** und einmal **stark optimiert** und vergleiche:
+
+<Uebersetzen name="konstant" />
+
+Ohne Optimierung legt der Compiler `tage` und `stunden` brav im Speicher ab und multipliziert. Optimiert bleibt nur das fertige Ergebnis übrig. Auf ARM-Prozessoren passt die Zahl 604800 nicht in einen einzigen Befehl und wird in zwei Hälften geladen: `mov` lädt 14976, `movk` setzt 9 · 65536 darüber – zusammen 604800. Auch Python faltet übrigens Konstanten: Im Bytecode steht direkt `RETURN_CONST 604800`.
+
+## Funktionen einbetten
+
+Ein Funktionsaufruf kostet Zeit: Argumente bereitlegen, springen, zurückspringen. Bei kleinen Funktionen kopiert der Optimierer deshalb den Rumpf direkt an die Aufrufstelle (*Inlining*). Danach kann er weitere Optimierungen anwenden, die über die Funktionsgrenze hinweg vorher nicht möglich waren.
+
+<Uebersetzen name="einbetten" />
+
+Stark optimiert taucht `quadrat` gar nicht mehr auf. Das ist der Grund, warum man in C++ und Rust kleine Hilfsfunktionen und Abstraktionen ohne schlechtes Gewissen schreiben kann: Nach der Optimierung kosten sie nichts.
+
+## Schleifen umbauen
+
+Jetzt das Beeindruckendste. Übersetze die Summenschleife erst ohne, dann mit starker Optimierung:
+
+<Uebersetzen name="summe" />
+
+Die optimierte Fassung enthält **keine Schleife mehr** (in Rust steht die Schleife als Iterator-Kette `(1..=n).sum()` da – der Optimierer behandelt beide Schreibweisen gleich gut). Der Optimierer hat erkannt, dass 1 + 2 + … + n immer n · (n + 1) / 2 ergibt, und rechnet das direkt aus – aus O(n) wurde O(1). Er hat die Gaußsche Summenformel nicht auswendig gelernt; er erkennt allgemein Schleifen, deren Ergebnis sich als Formel des Zählers ausdrücken lässt.
+
+<Nur lang="python,java">
+
+Im Bytecode siehst du die Schleife weiterhin. `javac` optimiert fast nichts – das übernimmt später der JIT-Compiler der JVM, wenn die Methode oft genug läuft. Und der Standard-Python-Interpreter optimiert über das Falten von Konstanten hinaus kaum: Die Schleife läuft tatsächlich n-mal. Wechsle oben zu C, C++ oder Rust, um den Unterschied zu sehen.
+
+</Nur>
+
+## Weitere Optimierungen
+
+| Optimierung | Idee |
+|---|---|
+| **Tote Code-Eliminierung** | Code entfernen, dessen Ergebnis niemand benutzt |
+| **Gemeinsame Teilausdrücke** | `a*b` nur einmal rechnen, wenn es zweimal vorkommt |
+| **Schleifeninvarianten herausziehen** | Was sich in der Schleife nie ändert, einmal davor berechnen |
+| **Vektorisierung** | vier oder acht Rechnungen mit einem einzigen Befehl erledigen (SIMD) – erkennbar an Befehlen wie `add.4s v0, v0, v1` |
+| **Registerzuteilung** | häufig benutzte Werte in Registern statt im Speicher halten |
+
+<Merke>
+
+Schreib zuerst klaren Code. Der Optimierer ist in Kleinkram wie „Ist `x * 2` oder `x << 1` schneller?" besser als jeder Mensch. Was er **nicht** kann: einen schlechten Algorithmus durch einen guten ersetzen. Die Wahl zwischen O(n²) und O(n log n) bleibt deine Aufgabe.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="als-ob" />
+
+<Aufgabe id="debug" />

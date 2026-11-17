@@ -1,0 +1,40 @@
+Git ist **verteilt**: Jede Kopie eines Repositorys enthält die komplette Geschichte. Es gibt keinen technischen Unterschied zwischen „dem Server" und deinem Rechner. Dass ein Repository auf GitHub, GitLab oder einem Firmenserver als gemeinsamer Treffpunkt dient, ist reine Vereinbarung.
+
+Andere Kopien desselben Repositorys heißen **Remotes**. Die vier Befehle für die Zusammenarbeit:
+
+| Befehl | macht |
+|---|---|
+| `git clone adresse` | Repository samt Geschichte kopieren; das Original wird zum Remote `origin` |
+| `git push` | eigene Commits zum Remote schicken |
+| `git fetch` | fremde Commits holen, ohne sie einzuarbeiten |
+| `git pull` | `fetch` und anschließend `merge` |
+
+<Szene name="ablauf" />
+
+Im Übungsordner liegt ein „Server": ein Repository namens `server.git` ohne Arbeitsverzeichnis (*bare*), wie es auch auf GitHub liegt. Statt einer Web-Adresse benutzt du einfach seinen Pfad.
+
+<Code name="klonen" />
+
+## Der Ablauf im Team
+
+1. Aktuellen Stand holen: `git switch main` und `git pull`.
+2. Eigenen Branch anlegen: `git switch -c fix-login`.
+3. Arbeiten, in kleinen Schritten committen.
+4. Branch hochladen: `git push -u origin fix-login`.
+5. Auf der Plattform einen **Pull Request** eröffnen.
+6. Kolleginnen prüfen den Code, die CI-Pipeline lässt die Tests laufen.
+7. Nach der Freigabe wird der Branch in `main` zusammengeführt.
+
+<Merke>
+
+Pushe niemals mit `--force` auf einen Branch, den andere benutzen. Ein erzwungener Push überschreibt die Geschichte auf dem Server – Commits anderer verschwinden dort, als hätte es sie nie gegeben.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="pushen" />
+
+<Aufgabe id="abgelehnt" />
+
+<Aufgabe id="pr" />

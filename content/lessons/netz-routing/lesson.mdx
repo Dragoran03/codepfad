@@ -1,0 +1,31 @@
+Das Internet ist keine einzelne Leitung, sondern ein Geflecht aus zehntausenden Netzen, verbunden durch **Router**. Jeder Router kennt nur seine Nachbarn und eine Tabelle, in welche Richtung welche Adressbereiche liegen. Trotzdem findet jedes Paket seinen Weg um die halbe Welt – Etappe für Etappe.
+
+<Szene name="weg" />
+
+## Die Routing-Tabelle
+
+Jeder Rechner und jeder Router hat eine Routing-Tabelle. Auf deinem Rechner ist sie klein: das eigene Netz (direkt erreichbar) und die Standardroute zum Gateway. Ein Router im Kern des Internets kennt dagegen fast eine Million Einträge. Woher er sie hat, regeln **Routing-Protokolle**: Router teilen sich gegenseitig mit, welche Netze sie erreichen. Zwischen Providern übernimmt das **BGP**, innerhalb großer Netze etwa **OSPF**.
+
+Für jedes Paket stellt der Router dieselbe Frage: Welcher Eintrag passt zur Zieladresse? Passen mehrere, gewinnt der **spezifischste** – der mit dem längsten Präfix. `10.1.0.0/16` schlägt `10.0.0.0/8`, und beide schlagen die Standardroute `0.0.0.0/0`, die auf alles passt. Genau das programmierst du in der Aufgabe unten.
+
+## ARP: von der IP zur MAC
+
+Für die letzte Etappe (und jede einzelne Etappe davor) braucht es die MAC-Adresse des nächsten Geräts. Das **Address Resolution Protocol** fragt per Broadcast im lokalen Netz danach und merkt sich die Antwort einige Minuten lang. Unter IPv6 übernimmt das ein ähnliches Verfahren namens *Neighbor Discovery*.
+
+| Wer | entscheidet anhand | Reichweite |
+|---|---|---|
+| **Switch** | MAC-Adresse und MAC-Tabelle | ein lokales Netz |
+| **Router** | IP-Adresse und Routing-Tabelle | zwischen Netzen |
+| **ARP** | übersetzt IP → MAC | ein lokales Netz |
+
+<Merke>
+
+Auf dem ganzen Weg bleiben Absender- und Ziel-**IP** gleich (abgesehen von NAT am Heimrouter). Die **MAC**-Adressen werden dagegen bei jeder Etappe neu gesetzt. IP beschreibt das Ziel der Reise, MAC nur den nächsten Schritt.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="praefix" />
+
+<Aufgabe id="switch-router" />

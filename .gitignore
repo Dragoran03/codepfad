@@ -1,0 +1,20 @@
+# Node
+node_modules/
+dist/
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+
+# Lokaler Lernfortschritt (Laufzeitdaten)
+data/progress.json
+
+# System / Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Umgebungsvariablen
+.env
+.env.*

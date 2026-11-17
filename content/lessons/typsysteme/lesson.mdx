@@ -1,0 +1,70 @@
+Du kennst Datentypen inzwischen als Leseanleitung für Bits. Das **Typsystem** einer Sprache regelt, wie streng sie auf diese Anleitungen achtet: wann sie prüft, ob die Typen zusammenpassen, und was sie tut, wenn nicht.
+
+## Wann wird geprüft?
+
+<Szene name="wann" />
+
+Führe das Programm aus und lies die Meldung genau – in Python kommt sie mitten im Lauf, in allen anderen Sprachen vor dem Start:
+
+<Code name="typfehler" />
+
+- **Statisch typisiert** (Java, C, C++, Rust): Jede Variable hat einen festen Typ, der beim Kompilieren bekannt ist. Fehler fallen früh auf, und Werkzeuge wie die Autovervollständigung im Editor wissen genau, was möglich ist.
+- **Dynamisch typisiert** (Python, JavaScript, Ruby): Der Typ hängt am Wert, nicht an der Variable. Das ist flexibel und kurz, aber Typfehler zeigen sich erst, wenn die betroffene Zeile läuft.
+
+<Nur lang="python">
+
+Python bietet einen Mittelweg: **Typ-Hinweise**. `def verdopple(x: int) -> int:` ändert nichts am Verhalten des Programms, aber Prüfwerkzeuge wie *mypy* oder der Editor lesen sie und melden Verstöße schon beim Schreiben. In größeren Python-Projekten sind sie heute Standard.
+
+</Nur>
+
+<Nur lang="rust,cpp,java">
+
+Statisch heißt nicht, dass du jeden Typ hinschreiben musst. Mit **Typinferenz** leitet der Compiler ihn selbst her: `let x = 5;` in Rust, `auto x = 5;` in C++, `var x = 5;` in Java. Der Typ ist trotzdem fest – du sparst dir nur das Tippen.
+
+</Nur>
+
+## Wie bereitwillig wird umgewandelt?
+
+Die zweite Frage: Was passiert, wenn ein Wert nicht ganz passt?
+
+<Code name="umwandeln" />
+
+Jede Sprache wandelt manches selbst um (**implizit**) und verlangt anderes ausdrücklich (**explizit**, auch *Cast* genannt).
+
+<Nur lang="c">
+
+C ist großzügig. Es wandelt fast alle Zahlentypen stillschweigend ineinander um, auch wenn dabei Information verloren geht: `int x = 3.99;` ist erlaubt und ergibt 3. Mit `-Wall -Wextra` warnt der Compiler zumindest in vielen Fällen – diese Plattform schaltet beides ein.
+
+</Nur>
+
+<Nur lang="java,cpp">
+
+Umwandlungen, bei denen nichts verloren geht (`int` zu `double`), passieren automatisch. In die andere Richtung muss man es ausdrücklich verlangen: `(int) 3.99` in Java, `static_cast<int>(3.99)` in C++. Der Cast ist ein Signal an Leser: „Ja, ich weiß, hier geht etwas verloren."
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust wandelt **nie** stillschweigend um, nicht einmal von `i32` nach `i64`. Jede Umwandlung steht mit `as` im Code. Das wirkt anfangs pedantisch, verhindert aber eine ganze Klasse von Fehlern – etwa, dass eine negative Zahl unbemerkt zu einer riesigen positiven wird.
+
+</Nur>
+
+<Nur lang="python">
+
+Python wandelt Zahlen untereinander großzügig um (`1 + 2.5` ergibt `3.5`), weigert sich aber, Zahlen und Text zu mischen: `"5" + 3` ist ein Fehler. Python ist also dynamisch, aber **stark** typisiert.
+
+</Nur>
+
+<Merke>
+
+Kein Typsystem ist „das richtige". Strenge Systeme fangen Fehler früh und machen große Programme wartbar. Lockere Systeme machen kleine Programme und Experimente schnell. Viele Teams verwenden deshalb beides: Python für Skripte und Datenanalyse, eine statisch typisierte Sprache für das Kernsystem.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="durchschnitt" />
+
+<Aufgabe id="umwandeln" />
+
+<Aufgabe id="streng" />

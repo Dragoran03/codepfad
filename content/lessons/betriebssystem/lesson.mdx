@@ -1,0 +1,39 @@
+Kein Programm läuft allein. Auf deinem Rechner arbeiten gerade Hunderte Programme gleichzeitig – Browser, Mail, Hintergrunddienste – und alle teilen sich dieselben Prozessorkerne, denselben Arbeitsspeicher, dieselbe Festplatte. Damit das klappt, gibt es das **Betriebssystem**. Sein Kern (*Kernel*) verwaltet die Hardware und schützt die Programme voreinander.
+
+## Prozesse
+
+Ein laufendes Programm heißt **Prozess**. Jeder Prozess hat eine Nummer (PID), einen eigenen Speicherbereich, geöffnete Dateien und mindestens einen Thread. Auch dein Programm hier auf der Plattform ist ein Prozess – gestartet vom Server dieser Plattform, seinem **Elternprozess**:
+
+<Code name="prozess" />
+
+Führe es mehrmals aus: Die Prozessnummer ändert sich jedes Mal, denn jede Ausführung ist ein neuer Prozess.
+
+## Zeit teilen
+
+<Szene name="zeitscheiben" />
+
+## Speicher teilen
+
+Jeder Prozess bekommt einen **virtuellen Adressraum**: Für ihn sieht es so aus, als gehöre ihm der ganze Speicher. Das Betriebssystem bildet diese virtuellen Adressen auf echte Speicherseiten ab, meist in Stücken von 4 oder 16 KB. Daraus ergeben sich mehrere Vorteile:
+
+- **Schutz:** Ein Prozess kann den Speicher eines anderen nicht einmal sehen.
+- **Flexibilität:** Selten benutzte Seiten können auf die SSD ausgelagert werden (*Swapping*).
+- **Teilen:** Bibliotheken, die viele Programme brauchen, liegen nur einmal im echten Speicher.
+
+Stack und Heap aus dem Kapitel „Unter der Haube" sind nichts anderes als Bereiche in diesem virtuellen Adressraum.
+
+## Systemaufrufe
+
+Programme dürfen nicht selbst auf die Festplatte, das Netzwerk oder den Bildschirm zugreifen. Sie bitten das Betriebssystem darum – über **Systemaufrufe**. Jede Ausgabe, jeder Dateizugriff, jede Netzwerkverbindung landet am Ende bei einem davon: `read`, `write`, `open`, `socket`, `fork` und einige hundert weitere. Mit Werkzeugen wie `strace` (Linux) oder `dtruss` (macOS) kann man einem Programm dabei zusehen.
+
+<Merke>
+
+Das Betriebssystem ist die Grenze zwischen deinem Code und der Hardware. Alles, was ein Programm über sich selbst hinaus bewirkt, geht durch diese Grenze. Deshalb ist sie auch der Ort, an dem Sicherheit durchgesetzt wird – die Sandbox, in der die Terminal-Übungen dieser Plattform laufen, ist eine solche Regel des Betriebssystems.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="virtuell" />
+
+<Aufgabe id="syscall" />

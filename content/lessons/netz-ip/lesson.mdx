@@ -1,0 +1,48 @@
+MAC-Adressen funktionieren nur im lokalen Netz. Für den Weg durchs Internet braucht jeder Rechner eine Adresse, die verrät, **wo** er hängt – so wie eine Postanschrift aus Land, Stadt, Straße und Hausnummer. Das ist die **IP-Adresse**.
+
+## Aufbau einer IPv4-Adresse
+
+Eine IPv4-Adresse ist eine 32-Bit-Zahl. Man schreibt sie als vier Bytes in Dezimalschreibweise: `192.168.10.37`. Jede Adresse besteht aus zwei Teilen:
+
+- dem **Netzanteil** (vorn): Er bezeichnet das Netz, wie die Straße,
+- dem **Hostanteil** (hinten): Er bezeichnet das Gerät in diesem Netz, wie die Hausnummer.
+
+Wo die Grenze liegt, sagt die **Präfixlänge** hinter dem Schrägstrich: `/24` heißt, die ersten 24 Bit sind Netzanteil. Dasselbe drückt die ältere Schreibweise als **Netzmaske** aus: 24 Einsen, dann Nullen, also `255.255.255.0`. Diese Schreibweise heißt **CIDR** (*Classless Inter-Domain Routing*).
+
+<SubnetCalc />
+
+Spiel mit dem Regler: Je größer das Präfix, desto kleiner das Netz. In einem `/24` gibt es 256 Adressen, davon 254 nutzbar – die erste ist die **Netzadresse**, die letzte die **Broadcast-Adresse** für „alle in diesem Netz".
+
+## Warum das wichtig ist
+
+Jeder Rechner entscheidet bei jedem Paket als Erstes: Liegt das Ziel in **meinem** Netz? Er verknüpft dazu Zieladresse und eigene Netzmaske mit einem bitweisen UND und vergleicht mit seiner eigenen Netzadresse.
+
+- **Ja:** Er schickt das Paket direkt zum Ziel (über den Switch).
+- **Nein:** Er schickt es an sein **Standard-Gateway** – den Router, der den Weg nach draußen kennt.
+
+## Besondere Adressen
+
+| Bereich | Bedeutung |
+|---|---|
+| `127.0.0.0/8` | **Loopback**: der eigene Rechner (`127.0.0.1` = „ich selbst") |
+| `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` | **privat**: nur im lokalen Netz gültig |
+| `169.254.0.0/16` | selbst vergeben, wenn kein DHCP-Server antwortet |
+| `0.0.0.0/0` | „alle Adressen" – die Standardroute |
+
+Woher bekommt ein Rechner überhaupt seine Adresse? Meist automatisch per **DHCP**: Beim Verbinden ruft er per Broadcast „Ich brauche eine Adresse!", und der DHCP-Server (zu Hause der Router) teilt ihm Adresse, Netzmaske, Gateway und DNS-Server zu.
+
+## IPv6
+
+IPv4 ist mit 4,3 Milliarden Adressen längst zu klein. Der Nachfolger **IPv6** hat 128-Bit-Adressen, geschrieben in Hexadezimal-Gruppen: `2001:db8:85a3::8a2e:370:7334` (`::` steht für eine Folge von Nullgruppen). Das Prinzip mit Netzanteil und Präfixlänge ist dasselbe; typische lokale Netze sind `/64`.
+
+<Merke>
+
+Ein Präfix ist nichts anderes als eine Maske über die Bits einer Zahl. Wer die bitweisen Operationen aus der Lektion „Bits und Bytes" kennt, kann jede Subnetz-Frage durch Rechnen beantworten.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="gleiches-netz" />
+
+<Aufgabe id="privat" />

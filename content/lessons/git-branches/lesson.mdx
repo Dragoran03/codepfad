@@ -1,0 +1,48 @@
+Du willst eine neue Funktion ausprobieren, aber das Projekt soll währenddessen benutzbar bleiben. Oder drei Leute arbeiten gleichzeitig an verschiedenen Dingen. Dafür gibt es **Branches**: parallele Entwicklungslinien, die sich später wieder zusammenführen lassen.
+
+<Szene name="verzweigen" />
+
+Im Übungsordner liegt ein Repository mit zwei Commits. Führe das Beispiel aus und schau dir den Graphen unter der Ausgabe an:
+
+<Code name="branch" />
+
+## Befehle
+
+| Befehl | macht |
+|---|---|
+| `git branch` | Branches auflisten |
+| `git switch -c name` | neuen Branch anlegen und hineinwechseln |
+| `git switch name` | Branch wechseln |
+| `git merge name` | anderen Branch in den aktuellen zusammenführen |
+| `git branch -d name` | Branch löschen (nach dem Merge) |
+| `git log --oneline --graph --all` | Geschichte als Graph |
+
+Ältere Anleitungen benutzen `git checkout` statt `git switch`. Es kann dasselbe – und noch einiges mehr, weshalb es inzwischen in `switch` und `restore` aufgeteilt wurde.
+
+## Konflikte
+
+Meistens führt Git Branches selbstständig zusammen, auch wenn beide Seiten dieselbe Datei geändert haben – solange es verschiedene Stellen sind. Haben beide **dieselbe Zeile** geändert, kann Git nicht wissen, welche Version richtig ist. Es meldet einen **Konflikt** und markiert die Stelle in der Datei:
+
+```
+<<<<<<< HEAD
+farbe=gruen
+=======
+farbe=blau
+>>>>>>> blau
+```
+
+Oben steht deine Version (`HEAD`), unten die des anderen Branches. Du bearbeitest die Datei, bis sie so aussieht, wie sie soll, entfernst die Markierungen, merkst sie mit `git add` vor und schließt mit `git commit` ab. Wer kalte Füße bekommt: `git merge --abort` stellt den Zustand vor dem Merge wieder her.
+
+<Merke>
+
+Konflikte sind kein Fehler, sondern Git, das ehrlich sagt: „Hier musst du entscheiden." Je kürzer Branches leben und je öfter man zusammenführt, desto kleiner und seltener werden sie.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="feature" />
+
+<Aufgabe id="konflikt" />
+
+<Aufgabe id="head" />

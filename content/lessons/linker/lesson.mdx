@@ -1,0 +1,49 @@
+Der Compiler übersetzt jede Quelldatei für sich. Bei einem Projekt mit tausend Dateien ist das ein Segen: Ändert sich eine Datei, muss nur sie neu übersetzt werden. Aber am Ende braucht man **ein** Programm. Diese letzte Station heißt **Linker** (Binder).
+
+<Szene name="linken" />
+
+## Wenn etwas fehlt
+
+Das Programm unten kündigt eine Funktion an, liefert sie aber nie. Führe es aus und achte darauf, **wer** sich beschwert:
+
+<Code name="fehlt" />
+
+<Nur lang="c,cpp">
+
+Der Compiler übersetzt `main` problemlos – er vertraut der Deklaration. Erst der Linker (`ld`) stellt fest: *Undefined symbols … `_verdopple`*. Der Unterstrich vor dem Namen ist eine Eigenheit des Mac-Formats. In C++ nennt die Meldung den Namen samt Parametertypen, `verdopple(int)`: Weil C++ Funktionen überladen kann, kodiert der Compiler die Parametertypen in den Symbolnamen (*name mangling*, aus `verdopple(int)` wird `__Z9verdopplei`). Der Linker übersetzt das für die Meldung zurück.
+
+</Nur>
+
+<Nur lang="rust">
+
+Normalerweise kennt der Rust-Compiler alle Funktionen selbst, denn ein ganzes Paket wird gemeinsam übersetzt. `extern "C"` ist der Weg, Funktionen aus C-Bibliotheken einzubinden – deren Existenz kann erst der Linker prüfen. Weil Rust deren Verhalten nicht garantieren kann, ist der Aufruf `unsafe`.
+
+</Nur>
+
+<Nur lang="java">
+
+Java hat keinen klassischen Linker. Der Compiler prüft beim Übersetzen, ob jede benutzte Klasse existiert (`cannot find symbol`). Zur Laufzeit lädt die JVM Klassen erst, wenn sie gebraucht werden – fehlt eine dann doch, gibt es einen `NoClassDefFoundError`.
+
+</Nur>
+
+<Nur lang="python">
+
+Python hat keinen Linker. Namen werden erst beim Ausführen der Zeile nachgeschlagen; `import` lädt Module zur Laufzeit. Deshalb läuft das Programm bis zur fehlerhaften Zeile – und gibt vorher noch „Start" aus.
+
+</Nur>
+
+## Das Format der ausführbaren Datei
+
+Eine ausführbare Datei ist mehr als Maschinencode. Sie enthält Abschnitte für Code (`__TEXT`), für Daten mit Anfangswerten (`__DATA`), eine Symboltabelle, die Liste der benötigten dynamischen Bibliotheken und den Einsprungpunkt. Jedes Betriebssystem hat sein eigenes Format: **ELF** unter Linux, **Mach-O** auf dem Mac, **PE** unter Windows. Auch deshalb läuft ein Programm nicht einfach auf einem anderen System.
+
+<Merke>
+
+Fehlermeldungen mit *undefined reference*, *undefined symbol* oder *unresolved external* kommen vom Linker. Der Code ist dann meist richtig – es fehlt eine Quelldatei im Build oder eine Bibliothek in der Liste der zu linkenden Bibliotheken.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="statisch-dynamisch" />
+
+<Aufgabe id="deklaration" />

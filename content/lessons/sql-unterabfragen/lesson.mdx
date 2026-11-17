@@ -1,0 +1,35 @@
+Manche Fragen enthalten eine zweite Frage: „Welche Produkte sind teurer **als der Durchschnitt**?" Um sie zu beantworten, muss man zuerst den Durchschnitt kennen. In SQL schreibt man die innere Frage einfach in Klammern in die äußere – als **Unterabfrage**.
+
+<Szene name="schnitt" />
+
+## Drei Formen
+
+**Ein einzelner Wert** – wie im Beispiel oben. Die Unterabfrage muss dann genau eine Zeile mit einer Spalte liefern.
+
+**Eine Liste von Werten** – für `IN` und `NOT IN`:
+
+<Code name="inliste" />
+
+**Eine ganze Tabelle** – in `FROM`. Das Ergebnis der Unterabfrage wird wie eine Tabelle benutzt und braucht einen Namen:
+
+<Code name="from" />
+
+## Unterabfrage oder JOIN?
+
+Viele Fragen lassen sich auf beide Arten beantworten. „Kunden mit offener Bestellung" geht mit `IN (SELECT …)` genauso wie mit einem JOIN. Die Unterabfrage liest sich oft näher an der Frage, der JOIN ist nötig, sobald Spalten aus beiden Tabellen im Ergebnis stehen sollen. Moderne Datenbanken machen aus beiden intern meist denselben Ausführungsplan.
+
+Bei sehr verschachtelten Abfragen hilft `WITH`: Man gibt Zwischenergebnissen vorab einen Namen (*Common Table Expression*) und liest die Abfrage dann von oben nach unten.
+
+<Merke>
+
+Vorsicht mit `NOT IN` und NULL: Enthält die Liste der Unterabfrage auch nur einen NULL-Wert, liefert `NOT IN` gar keine Zeilen – denn ob ein Wert ungleich „unbekannt" ist, ist selbst unbekannt. `NOT EXISTS` hat dieses Problem nicht.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="ladenhueter" />
+
+<Aufgabe id="fueller" />
+
+<Aufgabe id="alteingesessen" />

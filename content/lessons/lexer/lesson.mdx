@@ -1,0 +1,35 @@
+Für den Computer ist dein Quelltext zunächst nur eine lange Kette von Zeichen: `p`, `r`, `e`, `i`, `s`, Leerzeichen, `=` … Die erste Station des Compilers, der **Lexer** (auch Tokenizer oder Scanner), bündelt diese Zeichen zu **Tokens**: den Wörtern der Programmiersprache.
+
+Beim Lesen machst du dasselbe unbewusst. Du siehst in „Hausboot" ein Wort, nicht sieben Buchstaben, und in `12` eine Zahl, nicht zwei Ziffern.
+
+<CompilerLab ansicht="lexer" />
+
+## Arten von Tokens
+
+| Art | Beispiele |
+|---|---|
+| **Schlüsselwörter** | `if`, `while`, `return`, `class` |
+| **Bezeichner** (Namen) | `preis`, `berechne_summe`, `Main` |
+| **Literale** | `42`, `3.14`, `"Hallo"`, `true` |
+| **Operatoren** | `+`, `==`, `&&`, `->` |
+| **Satzzeichen** | `(`, `)`, `{`, `;`, `,` |
+
+Schlüsselwörter sieht der Lexer daran, dass sie in einer festen Liste stehen. Deshalb darf eine Variable nicht `if` heißen – der Lexer würde sie nie als Namen erkennen.
+
+## Die Regel vom längsten Treffer
+
+Wie entscheidet der Lexer, ob `>=` ein Token ist oder zwei (`>` und `=`)? Er nimmt immer den **längsten** Treffer. Deshalb ist `ifx` ein Name und nicht das Schlüsselwort `if` gefolgt von `x`. Und deshalb brauchte C++ bis 2011 ein Leerzeichen in `vector<vector<int> >` – sonst sah der Lexer `>>`, den Verschiebe-Operator.
+
+Lexer werden selten von Hand geschrieben. Meist beschreibt man die Token-Arten mit **regulären Ausdrücken** (siehe Werkzeug-Pfad), und ein Werkzeug erzeugt daraus den Lexer. Das Prinzip ist aber einfach genug, um es selbst zu bauen – in der Aufgabe unten.
+
+<Merke>
+
+Ein Lexer versteht nichts. Er weiß nicht, ob `x + + 3` sinnvoll ist, er sieht nur vier gültige Tokens. Ob die Tokens in einer sinnvollen Reihenfolge stehen, prüft erst die nächste Station: der Parser.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="tokenizer" />
+
+<Aufgabe id="kommentar" />

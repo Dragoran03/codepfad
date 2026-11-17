@@ -1,0 +1,26 @@
+Ein Switch verbindet alle angeschlossenen Geräte zu einem Netz. Oft ist das zu viel: Das Gäste-WLAN soll nicht an die Buchhaltung kommen, die Überwachungskameras nicht ins Büronetz. Getrennte Switches und Kabel für jede Gruppe wären teuer und unflexibel. **VLANs** teilen einen physischen Switch in mehrere logische.
+
+<Szene name="vlan" />
+
+## Access- und Trunk-Ports
+
+- Ein **Access-Port** gehört zu genau einem VLAN. Das angeschlossene Gerät merkt davon nichts – es schickt ganz normale Ethernet-Rahmen.
+- Ein **Trunk-Port** trägt mehrere VLANs, typischerweise zwischen Switches oder zum Router. Jeder Rahmen bekommt dort nach dem Standard **IEEE 802.1Q** eine 4 Byte lange Markierung mit der VLAN-Nummer (1 bis 4094).
+
+Für den Switch heißt das: Er führt pro VLAN eine eigene MAC-Tabelle und leitet Rahmen – auch Broadcasts – nur an Ports desselben VLANs weiter.
+
+## Zwischen VLANs
+
+VLANs sind auf Schicht 2 vollständig getrennt. Wer zwischen ihnen vermitteln soll, muss auf Schicht 3 arbeiten: ein **Router** oder ein **Layer-3-Switch**, der beide VLANs kennt. Jedes VLAN bekommt dafür ein eigenes IP-Subnetz – mehr dazu in der nächsten Lektion. Genau an dieser Stelle setzt man auch Firewall-Regeln durch.
+
+<Merke>
+
+Ein VLAN = eine Broadcast-Domäne = in der Regel ein IP-Subnetz. Diese Gleichung hilft beim Verstehen jedes Firmennetzes.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="broadcast" />
+
+<Aufgabe id="warum-vlan" />

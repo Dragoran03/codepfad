@@ -1,0 +1,81 @@
+Computer heißen so, weil sie rechnen. Die Grundrechenarten sehen in allen Sprachen fast gleich aus: `+`, `-`, `*` für Mal und `/` für Geteilt. Es gilt Punkt vor Strich, Klammern gehen vor.
+
+Spannend wird es beim Teilen.
+
+## Zwei Arten zu teilen
+
+Sieben Bonbons auf zwei Kinder verteilt: Jedes bekommt drei, eines bleibt übrig. Oder jedes bekommt dreieinhalb. Beide Antworten sind richtig – es kommt darauf an, ob man Bonbons zerschneiden darf. Programmiersprachen kennen deshalb zwei Divisionen und dazu den **Rest-Operator** `%` (gesprochen „modulo").
+
+<Code name="division" />
+
+<Nur lang="python">
+
+Python hat für jede Division ein eigenes Zeichen: `/` liefert immer eine Kommazahl, `//` schneidet immer ab.
+
+</Nur>
+
+<Nur lang="java,c,cpp,rust">
+
+Hier gibt es nur ein Zeichen, `/`, und die **Typen der Zahlen** entscheiden: Zwei ganze Zahlen ergeben eine ganze Zahl. Sobald eine Seite eine Kommazahl ist, wird mit Komma gerechnet. Das ist eine der häufigsten Fehlerquellen überhaupt: `1 / 2` ist `0`.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust mischt Zahlentypen nie stillschweigend. `7 / 2.0` lässt der Compiler nicht durch, weil links eine ganze Zahl und rechts eine Kommazahl steht. Du musst ausdrücklich umwandeln: `7 as f64 / 2.0`.
+
+</Nur>
+
+Ganzzahlige Division und Rest sind ein Team. Probier es mit dem Regler aus:
+
+<Szene name="uhr" />
+
+Der Rest-Operator kann mehr, als man ihm ansieht. `zahl % 2` ist 0 bei geraden und 1 bei ungeraden Zahlen. `zahl % 10` liefert die letzte Ziffer. Und wer auf einer Uhr von 23 Uhr drei Stunden weiterzählt, rechnet `(23 + 3) % 24`.
+
+## Werte einlesen
+
+Ein Programm, das immer dasselbe ausrechnet, ist langweilig. Über die **Eingabe** bekommt es Werte von außen. Das Beispiel liest einen Namen und ein Alter:
+
+<Code name="eingabe" />
+
+Eine Eingabe ist zunächst immer Text. Wer damit rechnen will, muss den Text in eine Zahl umwandeln.
+
+<Nur lang="python">
+
+`input()` liefert eine Zeile als Text. `int(...)` macht daraus eine ganze Zahl, `float(...)` eine Kommazahl. Ohne Umwandlung wäre `"16" + 1` ein Fehler.
+
+</Nur>
+
+<Nur lang="java">
+
+Ein `Scanner` zerlegt die Eingabe. `nextLine()` liest eine ganze Zeile als Text, `nextInt()` die nächste ganze Zahl. Die Zeile `import java.util.Scanner;` ganz oben macht den Scanner verfügbar.
+
+</Nur>
+
+<Nur lang="c">
+
+`scanf` liest nach einem Muster: `%d` erwartet eine ganze Zahl, `%s` ein Wort. Das `&` vor `alter` übergibt die **Adresse** der Variable, damit `scanf` den Wert dort ablegen kann – was das genau bedeutet, klärt die Lektion über Zeiger. Die `49` in `%49s` verhindert, dass ein zu langer Name über das Ende des Arrays hinausschreibt.
+
+</Nur>
+
+<Nur lang="cpp">
+
+`std::cin` ist das Gegenstück zu `std::cout`: Mit `>>` holst du Werte aus der Eingabe heraus. Die Umwandlung passiert automatisch passend zum Typ der Variable.
+
+</Nur>
+
+<Nur lang="rust">
+
+Einlesen ist in Rust ausführlich, weil jeder Schritt sichtbar ist: `read_line` hängt eine Zeile an einen `String` an, `trim()` entfernt den Zeilenumbruch, `parse()` wandelt in eine Zahl um. Die `unwrap()`-Aufrufe bedeuten: „Wenn hier etwas schiefgeht, brich ab." Besser geht das mit der Lektion zur Fehlerbehandlung.
+
+</Nur>
+
+In den Aufgaben ist das Einlesen meistens schon vorgegeben, damit du dich auf das eigentliche Thema konzentrieren kannst.
+
+## Jetzt du
+
+<Aufgabe id="wechselgeld" />
+
+<Aufgabe id="vorrang" />
+
+<Aufgabe id="ganzzahl" />

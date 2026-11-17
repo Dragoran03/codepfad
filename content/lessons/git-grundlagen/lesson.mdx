@@ -1,0 +1,50 @@
+`projekt_final.py`, `projekt_final2.py`, `projekt_final_wirklich.py` – wer so arbeitet, braucht **Versionskontrolle**. Git speichert die komplette Geschichte eines Projekts: wer wann was geändert hat und warum. Man kann jeden früheren Stand wiederherstellen, gefahrlos ausprobieren und mit vielen Menschen gleichzeitig am selben Code arbeiten. Praktisch jedes Softwareprojekt der Welt benutzt Git.
+
+## Drei Bereiche
+
+Der wichtigste Gedanke: Git unterscheidet drei Orte, an denen eine Datei sein kann.
+
+<Szene name="bereiche" />
+
+Die Staging-Area wirkt zunächst umständlich. Sie ist aber der Grund, warum Commits ordentlich bleiben: Du hast an drei Dingen gleichzeitig gearbeitet? Dann merkst du sie nacheinander vor und machst drei Commits mit je einer klaren Nachricht.
+
+## Die wichtigsten Befehle
+
+| Befehl | macht |
+|---|---|
+| `git init` | Repository anlegen |
+| `git status` | Was ist geändert, was vorgemerkt? (Der meistbenutzte Befehl überhaupt.) |
+| `git add datei` | Änderung vormerken |
+| `git commit -m "…"` | Vorgemerktes als Version speichern |
+| `git log --oneline` | Geschichte anzeigen |
+| `git diff` | Unterschiede noch nicht vorgemerkter Änderungen |
+| `git diff --staged` | Unterschiede vorgemerkter Änderungen |
+| `git restore datei` | Änderung im Arbeitsverzeichnis verwerfen |
+
+Probier es aus. Der Übungsordner enthält drei Dateien, aber noch kein Repository:
+
+<Code name="start" />
+
+<Code name="aendern" />
+
+In der Ausgabe von `git diff` stehen entfernte Zeilen mit `-`, hinzugefügte mit `+`.
+
+## Gute Commits
+
+- **Klein und zusammenhängend:** ein Commit, eine logische Änderung. Dann lässt sie sich verstehen, prüfen und bei Bedarf rückgängig machen.
+- **Aussagekräftige Nachricht:** Die erste Zeile sagt kurz, *was* sich ändert („Login-Fehler bei leerem Passwort behoben"), nicht „Änderungen" oder „fix".
+- **Keine erzeugten oder geheimen Dateien:** Logdateien, Build-Ergebnisse und vor allem Passwörter gehören nicht ins Repository. Eine Datei `.gitignore` sagt Git, was es übersehen soll.
+
+<Merke>
+
+Ein Commit ist ein vollständiger Schnappschuss des Projekts, keine Liste von Änderungen. Jeder Commit kennt seinen Vorgänger; die Kette bildet die Geschichte. Was einmal committet ist, geht praktisch nicht mehr verloren.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="erster-commit" />
+
+<Aufgabe id="gezielt" />
+
+<Aufgabe id="ignorieren" />

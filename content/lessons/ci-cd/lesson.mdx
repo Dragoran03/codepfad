@@ -1,0 +1,47 @@
+„Bei mir funktioniert es" ist der vielleicht berüchtigtste Satz der Softwareentwicklung. Der Code lief auf dem eigenen Laptop – mit einer bestimmten Python-Version, einer vergessenen Datei, einem Test, den man nicht ausgeführt hat. **CI/CD** beendet dieses Problem: Bei jeder Änderung prüft ein Server automatisch, ob alles funktioniert, und liefert es im Erfolgsfall aus.
+
+<Szene name="pipeline" />
+
+## Wie eine Pipeline beschrieben wird
+
+Die Schritte stehen als Datei im Repository – versioniert wie der Code selbst. So sieht eine einfache Pipeline für **GitHub Actions** aus (bei GitLab heißt die Datei `.gitlab-ci.yml` und sieht ähnlich aus):
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]          # wann die Pipeline startet
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest        # frische virtuelle Maschine
+    steps:
+      - uses: actions/checkout@v4 # Code holen
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: ruff check .         # Stilprüfung
+      - run: pytest               # Tests
+```
+
+Jede `run`-Zeile ist ein ganz normaler Terminal-Befehl. Schlägt einer fehl – also endet er mit einem Exit-Code ungleich 0 –, bricht der Job ab und wird rot.
+
+## Das Prinzip im Kleinen
+
+Im Kern ist eine Pipeline ein Skript, das bei jedem Fehler stoppt. Das Werkzeug dafür kennst du aus der Lektion über Shell-Skripte:
+
+<Code name="seterr" />
+
+Der Übungsordner enthält ein kleines Python-Projekt mit einem Rechenmodul und einem Test. In der Aufgabe baust du daraus deine eigene Mini-Pipeline.
+
+<Merke>
+
+Eine Pipeline ist nur so gut wie ihre Tests. Ohne Tests prüft CI lediglich, ob sich der Code übersetzen lässt. Und eine rote Pipeline repariert man sofort – wer sich an Rot gewöhnt, hat keine CI mehr, sondern nur noch eine Ampel, auf die niemand schaut.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="pipeline" />
+
+<Aufgabe id="ci-cd" />

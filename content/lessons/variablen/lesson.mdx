@@ -1,0 +1,77 @@
+Programme müssen sich Dinge merken: einen Punktestand, einen Namen, das Ergebnis einer Rechnung. Dafür gibt es **Variablen**. Eine Variable ist ein Stück Arbeitsspeicher mit einem Namen. Du legst einen Wert hinein, und solange das Programm läuft, findest du ihn unter diesem Namen wieder.
+
+<Szene name="steckbrief" />
+
+Drei Dinge stecken in diesem kleinen Beispiel:
+
+- **Anlegen:** Beim ersten Mal bekommt die Variable einen Namen und einen Startwert.
+- **Zuweisen:** Mit `=` wird der Wert überschrieben. Rechts steht, *was* gespeichert wird, links, *wohin*.
+- **Lesen:** Überall, wo der Name in einem Ausdruck auftaucht, setzt der Computer den aktuellen Wert ein.
+
+<Merke>
+
+`alter = alter + 1` wäre in der Mathematik Unsinn. Beim Programmieren heißt es: „Nimm den aktuellen Wert von alter, zähle 1 dazu und speichere das Ergebnis wieder in alter."
+
+</Merke>
+
+## Datentypen
+
+Im Speicher liegen nur Nullen und Einsen. Ob das Muster `01000001` die Zahl 65 oder der Buchstabe A ist, entscheidet der **Datentyp**. Er legt fest, wie viel Platz ein Wert braucht und was man mit ihm tun darf: Zahlen kann man multiplizieren, Texte nicht.
+
+Die vier Grundtypen gibt es in jeder Sprache, nur unter anderen Namen:
+
+| | Ganze Zahl | Kommazahl | Text | Wahrheitswert |
+|---|---|---|---|---|
+| **Python** | `int` | `float` | `str` | `bool` (`True`, `False`) |
+| **Java** | `int`, `long` | `double` | `String` | `boolean` (`true`, `false`) |
+| **C** | `int`, `long` | `double` | `char`-Array | `bool` (mit `<stdbool.h>`) |
+| **C++** | `int`, `long` | `double` | `std::string` | `bool` |
+| **Rust** | `i32`, `i64` | `f64` | `String`, `&str` | `bool` |
+
+<Nur lang="python">
+
+Python ist **dynamisch typisiert**: Du schreibst nie einen Typ hin. Der Typ gehört zum Wert, und eine Variable darf nacheinander Werte verschiedener Typen aufnehmen. Das spart Schreibarbeit, aber niemand warnt dich vorab, wenn du versehentlich einen Text mit einer Zahl verrechnest.
+
+</Nur>
+
+<Nur lang="java">
+
+Java ist **statisch typisiert**: Beim Anlegen steht der Typ vor dem Namen (`int alter = 16;`), und er ändert sich nie. Dafür findet der Compiler Verwechslungen, bevor das Programm läuft. Wer weniger tippen will, schreibt `var alter = 16;` – der Typ ist dann trotzdem fest, Java liest ihn nur vom Startwert ab.
+
+</Nur>
+
+<Nur lang="c">
+
+C ist **statisch typisiert**: Beim Anlegen steht der Typ vor dem Namen (`int alter = 16;`). Der Typ bestimmt die Größe: Ein `int` belegt meist 4 Bytes und reicht bis etwa 2,1 Milliarden.
+
+Eine Falle: Eine Variable ohne Startwert (`int x;`) enthält in C keinen definierten Wert, sondern das, was zufällig an dieser Speicherstelle lag. Gib Variablen deshalb immer gleich einen Wert.
+
+</Nur>
+
+<Nur lang="cpp">
+
+C++ ist **statisch typisiert**: Beim Anlegen steht der Typ vor dem Namen (`int alter = 16;`). Mit `auto alter = 16;` lässt du den Compiler den Typ vom Startwert ablesen – fest ist er trotzdem.
+
+Wie in C gilt: Eine lokale Variable ohne Startwert (`int x;`) enthält Zufallsdaten. Gib Variablen immer gleich einen Wert.
+
+</Nur>
+
+<Nur lang="rust">
+
+Rust ist **statisch typisiert**, liest den Typ aber meist selbst vom Wert ab. Du kannst ihn auch ausschreiben: `let alter: i32 = 16;`. Die Zahl im Typnamen ist die Größe in Bit.
+
+Besonders an Rust: Variablen sind **unveränderlich**, solange du nicht `mut` dazuschreibst. `let x = 5; x = 6;` lässt der Compiler nicht durch. Das wirkt streng, verhindert aber, dass sich Werte ändern, bei denen du nicht damit rechnest.
+
+</Nur>
+
+## Gute Namen
+
+Der Computer kommt mit `x7` genauso gut zurecht wie mit `kontostand`. Du in drei Wochen nicht. Wähle Namen, die sagen, was drinsteckt. Leerzeichen und Umlaute lässt man in Namen weg; statt eines Leerzeichens schreibt man `kontostand_neu` (Python, Rust, C) oder `kontostandNeu` (Java).
+
+## Jetzt du
+
+<Aufgabe id="rechteck" />
+
+<Aufgabe id="kopie" />
+
+<Aufgabe id="statisch" />

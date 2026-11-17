@@ -1,0 +1,27 @@
+Bisher hast du nur gelesen. Drei Anweisungen verändern Daten: `INSERT` fügt Zeilen ein, `UPDATE` ändert sie, `DELETE` löscht sie.
+
+<Szene name="aendern" />
+
+Keine Sorge beim Ausprobieren: Auf dieser Plattform startet jede Ausführung mit einer frischen Kopie des Datensatzes. Was du änderst, ist beim nächsten Klick wieder da.
+
+## Die Datenbank passt auf
+
+Eine gut entworfene Datenbank lässt keine widersprüchlichen Daten zu. Kunde 1 hat drei Bestellungen. Was passiert, wenn man ihn löschen will?
+
+<Code name="fk" />
+
+Der Fremdschlüssel `bestellungen.kunde_id` garantiert, dass jede Bestellung zu einem existierenden Kunden gehört. Die Datenbank verweigert deshalb das Löschen. Ebenso lehnt sie Werte ab, die gegen `NOT NULL`, `UNIQUE` oder eine `CHECK`-Regel verstoßen – mehr dazu in der nächsten Lektion.
+
+<Merke>
+
+`UPDATE` und `DELETE` ohne `WHERE` betreffen **alle** Zeilen. Das ist einer der folgenreichsten Tippfehler der Informatik. Gute Gewohnheit: Schreibe zuerst ein `SELECT` mit genau dem `WHERE`, das du benutzen willst, prüfe die Zeilen – und mache erst dann ein `UPDATE` oder `DELETE` daraus.
+
+</Merke>
+
+## Jetzt du
+
+<Aufgabe id="neue-kundin" />
+
+<Aufgabe id="papier-teurer" />
+
+<Aufgabe id="storno" />
